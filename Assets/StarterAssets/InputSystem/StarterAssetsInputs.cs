@@ -32,9 +32,6 @@ public class StarterAssetsInputs : MonoBehaviour
 				ButtonInput = false; print("not smt"); 
 			};
 
-			
-			
-			
 			input.Enable();
 		}
 

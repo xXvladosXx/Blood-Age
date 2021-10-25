@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Movement
   m_EditorClassIdentifier: 
   _manualMovement: 0
+  _distanceToAttack: 2
