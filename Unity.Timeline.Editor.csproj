@@ -147,8 +147,8 @@
      <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\Window\PlaybackScroller.cs" />
      <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\Utilities\Scopes\GUIGroupScope.cs" />
      <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\Utilities\AnimatedParameterUtility.cs" />
-     <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\treeview\PickerUtils.cs" />
      <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\Window\TimelineWindow_Manipulators.cs" />
+     <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\treeview\PickerUtils.cs" />
      <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\inspectors\ClipInspector\ClipInspectorCurveEditor.cs" />
      <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\Window\ViewModel\TimelineAssetViewModel.cs" />
      <Compile Include="Library\PackageCache\com.unity.timeline@1.4.6\Editor\Recording\TrackAssetRecordingExtensions.cs" />
@@ -546,6 +546,9 @@
  <Reference Include="Sirenix.OdinInspector.Attributes">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
  </Reference>
+ <Reference Include="PackageManagerAssembly">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
+ </Reference>
  <Reference Include="Sirenix.Serialization.Config">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
  </Reference>
@@ -563,9 +566,6 @@
  </Reference>
  <Reference Include="Sirenix.Utilities.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
- </Reference>
- <Reference Include="PackageManagerAssembly">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

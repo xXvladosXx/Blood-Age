@@ -52,6 +52,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Plugins\Steam\IStreamControllerAPI.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Utilities\NumberHelpers.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Utilities\OneOrMore.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Plugins\PlayerInput\PlayerInput.cs" />
@@ -202,8 +203,8 @@
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Controls\DoubleControl.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Plugins\UI\NavigationModel.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Devices\Keyboard.cs" />
-     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Devices\Gamepad.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Plugins\PlayerInput\InputValue.cs" />
+     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Devices\Gamepad.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Controls\InputControlLayoutChange.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Plugins\WebGL\WebGLJoystick.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Devices\Commands\QueryCanRunInBackground.cs" />
@@ -343,7 +344,6 @@
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Devices\Remote\InputRemoting.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Controls\Processors\AxisDeadzoneProcessor.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Plugins\EnhancedTouch\TouchHistory.cs" />
-     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Plugins\Steam\IStreamControllerAPI.cs" />
      <None Include="Library\PackageCache\com.unity.inputsystem@1.0.2\InputSystem\Unity.InputSystem.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/Variations/mono/Managed/UnityEngine.dll</HintPath>

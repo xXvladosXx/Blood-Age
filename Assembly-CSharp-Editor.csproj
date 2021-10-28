@@ -293,6 +293,9 @@
  <Reference Include="Sirenix.OdinInspector.Attributes">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
  </Reference>
+ <Reference Include="PackageManagerAssembly">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
+ </Reference>
  <Reference Include="Sirenix.Serialization.Config">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
  </Reference>
@@ -310,9 +313,6 @@
  </Reference>
  <Reference Include="Sirenix.Utilities.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
- </Reference>
- <Reference Include="PackageManagerAssembly">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -724,6 +724,10 @@
       <Project>{39c2d29d-5e15-0a1c-3822-6220bb6f3ca5}</Project>
       <Name>Unity.RenderPipelines.HighDefinition.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
+      <Project>{849f928b-2ce5-7d04-2548-be49df5de68a}</Project>
+      <Name>Unity.Postprocessing.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{c0a8c0d8-3d22-e3af-6f11-a81090505be7}</Project>
       <Name>UnityEditor.UI</Name>
@@ -760,6 +764,10 @@
       <Project>{acf228f5-00c1-2005-7112-c51cb9b4ea7a}</Project>
       <Name>com.unity.cinemachine.editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
+      <Project>{d4cbccd2-182b-2b3c-b4aa-cbfa7d8de0b3}</Project>
+      <Name>Unity.Postprocessing.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj">
       <Project>{47a95197-17c2-3bf4-47b7-e84f39ab20a7}</Project>
       <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary</Name>
@@ -775,14 +783,6 @@
     <ProjectReference Include="Unity.RenderPipelines.Core.Editor.csproj">
       <Project>{ccc8b300-61f1-ca51-233c-d7a02db8d4f2}</Project>
       <Name>Unity.RenderPipelines.Core.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
-      <Project>{849f928b-2ce5-7d04-2548-be49df5de68a}</Project>
-      <Name>Unity.Postprocessing.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
-      <Project>{d4cbccd2-182b-2b3c-b4aa-cbfa7d8de0b3}</Project>
-      <Name>Unity.Postprocessing.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

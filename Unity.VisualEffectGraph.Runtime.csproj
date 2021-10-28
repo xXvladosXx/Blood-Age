@@ -52,7 +52,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXRaycastBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXInputButtonBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXUIDropdownBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXVelocityBinder.cs" />
@@ -93,6 +92,7 @@
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXUISliderBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\EventBinding\Implementation\VFXRigidBodyCollisionEventBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXInputAxisBinder.cs" />
+     <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXRaycastBinder.cs" />
      <None Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor Default Resources\uss\VFXFlow.uss" />
      <None Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Shaders\ParticleLinesSW\Pass.template" />
      <None Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor Default Resources\uss\VFXView-light.uss" />
@@ -455,6 +455,9 @@
  <Reference Include="Sirenix.OdinInspector.Attributes">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
  </Reference>
+ <Reference Include="PackageManagerAssembly">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
+ </Reference>
  <Reference Include="Sirenix.Serialization.Config">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
  </Reference>
@@ -472,9 +475,6 @@
  </Reference>
  <Reference Include="Sirenix.Utilities.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
- </Reference>
- <Reference Include="PackageManagerAssembly">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

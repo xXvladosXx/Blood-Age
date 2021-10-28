@@ -22,16 +22,6 @@ public class StarterAssetsInputs : MonoBehaviour
 		{
 			input = new StarterAssets();
 
-			input.Player.ButtonInput.performed += cont =>
-			{
-				ButtonInput = true; print("somt"); 
-			};
-			
-			input.Player.ButtonInput.performed += cont =>
-			{
-				ButtonInput = false; print("not smt"); 
-			};
-
 			input.Enable();
 		}
 

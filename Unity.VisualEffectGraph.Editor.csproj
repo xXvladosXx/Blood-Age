@@ -113,8 +113,8 @@
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\Models\Operators\Implementations\Divide.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\Models\Slots\Implementations\VFXSlotFloat4.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\Models\Blocks\Implementations\Attribute\AttributeFromMap.cs" />
-     <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\GraphView\Elements\VFXBlockUI.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\Models\Operators\Implementations\Minimum.cs" />
+     <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\GraphView\Elements\VFXBlockUI.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\Core\VFXConverter.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\GraphView\Blackboard\VFXBlackboardPropertyView.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor\Models\Operators\VFXSubgraphOperator.cs" />
@@ -762,6 +762,9 @@
  <Reference Include="Sirenix.OdinInspector.Attributes">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
  </Reference>
+ <Reference Include="PackageManagerAssembly">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
+ </Reference>
  <Reference Include="Sirenix.Serialization.Config">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
  </Reference>
@@ -779,9 +782,6 @@
  </Reference>
  <Reference Include="Sirenix.Utilities.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
- </Reference>
- <Reference Include="PackageManagerAssembly">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

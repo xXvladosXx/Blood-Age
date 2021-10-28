@@ -57,8 +57,10 @@
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\ButtonHandler.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\StandaloneInput.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\VirtualInput.cs" />
-     <Compile Include="Assets\Scripts\Enemy.cs" />
-     <Compile Include="Assets\Scripts\AttackMaker.cs" />
+     <Compile Include="Assets\Scripts\States\Enemy.cs" />
+     <Compile Include="Assets\Scripts\AttackRegistrator.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
+     <Compile Include="Assets\Scripts\AI\AISensor.cs" />
      <Compile Include="Assets\SampleSceneAssets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\PivotBasedCameraRig.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Balrond3Pcontroller\Balrond3personCameraCollision.cs" />
@@ -68,40 +70,48 @@
      <Compile Include="Assets\SampleSceneAssets\Scripts\SimpleCameraController.cs" />
      <Compile Include="Assets\Scripts\MouseSystem\AttackData.cs" />
      <Compile Include="Assets\StarterAssets\Mobile\Scripts\Utilities\MobileDisableAutoSwitchControls.cs" />
-     <Compile Include="Assets\Scripts\StateData.cs" />
+     <Compile Include="Assets\Scripts\States\StateData.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\ThirdPersonUserControl.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\Joystick.cs" />
+     <Compile Include="Assets\Scripts\States\PlayerStates\PlayerAttackState.cs" />
      <Compile Include="Assets\Scripts\MouseSystem\IRaycastable.cs" />
+     <Compile Include="Assets\Scripts\IndicatorActivator.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\MobileControlRig.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\ProtectCameraFromWallClip.cs" />
      <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualJoystick.cs" />
      <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualTouchZone.cs" />
-     <Compile Include="Assets\Scripts\Movement.cs" />
+     <Compile Include="Assets\Scripts\States\Movement.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\CrossPlatformInputManager.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleMenu.cs" />
+     <Compile Include="Assets\Scripts\States\AIStates\AIMovementState.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\TargetFieldOfView.cs" />
      <Compile Include="Assets\StarterAssets\ThirdPersonController\Scripts\BasicRigidBodyPush.cs" />
      <Compile Include="Assets\SampleSceneAssets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\TouchPad.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\AxisTouchButton.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\MobileInput.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleExamples.cs" />
+     <Compile Include="Assets\Scripts\States\PlayerStates\PlayerMovementState.cs" />
      <Compile Include="Assets\SampleSceneAssets\Scripts\LookWithMouse.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\ThirdPersonCharacter.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleCollision.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\GunShoot.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\AbstractTargetFollower.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Balrond3Pcontroller\Balrond3pMainCamera.cs" />
      <Compile Include="Assets\StarterAssets\ThirdPersonController\Scripts\ThirdPersonController.cs" />
      <Compile Include="Assets\StarterAssets\InputSystem\StarterAssets.cs" />
-     <Compile Include="Assets\Scripts\BaseState.cs" />
-     <Compile Include="Assets\Scripts\IdleMovementState.cs" />
+     <Compile Include="Assets\Scripts\States\BaseState.cs" />
+     <Compile Include="Assets\Scripts\States\IdleMovementState.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\LookatTarget.cs" />
-     <Compile Include="Assets\Scripts\AttackState.cs" />
+     <Compile Include="Assets\Scripts\States\AIStates\AIAttackState.cs" />
+     <Compile Include="Assets\Scripts\States\AttackState.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\TiltInput.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleCollision.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\GunShoot.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\GunAim.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleExamples.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleMenu.cs" />
+     <Compile Include="Assets\DestroyObject.cs" />
+     <Compile Include="Assets\Simple Spin Blur\Scripts\SimpleSpinBlur.cs" />
+     <Compile Include="Assets\Simple Spin Blur\Scripts\OrbitCam.cs" />
+     <Compile Include="Assets\Simple Spin Blur\Scripts\CanvasControls.cs" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\SkinShaderHDRP.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\EyeslashShader.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\EyesShaderURP.shader" />
@@ -115,6 +125,7 @@
      <None Include="Assets\FurryS2\Shaders\DawnShader\ClothingShader.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\HairShaderURP_V2.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\SkinShaderHDRP.shader" />
+     <None Include="Assets\Simple Spin Blur\Quick Reference.txt" />
      <None Include="Assets\Shaders\DawnShaderURP\SkinShaderHDRP_V2.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\HairShaderURP_V3.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\HornShaderHDRP.shader" />
@@ -797,6 +808,10 @@
       <Project>{39c2d29d-5e15-0a1c-3822-6220bb6f3ca5}</Project>
       <Name>Unity.RenderPipelines.HighDefinition.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
+      <Project>{849f928b-2ce5-7d04-2548-be49df5de68a}</Project>
+      <Name>Unity.Postprocessing.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{c0a8c0d8-3d22-e3af-6f11-a81090505be7}</Project>
       <Name>UnityEditor.UI</Name>
@@ -833,6 +848,10 @@
       <Project>{acf228f5-00c1-2005-7112-c51cb9b4ea7a}</Project>
       <Name>com.unity.cinemachine.editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
+      <Project>{d4cbccd2-182b-2b3c-b4aa-cbfa7d8de0b3}</Project>
+      <Name>Unity.Postprocessing.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj">
       <Project>{47a95197-17c2-3bf4-47b7-e84f39ab20a7}</Project>
       <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary</Name>
@@ -848,14 +867,6 @@
     <ProjectReference Include="Unity.RenderPipelines.Core.Editor.csproj">
       <Project>{ccc8b300-61f1-ca51-233c-d7a02db8d4f2}</Project>
       <Name>Unity.RenderPipelines.Core.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
-      <Project>{849f928b-2ce5-7d04-2548-be49df5de68a}</Project>
-      <Name>Unity.Postprocessing.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
-      <Project>{d4cbccd2-182b-2b3c-b4aa-cbfa7d8de0b3}</Project>
-      <Name>Unity.Postprocessing.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

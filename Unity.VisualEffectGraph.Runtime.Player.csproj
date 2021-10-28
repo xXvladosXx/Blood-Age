@@ -52,7 +52,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXRaycastBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXInputButtonBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXUIDropdownBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXVelocityBinder.cs" />
@@ -93,6 +92,7 @@
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXUISliderBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\EventBinding\Implementation\VFXRigidBodyCollisionEventBinder.cs" />
      <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXInputAxisBinder.cs" />
+     <Compile Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Runtime\Utilities\PropertyBinding\Implementation\VFXRaycastBinder.cs" />
      <None Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor Default Resources\uss\VFXFlow.uss" />
      <None Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Shaders\ParticleLinesSW\Pass.template" />
      <None Include="Library\PackageCache\com.unity.visualeffectgraph@10.4.0\Editor Default Resources\uss\VFXView-light.uss" />
