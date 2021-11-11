@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using DefaultNamespace.MouseSystem;
+using InventorySystem;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,10 +10,11 @@ public abstract class AttackState : StateData
 {
     [SerializeField] protected float _startAttackTime;
     [SerializeField] protected float _endAttackTime;
-    [SerializeField] protected float _distanceToAttack;
+    protected float _distanceToAttack;
+    [SerializeField] protected bool _heavyAttack;
     
     protected AttackRegistrator _attackRegistrator;
-    protected Movement _movement;
+    protected ItemEquipper _itemEquipper;
 
     protected bool _wasClickedOnTarget;
     protected static readonly int MainAttack = Animator.StringToHash("Attack");
@@ -20,10 +23,18 @@ public abstract class AttackState : StateData
 
     public override void OnEnter(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
-        _movement = animator.GetComponent<Movement>();
         _attackRegistrator = animator.GetComponentInChildren<AttackRegistrator>();
 
-        _movement.Cancel();
+        animator.SetBool(WasRegistered, false);
+        animator.SetBool(MainAttack, false);
+        
+        _itemEquipper = animator.GetComponent<ItemEquipper>();
+        if (_itemEquipper == null)
+        {
+            _distanceToAttack = 2f;
+            return;
+        }
+        _distanceToAttack = _itemEquipper.GetAttackRange;
     }
 
     public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
@@ -36,6 +47,7 @@ public abstract class AttackState : StateData
     {
         if (!(_startAttackTime <= stateInfo.normalizedTime) || !(_endAttackTime > stateInfo.normalizedTime)) return;
        
+        _attackRegistrator.AttackData.HeavyAttack = _heavyAttack;
         _attackRegistrator.EnableCollider();
     }
 
@@ -53,6 +65,8 @@ public abstract class AttackState : StateData
 
     public override void OnExit(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
+        animator.SetBool(WasRegistered, false);
+        animator.SetBool(MainAttack, false);
         _attackRegistrator.DisableCollider();
     }
 }

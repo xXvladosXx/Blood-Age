@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 
 public class IndicatorActivator : MonoBehaviour
@@ -15,7 +16,7 @@ public class IndicatorActivator : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.GetComponent<DestroyObject>().DestroyItself();
+            child.GetComponent<IDestroyable>().Destroy();
         }
     }
 }

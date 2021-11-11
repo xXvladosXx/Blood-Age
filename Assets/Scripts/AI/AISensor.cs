@@ -52,7 +52,7 @@
                 if (IsInSight(obj))
                 {
                     _gameObjects.Add(obj);
-                    print("Found");
+                   
                     if (obj.GetComponent<StarterAssetsInputs>() != null)
                     {
                         _attackRegistrator.AttackData.Target = obj.transform;
@@ -61,7 +61,7 @@
             }
         }
 
-        public bool IsInSight(GameObject obj)
+        private bool IsInSight(GameObject obj)
         {
             Vector3 origin = transform.position;
             Vector3 dest = obj.transform.position;

@@ -17,10 +17,29 @@
         public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
             PlayerInput(animator);
+            
+            if(_itemEquipper == null) return;
+            _distanceToAttack = _itemEquipper.GetAttackRange;
         }
 
         private void PlayerInput(Animator animator)
         {
+            RaycastHit raycastHit;
+            bool hasHit = Physics.Raycast(_starterAssetsInputs.GetRay(), out raycastHit);
+
+            if (!hasHit) return;
+
+            if (_starterAssetsInputs.ButtonInput)
+            {
+                animator.SetBool(ForceTransition, false);
+                if (raycastHit.collider.GetComponent<Health>() != null && (raycastHit.collider.GetComponent<Health>() != animator.GetComponent<Health>()))
+                {
+                    _attackRegistrator.AttackData.Target = raycastHit.transform;
+                }
+
+                _movement.StartMoveTo(raycastHit.point, 1f);
+            }
+            
             if (_attackRegistrator.AttackData.Target != null)
             {
                 var distanceToTargetSec =
@@ -31,24 +50,11 @@
                     _movement.Cancel();
                     animator.transform.LookAt(_attackRegistrator.AttackData.Target.position);
                     animator.SetBool(Attack, true);
-                    return;
                 }
-            }
-
-            RaycastHit raycastHit;
-            bool hasHit = Physics.Raycast(_starterAssetsInputs.GetRay(), out raycastHit);
-
-            if (!hasHit) return;
-
-            if (_starterAssetsInputs.ButtonInput)
-            {
-                animator.SetBool(ForceTransition, false);
-                if (raycastHit.collider.GetComponent<Enemy>() != null)
+                else
                 {
-                    _attackRegistrator.AttackData.Target = raycastHit.transform;
+                    _movement.StartMoveTo(_attackRegistrator.AttackData.Target.position, 1f);
                 }
-
-                _movement.StartMoveTo(raycastHit.point, 1f);
             }
         }
     }

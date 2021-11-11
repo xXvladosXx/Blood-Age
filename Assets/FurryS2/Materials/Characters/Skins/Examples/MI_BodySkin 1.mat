@@ -150,6 +150,7 @@ Material:
     - _Parallax: 0.02
     - _Profile: 2.744419
     - _ReceivesSSR: 1
+    - _ReceivesSSRTransparent: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 1
     - _SSSonoff: 1.2
@@ -173,6 +174,7 @@ Material:
     - _StencilWriteMaskDistortionVec: 4
     - _StencilWriteMaskGBuffer: 14
     - _StencilWriteMaskMV: 40
+    - _SupportDecals: 1
     - _SurfaceType: 0
     - _TransAmbient: 0.2
     - _TransDirect: 1
@@ -197,9 +199,8 @@ Material:
     - _BlendColor02: {r: 1, g: 1, b: 1, a: 0}
     - _BlendColor03: {r: 1, g: 1, b: 1, a: 0}
     - _BlendColor04: {r: 1, g: 1, b: 1, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DiffusionProfileAsset: {r: -1.405437e+32, g: 2.0030989e-26, b: 0.00000006313206,
-        a: -4.4045647e-18}
+    - _Color: {r: 0, g: 0, b: 0, a: 0.10081818}
+    - _DiffusionProfileAsset: {r: -1.405437e+32, g: 2.0030989e-26, b: 0.00000006313206, a: -4.4045647e-18}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor1: {r: 0, g: 0, b: 0, a: 0}
@@ -214,3 +215,4 @@ Material:
     - _Profile_asset: {r: 2.7217396e-14, g: -0.00000033793674, b: 6.503509e-25, a: 2.5157696e-15}
     - _SSSColor: {r: 0.5471698, g: 0.077783935, b: 0, a: 1}
     - _Tint: {r: 1, g: 0.8288271, b: 0.7311321, a: 0}
+  m_BuildTextureStacks: []

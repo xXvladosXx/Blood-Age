@@ -56,6 +56,7 @@
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\GraphicRaycaster.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Text.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Image.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Button.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\LayoutElement.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Selectable.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\VertexModifiers\Shadow.cs" />
@@ -80,7 +81,6 @@
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\InputField.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\ToggleGroup.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\RaycastResult.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Button.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Navigation.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\ContentSizeFitter.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\InputModules\BaseInput.cs" />

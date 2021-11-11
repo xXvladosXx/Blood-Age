@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6998670854786068852}
   - component: {fileID: 6998670854786068851}
   - component: {fileID: 6998670854786068850}
-  - component: {fileID: -8067199695327817416}
+  - component: {fileID: 5405001341779416811}
   m_Layer: 0
   m_Name: VFXFire
   m_TagString: Untagged
@@ -112,7 +112,7 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &-8067199695327817416
+--- !u!114 &5405001341779416811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,6 +121,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6998670854786068849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae0627a407d9e4c4aaef8167c3078e88, type: 3}
+  m_Script: {fileID: 11500000, guid: 177f7f52bedf483fa5c15dda2dfb7a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

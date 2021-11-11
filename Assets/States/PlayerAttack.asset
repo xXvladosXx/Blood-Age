@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7734d7292632407eb28cdfa64b927369, type: 3}
   m_Name: PlayerAttack
   m_EditorClassIdentifier: 
-  _startAttackTime: 0.4
-  _endAttackTime: 0.9
-  _distanceToAttack: 1.5
+  _startAttackTime: 0.5
+  _endAttackTime: 0.7
+  _distanceToAttack: 2
+  _heavyAttack: 0
   _effect: {fileID: 6998670854786068849, guid: d853db66539bbbd4fa00a290a71fddbd, type: 3}
   _timeModifier: 100

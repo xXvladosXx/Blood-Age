@@ -9,56 +9,54 @@ public class PlayerAttackState : AttackState
 {
     [SerializeField] private GameObject _effect;
     [SerializeField] private int _timeModifier = 100;
+    
     private StarterAssetsInputs _starterAssetsInputs;
+    private IndicatorActivator _targetIndicator;
     private bool _wasSpawned;
     public override void OnEnter(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
         base.OnEnter(characterStateBase, animator, stateInfo);
         _starterAssetsInputs = animator.GetComponent<StarterAssetsInputs>();
-
+        _targetIndicator = _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>();
+        
         _wasClickedOnTarget = false;
         _wasSpawned = false;
     }
 
     public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
-        Debug.Log(_wasClickedOnTarget);
+        if (!_itemEquipper.IsRanged)
+            base.UpdateAbility(characterStateBase, animator, stateInfo);
         
-        base.UpdateAbility(characterStateBase, animator, stateInfo);
+        animator.transform.LookAt(_attackRegistrator.AttackData.Target);
         CombatCheck(characterStateBase, animator, stateInfo);
-        CheckDistance();
+        
+        if(_targetIndicator == null) return;
         ActivateIndicatorOnTarget(stateInfo);
         DeactivateIndicatorOnTarget(stateInfo);
-
-        if (_starterAssetsInputs.ButtonInput)
-        {
-            _wasClickedOnTarget = true;
-        }
     }
 
     private void DeactivateIndicatorOnTarget(AnimatorStateInfo stateInfo)
     {
-        if (_attackRegistrator.AttackData.Target == null) return;
+        if (!(stateInfo.normalizedTime > _endAttackTime)) return;
 
-        if (stateInfo.normalizedTime > _endAttackTime)
-        {
-            if (_wasSpawned)
-            {
-                _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>().DeactivateIndicator();
-            }
-        }
+        _targetIndicator.DeactivateIndicator();
+        _wasSpawned = false;
+    }
+    
+    private void DeactivateIndicatorOnTarget()
+    {        
+        _targetIndicator.DeactivateIndicator();
+        _wasSpawned = false;
     }
 
     private void ActivateIndicatorOnTarget(AnimatorStateInfo stateInfo)
     {
         if (_wasSpawned) return;
         if (!(stateInfo.normalizedTime >= _startAttackTime + ((_endAttackTime - _startAttackTime)) / _timeModifier)) return;
-        if (_attackRegistrator.AttackData.Target != null)
-        {
-            _wasSpawned = true;
-            _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>()
-                .ActivateIndicator(_effect);
-        }
+
+        _wasSpawned = true;
+        _targetIndicator.ActivateIndicator(_effect);
     }
 
     private void CombatCheck(BaseState characterStateBase, Animator animator,
@@ -69,50 +67,36 @@ public class PlayerAttackState : AttackState
 
         switch (_starterAssetsInputs.ButtonInput)
         {
-            case true when raycastHit.collider.GetComponent<Enemy>() != null:
+            case true when raycastHit.collider.GetComponent<Health>() != null && raycastHit.collider.GetComponent<Health>() != animator.GetComponent<Health>():
             {
+                _wasClickedOnTarget = true;
                 _attackRegistrator.AttackData.Target = raycastHit.collider.transform;
+                _targetIndicator = _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>();
                 
-                if (!(stateInfo.normalizedTime >= _startAttackTime + ((_endAttackTime - _startAttackTime)) / _timeModifier)) return;
-                if (_wasClickedOnTarget) return;
+                if(!_wasSpawned) return;
+                if (!_wasClickedOnTarget) return;
 
                 animator.SetBool(WasRegistered, true);
                 _wasClickedOnTarget = false;
 
                 break;
             }
-            case true when raycastHit.collider.GetComponent<Enemy>() == null:
+            case true when raycastHit.collider.GetComponent<Health>() == null:
             {
-                if(_attackRegistrator.AttackData.Target != null)
-                    _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>().DeactivateIndicator();
+                DeactivateIndicatorOnTarget();
 
+                _attackRegistrator.AttackData.Target = null;    
                 animator.SetBool(ForceTransition, true);
                 animator.SetBool(MainAttack, false);
-
-                _wasClickedOnTarget = false;
-
-                _movement.StartMoveTo(raycastHit.point, 1f);
-                _attackRegistrator.AttackData.Target = null;
                 break;
             }
         }
     }
 
-    private void CheckDistance()
-    {
-        if (_attackRegistrator.AttackData.Target == null) return;
-        
-        float distanceTo = Vector3.Distance(_attackRegistrator.transform.position,
-            _attackRegistrator.AttackData.Target.position);
-
-        if (distanceTo > _distanceToAttack)
-            _movement.StartMoveTo(_attackRegistrator.AttackData.Target.position, 1f);
-    }
-
     public override void OnExit(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
-        _wasClickedOnTarget = false;
-        _wasSpawned = false;
-        _attackRegistrator.DisableCollider();
+        base.OnExit(characterStateBase, animator, stateInfo);
+        
+        DeactivateIndicatorOnTarget();
     }
 }

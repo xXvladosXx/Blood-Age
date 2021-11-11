@@ -13,7 +13,7 @@ public class SimpleSpinBlur : MonoBehaviour
     public int Samples = 8;
     Queue<Quaternion> rotationQueue = new Queue<Quaternion>();
     public Material SSB_Material;
-    [Range(-0.1f, 0.1f)][Tooltip("Motion Blur Opacity")]
+    [Range(-0.5f, 0.5f)][Tooltip("Motion Blur Opacity")]
     public float alphaOffset;
     public AdvancedSettings advancedSettings;
 

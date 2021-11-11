@@ -25,6 +25,7 @@
             _defaultStartPoint = animator.transform.position;
             _timeSinceLastVisited = 4;
             _isOnPosition = false;
+            _distanceToAttack = _itemEquipper.GetAttackRange;
 
             if (_path != null)
             {
@@ -49,14 +50,14 @@
 
                 var distanceToTargetSec =
                     Vector3.Distance(animator.transform.position, targetPosition);
-
+                
                 if (distanceToTargetSec < _distanceToAttack)
                 {
                     _movement.Cancel();
                     animator.transform.LookAt(_attackRegistrator.AttackData.Target.position);
                     animator.SetBool(Attack, true);
                 }
-
+               
                 return;
             }
 
@@ -73,7 +74,6 @@
             if (_isOnPosition || _timeSinceLastVisited == 4)
             {
                 _timeSinceLastVisited -= Time.deltaTime;
-               
 
                 if (_timeSinceLastVisited <= 0)
                 {

@@ -145,6 +145,7 @@ Material:
     - _DarkMode: 0
     - _DetailNormalMapScale: 1
     - _DirtBoots: 0
+    - _DirtRoughness: 0
     - _DirtRoughness_Power: 0
     - _DitherBoosts: 9.5
     - _DoubleSidedEnable: 1
@@ -173,6 +174,7 @@ Material:
     - _OpacityBoots: 0.5
     - _Parallax: 0.02
     - _ReceivesSSR: 1
+    - _ReceivesSSRTransparent: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
     - _RoughnessBoost01: 1
@@ -193,6 +195,7 @@ Material:
     - _StencilWriteMaskDistortionVec: 4
     - _StencilWriteMaskGBuffer: 14
     - _StencilWriteMaskMV: 40
+    - _SupportDecals: 1
     - _SurfaceType: 0
     - _TransAmbient: 0.2
     - _TransDirect: 1
@@ -218,7 +221,7 @@ Material:
     - _BlendColor02: {r: 1, g: 1, b: 1, a: 0}
     - _BlendColor03: {r: 1, g: 1, b: 1, a: 0}
     - _BlendColor04: {r: 1, g: 1, b: 1, a: 0}
-    - _Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor2: {r: 0, g: 0, b: 0, a: 0}
@@ -227,3 +230,4 @@ Material:
     - _EmissiveColor5: {r: 0, g: 0, b: 0, a: 0}
     - _PannerProperty1: {r: 0, g: 0, b: 0, a: 0}
     - _SSSColor2: {r: 1, g: 0.8184171, b: 0.7122642, a: 1}
+  m_BuildTextureStacks: []
