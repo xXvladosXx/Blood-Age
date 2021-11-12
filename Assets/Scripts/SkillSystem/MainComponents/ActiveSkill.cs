@@ -6,7 +6,7 @@
 
     public class ActiveSkill : SkillNode
     {
-        public override void ApplySkill(ClassChooser classChooser)
+        public override void ApplySkill(FindStats findStats)
         {
             
         }

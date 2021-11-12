@@ -12,28 +12,28 @@ using UnityEngine.VFX;
 public class AttackRegistrator : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
-    [SerializeField] private float _timeToDisable = .5f;
-    [SerializeField] private GameObject _visualEffect;
     [SerializeField] private Transform _arrowSpawnPosition;
+    
+    [SerializeField] private float _arrowSpeed = 15f;
+    [SerializeField] private float _stickSpeed = 15f;
     
     public AttackData AttackData;
     private SphereCollider _sphereCollider;
     private StarterAssetsInputs _starterAssetsInputs;
     private Health _health;
     private ItemEquipper _itemEquipper;
-    private ClassChooser _classChooser;
+    private FindStats _findStats;
     
-    private float _startTime = 0;
-    private bool _hitWasMade;
 
     private void Awake()
     {
         AttackData = new AttackData();
+        
         _sphereCollider = GetComponent<SphereCollider>();
         _starterAssetsInputs = GetComponentInParent<StarterAssetsInputs>();
         _health = GetComponentInParent<Health>();
         _itemEquipper = GetComponentInParent<ItemEquipper>();
-        _classChooser = GetComponentInParent<ClassChooser>();
+        _findStats = GetComponentInParent<FindStats>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,7 +46,7 @@ public class AttackRegistrator : MonoBehaviour
             _cinemachineVirtualCamera.enabled = true;
         }
 
-        AttackData.Damage = _classChooser.GetStat(_classChooser.GetClass, Characteristics.Damage);
+        AttackData.Damage = _findStats.GetStat(_findStats.GetClass, Characteristics.Damage);
         
         other.GetComponent<Health>().TakeHit(AttackData);
     }
@@ -68,10 +68,13 @@ public class AttackRegistrator : MonoBehaviour
 
     public void Shoot()
     {
-        var arrow = Instantiate(_itemEquipper.GetProjectile.GetPrefab, _arrowSpawnPosition.position, Quaternion.identity);
-        
         if(AttackData.Target == null) return;
-        arrow.AddComponent<ArrowMover>().SetInfoForArrow(15, _health, AttackData.Target, 
-            _classChooser.GetStat(_classChooser.GetClass, Characteristics.Damage));
+        
+        var arrow = Instantiate(_itemEquipper.GetProjectile.GetPrefab, _arrowSpawnPosition.position, Quaternion.identity);
+        print(AttackData.HeavyAttack);
+        arrow.GetComponent<ArrowMover>().SetInfoForArrow(_health, AttackData, 
+            _findStats.GetStat(_findStats.GetClass, Characteristics.Damage), 
+             0,
+            0);
     }
 }

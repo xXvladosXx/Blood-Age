@@ -8,7 +8,7 @@
     using UnityEngine;
     using Object = UnityEngine.Object;
 
-    public class ItemEquipper : MonoBehaviour, IModifier
+    public class ItemEquipper : MonoBehaviour, IModifier 
     {
         [SerializeField] private Transform _handR;
         [SerializeField] private Transform _handL;
@@ -99,11 +99,14 @@
             _weapon.EquipWeapon(_animator);
         }
 
-        public float AddBonus(Characteristics characteristics)
+        public IEnumerable<IBonus> AddBonus(Characteristics[] characteristics)
         {
-            return _equippedItems.Select(item => item as IModifier)
-                .Where(modifiableItem => modifiableItem != null)
-                .Sum(modifiableItem => modifiableItem.AddBonus(Characteristics.Damage));
+            IEnumerable<IBonus> AllModifierBonuses(IModifier modifier)
+                => modifier.AddBonus(characteristics);
+
+            return _equippedItems
+                .OfType<IModifier>()
+                .SelectMany(AllModifierBonuses);
         }
     }
 }

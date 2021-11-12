@@ -4,7 +4,7 @@
     using UnityEngine;
 
     [CreateAssetMenu (menuName = "Weapon/Staff")]
-    public class StaffWeapon : StandardWeapon, IModifier, IRangeable
+    public class StaffWeapon : StandardWeapon, IRangeable
     {
         public override void EquipWeapon(Animator animator)
         {

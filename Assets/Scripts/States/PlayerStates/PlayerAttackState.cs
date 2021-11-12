@@ -17,10 +17,12 @@ public class PlayerAttackState : AttackState
     {
         base.OnEnter(characterStateBase, animator, stateInfo);
         _starterAssetsInputs = animator.GetComponent<StarterAssetsInputs>();
-        _targetIndicator = _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>();
-        
+
         _wasClickedOnTarget = false;
         _wasSpawned = false;
+        
+        if(_attackRegistrator.AttackData.Target != null)
+            _targetIndicator = _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>();
     }
 
     public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)

@@ -25,6 +25,16 @@ MonoBehaviour:
       - 11
       - 12
       - 14
+    - Characteristics: 3
+      Value:
+      - 10
+      - 12
+      - 14
+    - Characteristics: 4
+      Value:
+      - 110
+      - 112
+      - 114
   - Class: 0
     Data:
     - Characteristics: 1

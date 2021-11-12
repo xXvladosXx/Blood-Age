@@ -5,6 +5,6 @@
 
     public abstract class SkillNode : ScriptableObject
     {
-        public abstract void ApplySkill(ClassChooser classChooser);
+        public abstract void ApplySkill(FindStats findStats);
     }
 }

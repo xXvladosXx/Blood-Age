@@ -24,7 +24,8 @@ public abstract class AttackState : StateData
     public override void OnEnter(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
         _attackRegistrator = animator.GetComponentInChildren<AttackRegistrator>();
-
+        _attackRegistrator.AttackData.HeavyAttack = _heavyAttack;
+        
         animator.SetBool(WasRegistered, false);
         animator.SetBool(MainAttack, false);
         
@@ -46,8 +47,7 @@ public abstract class AttackState : StateData
     private void RegisterAttack(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
         if (!(_startAttackTime <= stateInfo.normalizedTime) || !(_endAttackTime > stateInfo.normalizedTime)) return;
-       
-        _attackRegistrator.AttackData.HeavyAttack = _heavyAttack;
+        
         _attackRegistrator.EnableCollider();
     }
 

@@ -3,7 +3,7 @@
     using DefaultNamespace;using InventorySystem;
     using UnityEngine;
 
-    public abstract class Projectile : Item, IModifier
+    public abstract class Projectile : Item
     {
         [SerializeField] protected float _damage;
         [SerializeField] protected GameObject _prefab;

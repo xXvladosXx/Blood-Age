@@ -1,21 +1,36 @@
 ﻿namespace AttackSystem
 {
     using System;
+    using System.Collections;
+    using Cinemachine;
     using DefaultNamespace.MouseSystem;
     using UnityEngine;
 
     public class ArrowMover : MonoBehaviour
     {
-        private float _speed;
+        [SerializeField] private float _speed;
+
+        private CinemachineVirtualCamera _cinemachineVirtualCamera;
+
+        private AttackData _attackData;
         private Health _damager;
         private Transform _target;
         private float _damage;
-        public void SetInfoForArrow(float speed, Health damager, Transform attackDataTarget, float damage)
+        public void SetInfoForArrow(Health damager, AttackData attackData, float damage, float criticalChance, float criticalDamage)
         {
-            _speed = speed;
             _damager = damager;
-            _target = attackDataTarget;
+            _attackData = attackData;
             _damage = damage;
+            _target = attackData.Target;
+            
+            print(criticalChance + " cr");
+            print(criticalDamage + " cd");
+        }
+
+        private void Awake()
+        {
+            _cinemachineVirtualCamera =
+                GameObject.FindWithTag("CinemachineShake").GetComponent<CinemachineVirtualCamera>();
         }
 
         private void Start()
@@ -35,6 +50,12 @@
         {
             if (other.TryGetComponent(out Health health) && health != _damager)
             {
+                if (_damager.GetComponent<StarterAssetsInputs>() != null && _attackData.HeavyAttack)
+                {
+                    _cinemachineVirtualCamera.enabled = true;
+                    StartCoroutine(DisableCamera());
+                }
+                
                 health.TakeHit(new AttackData
                 {
                     Damage = _damage,
@@ -44,5 +65,12 @@
                 Destroy(gameObject);
             }
         }
+
+        private IEnumerator DisableCamera()
+        {
+            yield return new WaitForSeconds(.2f);
+            _cinemachineVirtualCamera.enabled = false;
+        }
+
     }
 }

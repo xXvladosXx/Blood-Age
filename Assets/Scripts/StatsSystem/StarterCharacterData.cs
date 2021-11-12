@@ -12,11 +12,13 @@
         Wizard
     }
 
-    public enum Characteristics
+    public enum Characteristics : sbyte
     {
         Health,
         Damage, 
-        Speed
+        Speed,
+        CriticalChance,
+        CriticalDamage
     }
 
     [Serializable]

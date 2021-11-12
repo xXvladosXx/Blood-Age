@@ -5,19 +5,19 @@ using DefaultNamespace;
 using DefaultNamespace.MouseSystem;
 using UnityEngine;
 
-[RequireComponent(typeof(ClassChooser))]
+[RequireComponent(typeof(FindStats))]
 public class Health : MonoBehaviour, IRaycastable
 {
     private Animator _animator;
-    private ClassChooser _classChooser;
+    private FindStats _findStats;
     [SerializeField] private float _currentHealth;
     
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _classChooser = GetComponent<ClassChooser>();
+        _findStats = GetComponent<FindStats>();
         
-        _currentHealth = _classChooser.GetStat(_classChooser.GetClass, Characteristics.Health);
+        _currentHealth = _findStats.GetStat(_findStats.GetClass, Characteristics.Health);
     }
 
     public bool HandleRaycast(Transform gameObject)

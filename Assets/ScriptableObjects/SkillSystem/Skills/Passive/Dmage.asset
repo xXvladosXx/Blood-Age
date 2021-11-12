@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20df3df81cf443879ee8ef4dd32dc860, type: 3}
+  m_Name: Dmage
+  m_EditorClassIdentifier: 
+  _playerPassiveSkillBonus:
+  - {fileID: 11400000, guid: 76c923de72b332d4c854e95b2b83d3b8, type: 2}
+  - {fileID: 11400000, guid: c81686be5cef6244ebf67473ec4951c3, type: 2}

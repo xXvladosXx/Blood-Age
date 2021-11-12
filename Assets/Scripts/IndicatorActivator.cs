@@ -16,7 +16,8 @@ public class IndicatorActivator : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.GetComponent<IDestroyable>().Destroy();
+            if(child.GetComponent<IDestroyable>() != null)
+                child.GetComponent<IDestroyable>().Destroy();
         }
     }
 }

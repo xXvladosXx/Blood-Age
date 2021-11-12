@@ -1,7 +1,9 @@
 ﻿namespace DefaultNamespace
 {
+    using System.Collections.Generic;
+
     public interface IModifier
     {
-        float AddBonus(Characteristics characteristics);
+        IEnumerable<IBonus> AddBonus(Characteristics[] characteristics);
     }
 }
