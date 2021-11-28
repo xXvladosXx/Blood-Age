@@ -11,7 +11,11 @@
     public class ItemEquipper : MonoBehaviour, IModifier 
     {
         [SerializeField] private Transform _handR;
+        public Transform GetRightHand => _handR;
+
         [SerializeField] private Transform _handL;
+        public Transform GetLeftHand => _handL;
+        
         [SerializeField] private StandardWeapon _weapon;
         [SerializeField] private Projectile _standartProjectile;
         [SerializeField] private Arrow _projectile;
@@ -23,8 +27,9 @@
         
         private float _attackRange;
         public float GetAttackRange => _attackRange;
-        private float _attackDamage;
         private bool _isRanged;
+
+        public event Action OnEquipmentChanged;
 
         [SerializeField] private List<Item> _items = new List<Item>();
         [SerializeField] private List<Item> _equippedItems = new List<Item>();
@@ -37,7 +42,6 @@
             _weaponPrefab = Instantiate(_weapon.GetPrefab, _weapon.IsRightHand ? _handR : _handL);
 
             _isRanged = _weapon.GetIsRanged;
-            _attackDamage = _weapon.GetAttackDamage;
             _attackRange = _weapon.GetAttackDistance;
         }
 
@@ -58,6 +62,8 @@
                     print("Armor");
                     break;
             }
+            
+            OnEquipmentChanged?.Invoke();
         }
 
         private void EquipProjectile(Item item)

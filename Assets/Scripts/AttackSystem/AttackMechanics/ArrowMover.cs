@@ -15,16 +15,14 @@
         private AttackData _attackData;
         private Health _damager;
         private Transform _target;
-        private float _damage;
-        public void SetInfoForArrow(Health damager, AttackData attackData, float damage, float criticalChance, float criticalDamage)
+        
+       
+        
+        public void SetInfoForArrow(Health damager, AttackData attackData)
         {
             _damager = damager;
             _attackData = attackData;
-            _damage = damage;
             _target = attackData.Target;
-            
-            print(criticalChance + " cr");
-            print(criticalDamage + " cd");
         }
 
         private void Awake()
@@ -56,11 +54,7 @@
                     StartCoroutine(DisableCamera());
                 }
                 
-                health.TakeHit(new AttackData
-                {
-                    Damage = _damage,
-                    Target = _target
-                });
+                health.TakeHit(_attackData);
                 
                 Destroy(gameObject);
             }

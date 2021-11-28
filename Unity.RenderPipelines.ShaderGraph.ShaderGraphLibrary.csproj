@@ -290,8 +290,14 @@
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Collections.LowLevel.ILSupport">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+ </Reference>
  <Reference Include="Sirenix.OdinInspector.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Burst.Unsafe">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.burst@1.4.1/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="Sirenix.OdinInspector.Attributes">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
@@ -310,6 +316,9 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.render-pipelines.core@10.4.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Sirenix.Serialization">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>

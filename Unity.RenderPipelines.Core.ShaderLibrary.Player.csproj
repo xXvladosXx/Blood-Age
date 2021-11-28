@@ -302,6 +302,15 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/AOT/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Collections.LowLevel.ILSupport">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Burst.Unsafe">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.burst@1.4.1/Unity.Burst.Unsafe.dll</HintPath>
+ </Reference>
  <Reference Include="Sirenix.OdinInspector.Attributes">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
  </Reference>

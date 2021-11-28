@@ -11,7 +11,8 @@
         [SerializeField] protected Transform _path;
 
         private List<Transform> _points = new List<Transform>();
-
+        private Health _health;
+        
         private int _currentPointIndex;
         private Vector3 _defaultStartPoint;
         private float _timeSinceLastVisited;
@@ -22,6 +23,7 @@
         {
             base.OnEnter(characterStateBase, animator, stateInfo);
 
+            _health = animator.GetComponent<Health>();
             _defaultStartPoint = animator.transform.position;
             _timeSinceLastVisited = 4;
             _isOnPosition = false;
@@ -34,6 +36,8 @@
                     _points.Add(child);
                 }
             }
+
+            _health.OnTakeHit += transform => _attackRegistrator.AttackData.Target = transform;
         }
 
         public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
@@ -43,6 +47,11 @@
 
         private void AIInput(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
+            if (_attackRegistrator.AttackData.Damager != null)
+            {
+                _attackRegistrator.AttackData.Target = _attackRegistrator.AttackData.Damager;
+            }
+            
             if (_attackRegistrator.AttackData.Target != null)
             {
                 var targetPosition = _attackRegistrator.AttackData.Target.position;

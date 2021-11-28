@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d0b463d8dd2456981aa34417e5bd5e0, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  _damageBonus: 0
+  _healthBonus: 112
+  _criticalDamage: 110
+  _criticalChance: 25
   _rightHanded: 1
-  _damage: 11
   _attackRange: 2
   _animatorController: {fileID: 9100000, guid: ec2a231f3fe973546b9e06b025baeef8, type: 2}
   _weaponPrefab: {fileID: 1485065270930265030, guid: 3b7cb88d898510e41bbcf6962f4a5ed0, type: 3}

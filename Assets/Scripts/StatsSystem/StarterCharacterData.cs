@@ -16,7 +16,10 @@
     {
         Health,
         Damage, 
-        Speed,
+        MovementSpeed,
+        AttackSpeed,
+        HealthRegeneration,
+        ManaRegeneration,
         CriticalChance,
         CriticalDamage
     }

@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _maxSpeed = _navMeshAgent.speed;
+        _maxSpeed = _navMeshAgent.speed; 
     }
 
     private void Update()
@@ -33,6 +33,8 @@ public class Movement : MonoBehaviour
     
     public void StartMoveTo(Vector3 destination, float speedFraction)
     {
+        if(!_navMeshAgent.enabled) return;
+        
         _navMeshAgent.speed = _maxSpeed * Mathf.Clamp01(speedFraction);
         _navMeshAgent.destination = destination;
         _navMeshAgent.isStopped = false;    

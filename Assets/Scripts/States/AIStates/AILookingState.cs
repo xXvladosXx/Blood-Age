@@ -11,7 +11,6 @@
         {
             if (_attackRegistrator.AttackData.Target != null)
             {
-                Debug.Log("Go");
                 animator.SetBool(Transition, true);
             }
         }

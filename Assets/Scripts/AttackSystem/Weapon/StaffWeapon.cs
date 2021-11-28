@@ -11,14 +11,6 @@
             animator.runtimeAnimatorController = _animatorController;
         }
 
-        public float AddBonus(Characteristics characteristics)
-        {
-            if(characteristics == Characteristics.Damage)
-                return _damage;
-
-            return 0;
-        }
-
         public ProjectileType GetProjectileType()
         {
             return ProjectileType.Stick;

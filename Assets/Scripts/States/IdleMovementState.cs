@@ -20,9 +20,12 @@
         
         protected static readonly int ForceTransition = Animator.StringToHash("ForceTransition");
         protected static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Roll = Animator.StringToHash("Roll");
+        private static readonly int Canceled = Animator.StringToHash("Canceled");
 
         public override void OnEnter(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
+            animator.SetBool(Canceled, false);
             _attackRegistrator = animator.GetComponentInChildren<AttackRegistrator>();
             _movement = animator.GetComponent<Movement>();
            
@@ -33,7 +36,9 @@
 
         public override void OnExit(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
+            _movement.Cancel();
             animator.SetBool(ForceTransition, false);
+            animator.SetBool(Roll, false);
         }
     }
 }

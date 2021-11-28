@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a08c30b724428da158fca50c3969ec, type: 3}
+  m_Name: Targeting
+  m_EditorClassIdentifier: 
+  _cursorTexture: {fileID: 2800000, guid: d0bd63dc4e8d4a845a0f198c39644e18, type: 3}
+  _cursorHotspot: {x: 2, y: 2}
+  _skillRadius: 10
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  _distanceToCastSkill: 5
+  _transitionDuration: 0.01
+  _skillRadiusRenderer: {fileID: 6128641895528089822, guid: 53f9accc1b2c01449a319513b538f26c, type: 3}
+  _skillDistanceRenderer: {fileID: 6128641895528089822, guid: 7f73b4593485ee54b8f0176151c2c030, type: 3}

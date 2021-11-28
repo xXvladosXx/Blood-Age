@@ -22,7 +22,6 @@
         {
             BowAnimatorController bowAnimatorController = GetComponentInChildren<BowAnimatorController>();
             
-            print(bowAnimatorController);
             bowAnimatorController.DrawRope();
         }
     }

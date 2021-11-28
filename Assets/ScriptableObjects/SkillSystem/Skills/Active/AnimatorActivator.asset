@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52792713ff794f35af4316763e144300, type: 3}
+  m_Name: AnimatorActivator
+  m_EditorClassIdentifier: 
+  _targeting: {fileID: 11400000, guid: 1c161b83aa3c64542b4931360b72e022, type: 2}
+  _filtering: []
+  _effectApplying:
+  - {fileID: 11400000, guid: d285e426dd7f26245b58b1d39bb9bb18, type: 2}
+  - {fileID: 11400000, guid: 141a82984fc06454dad9a34f3e3277f3, type: 2}
+  - {fileID: 11400000, guid: cc442d9395747344ab09272dee8a29a5, type: 2}

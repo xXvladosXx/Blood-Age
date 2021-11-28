@@ -65,6 +65,22 @@ public class @StarterAssets : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""CancelInput"",
+                    ""type"": ""Value"",
+                    ""id"": ""0035c831-22cc-4bfc-ab8e-9cafe9a84e26"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SecondSkill"",
+                    ""type"": ""Value"",
+                    ""id"": ""5c3adc90-d09c-41dc-a084-f432a64de3d9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -265,6 +281,28 @@ public class @StarterAssets : IInputActionCollection, IDisposable
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae13eb2a-8b87-4e0d-adc7-ea05b8db6bf9"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""CancelInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1405e35a-58f2-4422-8044-6a3c09fe661d"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""SecondSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -327,6 +365,8 @@ public class @StarterAssets : IInputActionCollection, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_ButtonInput = m_Player.FindAction("ButtonInput", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
+        m_Player_CancelInput = m_Player.FindAction("CancelInput", throwIfNotFound: true);
+        m_Player_SecondSkill = m_Player.FindAction("SecondSkill", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -382,6 +422,8 @@ public class @StarterAssets : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_ButtonInput;
     private readonly InputAction m_Player_MousePosition;
+    private readonly InputAction m_Player_CancelInput;
+    private readonly InputAction m_Player_SecondSkill;
     public struct PlayerActions
     {
         private @StarterAssets m_Wrapper;
@@ -392,6 +434,8 @@ public class @StarterAssets : IInputActionCollection, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @ButtonInput => m_Wrapper.m_Player_ButtonInput;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
+        public InputAction @CancelInput => m_Wrapper.m_Player_CancelInput;
+        public InputAction @SecondSkill => m_Wrapper.m_Player_SecondSkill;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -419,6 +463,12 @@ public class @StarterAssets : IInputActionCollection, IDisposable
                 @MousePosition.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
+                @CancelInput.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancelInput;
+                @CancelInput.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancelInput;
+                @CancelInput.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancelInput;
+                @SecondSkill.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondSkill;
+                @SecondSkill.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondSkill;
+                @SecondSkill.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondSkill;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -441,6 +491,12 @@ public class @StarterAssets : IInputActionCollection, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @CancelInput.started += instance.OnCancelInput;
+                @CancelInput.performed += instance.OnCancelInput;
+                @CancelInput.canceled += instance.OnCancelInput;
+                @SecondSkill.started += instance.OnSecondSkill;
+                @SecondSkill.performed += instance.OnSecondSkill;
+                @SecondSkill.canceled += instance.OnSecondSkill;
             }
         }
     }
@@ -489,5 +545,7 @@ public class @StarterAssets : IInputActionCollection, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnButtonInput(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnCancelInput(InputAction.CallbackContext context);
+        void OnSecondSkill(InputAction.CallbackContext context);
     }
 }

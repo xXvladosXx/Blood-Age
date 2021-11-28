@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52792713ff794f35af4316763e144300, type: 3}
+  m_Name: SpawnMeteor
+  m_EditorClassIdentifier: 
+  _targeting: {fileID: 11400000, guid: 8966f90c1635a6b44a99a7a3828a5624, type: 2}
+  _filtering:
+  - {fileID: 11400000, guid: 049d44cc0317df0469f6cd588201d889, type: 2}
+  _effectApplying:
+  - {fileID: 11400000, guid: 2cb8a7169643dd049aa08fbcfcaf10d2, type: 2}
+  - {fileID: 11400000, guid: 1eb36c77bb6749547adf8e6ed045f7d4, type: 2}
+  - {fileID: 11400000, guid: 9086f5b916d3c5c45975bbf069829791, type: 2}
+  - {fileID: 11400000, guid: 19e2c5026bf161944b699c113b8f1d1b, type: 2}
+  - {fileID: 11400000, guid: 0669c9485fa1e9c4b893d8074689e9cc, type: 2}
+  - {fileID: 11400000, guid: 3567ab79f646ed34e87b92991306cba1, type: 2}
+  - {fileID: 11400000, guid: fe6a2917c380cc944a3c5ccc29fad11a, type: 2}

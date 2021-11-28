@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2300fd23fe4cfba7aabee22aadbf0a, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
-  _damage: 111
+  _damageBonus: 12
+  _healthBonus: 111
+  _criticalDamage: 9
+  _criticalChance: 0
   _prefab: {fileID: 4749831038708240057, guid: b61c938d074224042be7c3a81b13e929, type: 3}

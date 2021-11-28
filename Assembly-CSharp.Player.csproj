@@ -52,112 +52,180 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\SkillSystem\MainComponents\ActiveSkill.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\ActiveSkill.cs" />
      <Compile Include="Assets\Scripts\InventorySystem\IEquipable.cs" />
+     <Compile Include="Assets\Scripts\Entity\HumanEntity.cs" />
+     <Compile Include="Assets\Scripts\ECS\Providers\DirectionProvider.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\SkillBuilder.cs" />
-     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualButton.cs" />
-     <Compile Include="Assets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\ButtonHandler.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\StandaloneInput.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\VirtualInput.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Buff.cs" />
      <Compile Include="Assets\Scripts\InventorySystem\ItemEquipper.cs" />
-     <Compile Include="Assets\Scripts\States\Health.cs" />
+     <Compile Include="Assets\Scripts\InventorySystem\StatModifItem.cs" />
+     <Compile Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Scripts\ParticleCollisionInstance.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\SkillNodes\SkillChoice.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
      <Compile Include="Assets\Scripts\AI\AISensor.cs" />
-     <Compile Include="Assets\Simple Spin Blur\Scripts\OrbitCam.cs" />
-     <Compile Include="Assets\SampleSceneAssets\Scripts\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\UI\ButtonClickable\SkillHolder.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\MainComponents\SkillNodeVisitor.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\PivotBasedCameraRig.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Balrond3Pcontroller\Balrond3personCameraCollision.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Balrond3Pcontroller\Balrond3pCameraFollow.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\InputAxisScrollbar.cs" />
      <Compile Include="Assets\Scripts\InventorySystem\Item.cs" />
-     <Compile Include="Assets\Scripts\InventorySystem\ItemPickUp.cs" />
-     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ScaleFactorApplyToMaterial.cs" />
      <Compile Include="Assets\Scripts\InventorySystem\StandardArmor.cs" />
-     <Compile Include="Assets\Scripts\AttackSystem\Weapon\BowWeapon.cs" />
      <Compile Include="Assets\SampleSceneAssets\Scripts\SimpleCameraController.cs" />
-     <Compile Include="Assets\Scripts\MouseSystem\AttackData.cs" />
-     <Compile Include="Assets\StarterAssets\Mobile\Scripts\Utilities\MobileDisableAutoSwitchControls.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\MainComponents\Strategies\Filtering.cs" />
      <Compile Include="Assets\Scripts\States\StateData.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\ThirdPersonUserControl.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\Joystick.cs" />
-     <Compile Include="Assets\Scripts\UI\ButtonClickable\UIButtonClick.cs" />
+     <Compile Include="Assets\Scripts\ECS\System\StarterInputSystem.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\VariousTranslateMove.cs" />
      <Compile Include="Assets\Scripts\StatsSystem\IModifier.cs" />
-     <Compile Include="Assets\Simple Spin Blur\Scripts\CanvasControls.cs" />
      <Compile Include="Assets\Scripts\StatsSystem\FindStats.cs" />
-     <Compile Include="Assets\Scripts\States\PlayerStates\PlayerAttackState.cs" />
-     <Compile Include="Assets\Scripts\SkillSystem\SkillNodes\UnpgradeableSkillNode.cs" />
-     <Compile Include="Assets\Scripts\AttackSystem\AttackMechanics\ShootMaker.cs" />
-     <Compile Include="Assets\Simple Spin Blur\Scripts\SimpleSpinBlur.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Bonuses\DamageBonus.cs" />
      <Compile Include="Assets\Scripts\MouseSystem\IRaycastable.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ForEffects\ObjectMove.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\Weapon\Projectile.cs" />
-     <Compile Include="Assets\Scripts\IndicatorActivator.cs" />
+     <Compile Include="Assets\Scripts\ECS\System\MovementSystem.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\BuffApplier.cs" />
+     <Compile Include="Assets\Scripts\ECS\System\PickUpSystem.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\MobileControlRig.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\ProtectCameraFromWallClip.cs" />
      <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualJoystick.cs" />
      <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualTouchZone.cs" />
-     <Compile Include="Assets\Scripts\States\Movement.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\CrossPlatformInputManager.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleMenu.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\Weapon\SwordWeapon.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\Weapon\Arrow.cs" />
+     <Compile Include="Assets\Scripts\ECS\Providers\WeaponProviders\WeaponDataProvider.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\AttackMechanics\AttackRegistrator.cs" />
      <Compile Include="Assets\Scripts\States\AIStates\AIMovementState.cs" />
+     <Compile Include="Assets\Scripts\States\CastingSkill.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\TargetFieldOfView.cs" />
-     <Compile Include="Assets\StarterAssets\ThirdPersonController\Scripts\BasicRigidBodyPush.cs" />
-     <Compile Include="Assets\SampleSceneAssets\TutorialInfo\Scripts\Readme.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\TouchPad.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\VariousRotateObject.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\AxisTouchButton.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\MobileInput.cs" />
-     <Compile Include="Assets\Scripts\AttackSystem\Weapon\StandardWeapon.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleExamples.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\EffectApplyingSkills\AnimationTriggerEffect.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\MainComponents\Strategies\Targeting.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ForEffects\ShieldActivate.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\Weapon\Stick.cs" />
-     <Compile Include="Assets\Scripts\AttackSystem\AttackMechanics\BowAnimatorController.cs" />
-     <Compile Include="Assets\Scripts\States\PlayerStates\PlayerMovementState.cs" />
      <Compile Include="Assets\SampleSceneAssets\Scripts\LookWithMouse.cs" />
-     <Compile Include="Assets\Scripts\StatsSystem\StarterCharacterData.cs" />
-     <Compile Include="Assets\Scripts\DestroyableObject.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\ThirdPersonCharacter.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleCollision.cs" />
-     <Compile Include="Assets\Scripts\SkillSystem\SkillNodes\SkillNode.cs" />
-     <Compile Include="Assets\Scripts\SkillSystem\MainComponents\PassiveSkill.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\GunShoot.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\AbstractTargetFollower.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\PassiveSkill.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Bonuses\MovementSpeedBonus.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\VariousEffectsScene.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\MainComponents\SkillTree.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Balrond3Pcontroller\Balrond3pMainCamera.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\VariousMouseOrbit.cs" />
      <Compile Include="Assets\StarterAssets\ThirdPersonController\Scripts\ThirdPersonController.cs" />
+     <Compile Include="Assets\Scripts\CollisionDetector.cs" />
+     <Compile Include="Assets\Scripts\States\RollState.cs" />
+     <Compile Include="Assets\Scripts\CharacteristicBonus.cs" />
+     <Compile Include="Assets\Scripts\ECS\Components\WeaponComponents\AnimatorComponent.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\SkillInfo\SkillDescription.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Bonuses\ManaRegenerationBonus.cs" />
      <Compile Include="Assets\StarterAssets\InputSystem\StarterAssets.cs" />
      <Compile Include="Assets\Scripts\States\BaseState.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\EffectApplyingSkills\BonusEffect.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\Weapon\UnarmedWeapon.cs" />
-     <Compile Include="Assets\Scripts\States\IdleMovementState.cs" />
+     <Compile Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Scripts\EGA_EffectSound.cs" />
+     <Compile Include="Assets\Scripts\ECS\System\Tags\WeaponTag.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\TargetingSkills\FollowTargeting.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\LookatTarget.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\Weapon\IRangeable.cs" />
      <Compile Include="Assets\Scripts\States\AIStates\AIAttackState.cs" />
+     <Compile Include="Assets\Scripts\ECS\System\Tags\PlayerTag.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\TiltInput.cs" />
+     <Compile Include="Assets\Scripts\ECS\Providers\PlayerTagProvider.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\GunAim.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\NewMaterialChange.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\TargetingSkills\DelayClickTargeting.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ForEffects\LookAtTarget.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\TargetingSkills\ImmediateTargeting.cs" />
+     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualButton.cs" />
+     <Compile Include="Assets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\VirtualInput.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Health.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Bonuses\CriticalDamageBonus.cs" />
+     <Compile Include="Assets\Scripts\Entity\AliveEntity.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ForEffects\ObjectMoveDestroy.cs" />
+     <Compile Include="Assets\Simple Spin Blur\Scripts\OrbitCam.cs" />
+     <Compile Include="Assets\SampleSceneAssets\Scripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\ECS\Components\WeaponComponents\MovableComponent.cs" />
+     <Compile Include="Assets\Scripts\UI\ButtonClickable\SkillHolder.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Balrond3Pcontroller\Balrond3personCameraCollision.cs" />
+     <Compile Include="Assets\Scripts\ECS\Components\WeaponComponents\WeaponComponent.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Balrond3Pcontroller\Balrond3pCameraFollow.cs" />
+     <Compile Include="Assets\Scripts\InventorySystem\ItemPickUp.cs" />
+     <Compile Include="Assets\Scripts\ECS\EcsGameStartup.cs" />
+     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
+     <Compile Include="Assets\Scripts\ECS\Components\WeaponComponents\ModelComponent.cs" />
+     <Compile Include="Assets\Scripts\AttackSystem\Weapon\BowWeapon.cs" />
+     <Compile Include="Assets\Scripts\AttackSystem\AttackMechanics\AttackData.cs" />
+     <Compile Include="Assets\StarterAssets\Mobile\Scripts\Utilities\MobileDisableAutoSwitchControls.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Bonuses\HealthRegenerationBonus.cs" />
+     <Compile Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Demo AOE skills\CameraHolder.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\ThirdPersonUserControl.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ForEffects\MultipleObjectsMake.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\Joystick.cs" />
+     <Compile Include="Assets\Scripts\UI\ButtonClickable\UIButtonClick.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\FilteringSkills\TagFilter.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ChangeSizeColor.cs" />
+     <Compile Include="Assets\Simple Spin Blur\Scripts\CanvasControls.cs" />
+     <Compile Include="Assets\Scripts\States\PlayerStates\PlayerAttackState.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\SkillNodes\UnpgradeableSkillNode.cs" />
+     <Compile Include="Assets\Scripts\AttackSystem\AttackMechanics\ShootMaker.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ForEffects\_ObjectsMakeBase.cs" />
+     <Compile Include="Assets\Simple Spin Blur\Scripts\SimpleSpinBlur.cs" />
+     <Compile Include="Assets\Scripts\ECS\Providers\WeaponProviders\AnimatorWeaponProvider.cs" />
+     <Compile Include="Assets\Scripts\IndicatorActivator.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Bonuses\AttackSpeedBonus.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\ProtectCameraFromWallClip.cs" />
+     <Compile Include="Assets\Scripts\States\Movement.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleMenu.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\MainComponents\Strategies\EffectApplying.cs" />
+     <Compile Include="Assets\StarterAssets\ThirdPersonController\Scripts\BasicRigidBodyPush.cs" />
+     <Compile Include="Assets\Scripts\ECS\Providers\ModelProvider.cs" />
+     <Compile Include="Assets\SampleSceneAssets\TutorialInfo\Scripts\Readme.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\TouchPad.cs" />
+     <Compile Include="Assets\Scripts\ECS\Providers\MovableProvider.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\MobileInput.cs" />
+     <Compile Include="Assets\Scripts\AttackSystem\Weapon\StandardWeapon.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\ParticleExamples.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\EffectApplyingSkills\FollowEffect.cs" />
+     <Compile Include="Assets\Scripts\AttackSystem\AttackMechanics\BowAnimatorController.cs" />
+     <Compile Include="Assets\Scripts\States\PlayerStates\PlayerMovementState.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\StarterCharacterData.cs" />
+     <Compile Include="Assets\Scripts\DestroyableObject.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\ThirdPersonCharacter.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\SkillNodes\SkillNode.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\IBonus.cs" />
+     <Compile Include="Assets\EffectExamples\Shared\Scripts\GunShoot.cs" />
+     <Compile Include="Assets\FurryS2\Scrips\Deleteable\AbstractTargetFollower.cs" />
+     <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\DelayActive.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\EffectApplyingSkills\SpawnEffect.cs" />
+     <Compile Include="Assets\Scripts\States\IdleMovementState.cs" />
+     <Compile Include="Assets\Scripts\ECS\System\MeleeCombatSystem.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\TargetingSkills\IManaChangeable.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\SkillInfo\SkillData.cs" />
+     <Compile Include="Assets\Scripts\SkillSystem\Skills\EffectApplyingSkills\DamageTriggerEffect.cs" />
+     <Compile Include="Assets\Scripts\HitEffectInstantiator.cs" />
+     <Compile Include="Assets\Scripts\ECS\Components\WeaponComponents\DirectionComponent.cs" />
      <Compile Include="Assets\Scripts\States\AIStates\AILookingState.cs" />
      <Compile Include="Assets\Scripts\States\AttackState.cs" />
      <Compile Include="Assets\Scripts\IDestroyable.cs" />
-     <Compile Include="Assets\FurryS2\Scrips\Deleteable\TiltInput.cs" />
+     <Compile Include="Assets\Scripts\Entity\OrcEntity.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Bonuses\CriticalChanceBonus.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\Weapon\StaffWeapon.cs" />
      <Compile Include="Assets\Scripts\AttackSystem\AttackMechanics\ArrowMover.cs" />
-     <Compile Include="Assets\EffectExamples\Shared\Scripts\GunAim.cs" />
-     <Compile Include="Assets\Scripts\StatsSystem\IBonus.cs" />
-     <Compile Include="Assets\Scripts\StatsSystem\HealthBonus.cs" />
-     <Compile Include="Assets\Scripts\StatsSystem\DamageBonus.cs" />
-     <Compile Include="Assets\Scripts\PlayerPassiveSkillBonus.cs" />
+     <Compile Include="Assets\Scripts\StatsSystem\Bonuses\HealthBonus.cs" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\SkinShaderHDRP.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\EyeslashShader.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\EyesShaderURP.shader" />
      <None Include="Assets\Shaders\DawnShader\ClothingShader2Sides_V2.shader" />
+     <None Include="Assets\SpecialSkillsEffectsPack\Shader_ForEffects\Shader_Decal.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\HornShader.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\Shaders\DawnShader\HairShader_V3.shader" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Demo AOE skills\Readme.txt" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Shaders\Lit_CenterGlow.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\HairShader.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\ClothingShaderURP_V2.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
@@ -171,18 +239,24 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\SkinShaderHDRP_V2.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\HairShaderURP_V3.shader" />
+     <None Include="Assets\SpecialSkillsEffectsPack\Shader_ForEffects\Shader_DistortionEffect.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\HornShaderHDRP.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\HairShaderV2.shader" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Shaders\Distortion.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\EyesGradianShader.shader" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Shaders\Blend_CenterGlow.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\ClothingShaderURP.shader" />
      <None Include="Assets\StarterAssets\Environment\Shaders\Built-in_RP\Triplanar.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\EyesGradianShaderURP.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\EyesGradianShaderHDRP.shader" />
+     <None Include="Assets\Hovl Studio\Render Pipelines support\Documentation.txt" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Prefabs\Readme.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\EyesShader.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\EyesTearShaderHDRP.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Shaders\LightGlow.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\EyesGradianShaderURP.shader" />
      <None Include="Assets\Shaders\DawnShader\ClothingShader.shader" />
@@ -201,6 +275,7 @@
      <None Include="Assets\Shaders\DawnShader\HairShader.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\EyesTearShaderURP.shader" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Shaders\AddTrail.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\HairShaderHDRP_V2.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\EyesShader_URP.shader" />
      <None Include="Assets\Shaders\DawnShader\SkinShader.shader" />
@@ -210,11 +285,14 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\Shaders\DawnShader\ClothingShader2Sides.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\EyesShaderHDRP.shader" />
+     <None Include="Assets\SpecialSkillsEffectsPack\Shader_ForEffects\Shader_IntegratedEffect.shader" />
+     <None Include="Assets\Hovl Studio\Render Pipelines support\Shaders\HDRP_LightGlow.shader" />
      <None Include="Assets\Shaders\DawnShader\EyesGradianShader.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\EyesTearShaderURP.shader" />
      <None Include="Assets\StarterAssets\Environment\Shaders\Built-in_RP\ArmatureShader.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\ClothingShader2SidesURP.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\ClothingShader2Sides.shader" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Shaders\Add_CenterGlow.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\ClothingShader2SidesURP_V2.shader" />
      <None Include="Assets\Shaders\DawnShader\ClothingShader_V2.shader" />
@@ -224,6 +302,7 @@
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\HairShaderURP.shader" />
      <None Include="Assets\EffectExamples\Shared\Shaders\SurfaceShader_VC.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Demo AOE skills\HDRP and URP(LWRP).txt" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\ClothingShaderHDRP.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\HairShaderURP_V2.shader" />
@@ -424,26 +503,20 @@
  <Reference Include="UnityEngine.XRModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/Variations/mono/Managed/UnityEngine.XRModule.dll</HintPath>
  </Reference>
- <Reference Include="Unity.VisualEffectGraph.Editor">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.CacheServer">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.VisualStudio.Editor">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Searcher.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.RenderPipelines.HighDefinition.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Postprocessing.Editor">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+ <Reference Include="Unity.Rendering.Hybrid.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Rendering.Hybrid.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -451,20 +524,80 @@
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Sirenix.OdinInspector.Modules.UnityMathematics">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Sirenix.OdinInspector.Modules.UnityMathematics.dll</HintPath>
+ </Reference>
  <Reference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Sirenix.OdinInspector.CompatibilityLayer.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.ShaderGraph.Editor">
- <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+ <Reference Include="Unity.Entities.Hybrid.EndToEnd.Tests">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Entities.Hybrid.EndToEnd.Tests.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Properties.UI.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Properties.UI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="com.unity.cinemachine.editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.ShaderGraph.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Scenes.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Scenes.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VisualEffectGraph.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.BuildUtils">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VisualStudio.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Burst.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Sprite.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.RenderPipelines.HighDefinition.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Postprocessing.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Jobs.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Physics.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Physics.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Serialization.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.Serialization.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.RenderPipelines.Core.Editor">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/AOT/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Collections.LowLevel.ILSupport">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Burst.Unsafe">
+ <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Library/PackageCache/com.unity.burst@1.4.1/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="Sirenix.OdinInspector.Attributes">
  <HintPath>C:/ProjectsUnity/Diablo-RPG/Diablo-RPG/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
@@ -828,29 +961,17 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.VisualEffectGraph.Runtime.csproj">
-      <Project>{e636cb18-145c-c50e-e24c-f48f3a73d5d0}</Project>
-      <Name>Unity.VisualEffectGraph.Runtime</Name>
+    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
+      <Project>{97195a5d-544f-ea83-1358-9e3e700f50ec}</Project>
+      <Name>Unity.Transforms.Hybrid</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{bacf914c-b377-4c4e-5ae6-37c9a761e016}</Project>
-      <Name>Unity.Timeline</Name>
+    <ProjectReference Include="Unity.Properties.csproj">
+      <Project>{e1e4e57d-a169-9a96-54b6-78f9c2e108bd}</Project>
+      <Name>Unity.Properties</Name>
     </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
-      <Project>{fa27fde5-2093-91a6-2d7d-d6bd6e82821b}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.TextMeshPro.csproj">
-      <Project>{9f6c4931-3347-3d21-43eb-f03a8ccb3e5c}</Project>
-      <Name>Unity.TextMeshPro</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Runtime.csproj">
-      <Project>{7151f7e3-35d9-e677-12c5-d5e216a1ec92}</Project>
-      <Name>Unity.RenderPipelines.HighDefinition.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.csproj">
-      <Project>{faa1cf9f-abba-6698-0867-75daf69f25ea}</Project>
-      <Name>Unity.RenderPipelines.Core.Runtime</Name>
+    <ProjectReference Include="Unity.Serialization.csproj">
+      <Project>{c1503670-80b5-62e9-5d9a-5bb589e7f141}</Project>
+      <Name>Unity.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.csproj">
       <Project>{a2fb820c-7f2e-76ee-b867-10bea5fedfa3}</Project>
@@ -868,17 +989,109 @@
       <Project>{5582dc1f-49d8-c7a3-da2a-c0940c16ad4b}</Project>
       <Name>Cinemachine</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Scenes.csproj">
+      <Project>{96bb74ba-6ede-5a8d-fbc7-79284d79fae6}</Project>
+      <Name>Unity.Scenes</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.Extensions.csproj">
+      <Project>{7d328c80-d833-5c9d-855e-b67c504505e4}</Project>
+      <Name>Unity.Mathematics.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Transforms.csproj">
+      <Project>{a32fce49-c83b-bba1-5066-86c26e4cdfb2}</Project>
+      <Name>Unity.Transforms</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime.csproj">
+      <Project>{b6af0c86-0119-8f8e-4493-c39731b7eb86}</Project>
+      <Name>Unity.RenderPipelines.HighDefinition.Config.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Collections.csproj">
+      <Project>{19890ee9-bb5b-2dde-958c-3b9fe887e709}</Project>
+      <Name>Unity.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Physics.csproj">
+      <Project>{ace76d94-f30d-0c79-53af-6a73824b4414}</Project>
+      <Name>Unity.Physics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.Extensions.Hybrid.csproj">
+      <Project>{0b6a8560-f849-c223-c6f2-80e70d70dc97}</Project>
+      <Name>Unity.Mathematics.Extensions.Hybrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualEffectGraph.Runtime.csproj">
+      <Project>{e636cb18-145c-c50e-e24c-f48f3a73d5d0}</Project>
+      <Name>Unity.VisualEffectGraph.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Timeline.csproj">
+      <Project>{bacf914c-b377-4c4e-5ae6-37c9a761e016}</Project>
+      <Name>Unity.Timeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
+      <Project>{fa27fde5-2093-91a6-2d7d-d6bd6e82821b}</Project>
+      <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.csproj">
+      <Project>{9f6c4931-3347-3d21-43eb-f03a8ccb3e5c}</Project>
+      <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Physics.Hybrid.csproj">
+      <Project>{f724e5b8-6ff3-0a69-32c8-d61a01f07c70}</Project>
+      <Name>Unity.Physics.Hybrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Runtime.csproj">
+      <Project>{7151f7e3-35d9-e677-12c5-d5e216a1ec92}</Project>
+      <Name>Unity.RenderPipelines.HighDefinition.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.csproj">
+      <Project>{faa1cf9f-abba-6698-0867-75daf69f25ea}</Project>
+      <Name>Unity.RenderPipelines.Core.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Entities.csproj">
+      <Project>{43a49669-55a1-1411-fb34-ec894d269be5}</Project>
+      <Name>Unity.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Entities.Hybrid.csproj">
+      <Project>{d1a12122-03a5-d520-6aff-83d6407a6af2}</Project>
+      <Name>Unity.Entities.Hybrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.csproj">
+      <Project>{63fc710e-bc9a-7809-285a-5615d8af549f}</Project>
+      <Name>Unity.Mathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{b1d1b91c-c31a-8884-3cc8-8a14f5ab67d3}</Project>
+      <Name>Unity.Burst</Name>
+    </ProjectReference>
+    <ProjectReference Include="Leopotam.Ecs.csproj">
+      <Project>{a8cd1ee6-56bd-417d-8b8d-b49e4038ba82}</Project>
+      <Name>Leopotam.Ecs</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
       <Project>{d4cbccd2-182b-2b3c-b4aa-cbfa7d8de0b3}</Project>
       <Name>Unity.Postprocessing.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Jobs.csproj">
+      <Project>{cbbed2d9-e049-5111-7be4-401ef74b5a6a}</Project>
+      <Name>Unity.Jobs</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Deformations.csproj">
+      <Project>{7be833cb-7ea6-dce5-e45b-0a8b83d5c0a1}</Project>
+      <Name>Unity.Deformations</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Properties.UI.csproj">
+      <Project>{0216b92b-f23d-d533-d6e5-931d77b65ce9}</Project>
+      <Name>Unity.Properties.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.ScriptableBuildPipeline.csproj">
+      <Project>{b4192b91-d275-e158-6710-ab4a53c72e56}</Project>
+      <Name>Unity.ScriptableBuildPipeline</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj">
       <Project>{47a95197-17c2-3bf4-47b7-e84f39ab20a7}</Project>
       <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime.csproj">
-      <Project>{b6af0c86-0119-8f8e-4493-c39731b7eb86}</Project>
-      <Name>Unity.RenderPipelines.HighDefinition.Config.Runtime</Name>
+    <ProjectReference Include="Unity.Rendering.Hybrid.csproj">
+      <Project>{a133a7a6-5db1-4bc0-c101-1c2ec1b123d8}</Project>
+      <Name>Unity.Rendering.Hybrid</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
