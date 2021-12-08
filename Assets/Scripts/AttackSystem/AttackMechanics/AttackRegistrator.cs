@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AttackSystem;
 using Cinemachine;
 using DefaultNamespace;
+using DefaultNamespace.Entity;
 using DefaultNamespace.MouseSystem;
 using InventorySystem;
 using UnityEngine;
@@ -19,10 +20,8 @@ public class AttackRegistrator : MonoBehaviour
 
     public AttackData AttackData;
     private SphereCollider _sphereCollider;
-    private StarterAssetsInputs _starterAssetsInputs;
-    private Health _health;
-    private ItemEquipper _itemEquipper;
-    private FindStats _findStats;
+  
+    private AliveEntity _aliveEntity;
 
     public event Action<Transform> OnHitTake;
 
@@ -32,25 +31,23 @@ public class AttackRegistrator : MonoBehaviour
         AttackData = new AttackData();
 
         _sphereCollider = GetComponent<SphereCollider>();
-        _starterAssetsInputs = GetComponentInParent<StarterAssetsInputs>();
-        _health = GetComponentInParent<Health>();
-        _itemEquipper = GetComponentInParent<ItemEquipper>();
-        _findStats = GetComponentInParent<FindStats>();
+        _aliveEntity = GetComponentInParent<AliveEntity>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Health>() == null) return;
-        if (other.GetComponent<Health>() == _health) return;
+        if (other.GetComponent<AliveEntity>() == null) return;
+        if (other.GetComponent<AliveEntity>() == _aliveEntity) return;
 
-        if (_starterAssetsInputs != null && AttackData.HeavyAttack)
-        {
-            _cinemachineVirtualCamera.enabled = true;
-        }
+        // if (other.GetComponent<StarterAssetsInputs>() != null && AttackData.HeavyAttack)
+        // {
+        //     _cinemachineVirtualCamera.enabled = true;
+        // }
 
+        print("Damaged");
         FindNecessaryData();
 
-        other.GetComponent<Health>().TakeHit(AttackData);
+        other.GetComponent<AliveEntity>().GetHealth.TakeHit(AttackData);
     }
 
     public void EnableCollider()
@@ -62,31 +59,30 @@ public class AttackRegistrator : MonoBehaviour
     {
         _sphereCollider.enabled = false;
 
-        if (_starterAssetsInputs != null)
-        {
-            _cinemachineVirtualCamera.enabled = false;
-        }
+        // if (_starterAssetsInputs != null)
+        // {
+        //     _cinemachineVirtualCamera.enabled = false;
+        // }
     }
 
     public void Shoot()
     {
         if (AttackData.Target == null) return;
 
-        var arrow = Instantiate(_itemEquipper.GetProjectile.GetPrefab, _arrowSpawnPosition.position,
+        var arrow = Instantiate(_aliveEntity.GetItemEquipper.GetProjectile.GetPrefab, _arrowSpawnPosition.position,
             Quaternion.identity);
         
         FindNecessaryData();
         
-        arrow.GetComponent<ArrowMover>().SetInfoForArrow(_health, AttackData);
+        arrow.GetComponent<ArrowMover>().SetInfoForArrow(_aliveEntity, AttackData);
     }
 
     private void FindNecessaryData()
     {
-        AttackData.Damage = _findStats.GetStat(_findStats.GetClass, Characteristics.Damage);
-        AttackData.CriticalChance = _findStats.GetStat(_findStats.GetClass, Characteristics.CriticalChance);
-        AttackData.CriticalDamage = _findStats.GetStat(_findStats.GetClass, Characteristics.CriticalDamage);
+        AttackData.Damage = _aliveEntity.GetStat(Characteristics.Damage);
+        AttackData.CriticalChance = _aliveEntity.GetStat(Characteristics.CriticalChance);
+        AttackData.CriticalDamage = _aliveEntity.GetStat(Characteristics.CriticalDamage);
         AttackData.Damager = gameObject.transform.parent;
         OnHitTake?.Invoke(AttackData.Damager);
-      
     }
 }

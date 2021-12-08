@@ -9,7 +9,7 @@
 
         public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
-            if (_attackRegistrator.AttackData.Target != null)
+            if (AttackRegistrator.AttackData.Target != null)
             {
                 animator.SetBool(Transition, true);
             }

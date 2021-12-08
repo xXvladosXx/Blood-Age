@@ -19,6 +19,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _distanceToCastSkill: 5
-  _transitionDuration: 0.01
+  _transitionDuration: 1
   _skillRadiusRenderer: {fileID: 6128641895528089822, guid: 53f9accc1b2c01449a319513b538f26c, type: 3}
   _skillDistanceRenderer: {fileID: 6128641895528089822, guid: 7f73b4593485ee54b8f0176151c2c030, type: 3}

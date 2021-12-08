@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using DefaultNamespace.Entity;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,55 +12,27 @@ public class PlayerAttackState : AttackState
     [SerializeField] private int _timeModifier = 100;
     
     private StarterAssetsInputs _starterAssetsInputs;
-    private IndicatorActivator _targetIndicator;
     private bool _wasSpawned;
     public override void OnEnter(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
         base.OnEnter(characterStateBase, animator, stateInfo);
         _starterAssetsInputs = animator.GetComponent<StarterAssetsInputs>();
 
-        _wasClickedOnTarget = false;
-        _wasSpawned = false;
-        
-        if(_attackRegistrator.AttackData.Target != null)
-            _targetIndicator = _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>();
+        WasClickedOnTarget = false;
     }
 
     public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
     {
-        if (!_itemEquipper.IsRanged)
+        if (!AliveEntity.GetItemEquipper.IsRanged)
+        {
             base.UpdateAbility(characterStateBase, animator, stateInfo);
+        }
         
-        animator.transform.LookAt(_attackRegistrator.AttackData.Target);
+        animator.transform.LookAt(AttackRegistrator.AttackData.Target);
         CombatCheck(characterStateBase, animator, stateInfo);
         
-        if(_targetIndicator == null) return;
-        ActivateIndicatorOnTarget(stateInfo);
-        DeactivateIndicatorOnTarget(stateInfo);
     }
 
-    private void DeactivateIndicatorOnTarget(AnimatorStateInfo stateInfo)
-    {
-        if (!(stateInfo.normalizedTime > _endAttackTime)) return;
-
-        _targetIndicator.DeactivateIndicator();
-        _wasSpawned = false;
-    }
-    
-    private void DeactivateIndicatorOnTarget()
-    {        
-        _targetIndicator.DeactivateIndicator();
-        _wasSpawned = false;
-    }
-
-    private void ActivateIndicatorOnTarget(AnimatorStateInfo stateInfo)
-    {
-        if (_wasSpawned) return;
-        if (!(stateInfo.normalizedTime >= _startAttackTime + ((_endAttackTime - _startAttackTime)) / _timeModifier)) return;
-
-        _wasSpawned = true;
-        _targetIndicator.ActivateIndicator(_effect);
-    }
 
     private void CombatCheck(BaseState characterStateBase, Animator animator,
         AnimatorStateInfo stateInfo)
@@ -69,25 +42,22 @@ public class PlayerAttackState : AttackState
 
         switch (_starterAssetsInputs.ButtonInput)
         {
-            case true when raycastHit.collider.GetComponent<Health>() != null && raycastHit.collider.GetComponent<Health>() != animator.GetComponent<Health>():
+            case true when raycastHit.collider.GetComponent<AliveEntity>() != null
+                           && raycastHit.collider.GetComponent<AliveEntity>() != animator.GetComponent<AliveEntity>():
             {
-                _wasClickedOnTarget = true;
-                _attackRegistrator.AttackData.Target = raycastHit.collider.transform;
-                _targetIndicator = _attackRegistrator.AttackData.Target.GetComponentInChildren<IndicatorActivator>();
-                
-                if(!_wasSpawned) return;
-                if (!_wasClickedOnTarget) return;
+                WasClickedOnTarget = true;
+                AttackRegistrator.AttackData.Target = raycastHit.collider.transform;
 
-                animator.SetBool(WasRegistered, true);
-                _wasClickedOnTarget = false;
+                if (stateInfo.normalizedTime >= startAttackTime )
+                {
+                    animator.SetBool(WasRegistered, true);
+                }
 
                 break;
             }
-            case true when raycastHit.collider.GetComponent<Health>() == null:
+            case true when raycastHit.collider.GetComponent<AliveEntity>() == null:
             {
-                DeactivateIndicatorOnTarget();
-
-                _attackRegistrator.AttackData.Target = null;    
+                AttackRegistrator.AttackData.Target = null;    
                 animator.SetBool(ForceTransition, true);
                 animator.SetBool(MainAttack, false);
                 break;
@@ -95,10 +65,4 @@ public class PlayerAttackState : AttackState
         }
     }
 
-    public override void OnExit(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
-    {
-        base.OnExit(characterStateBase, animator, stateInfo);
-        
-        DeactivateIndicatorOnTarget();
-    }
 }

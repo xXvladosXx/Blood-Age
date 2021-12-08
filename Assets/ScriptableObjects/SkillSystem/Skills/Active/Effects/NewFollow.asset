@@ -19,4 +19,5 @@ MonoBehaviour:
     m_Bits: 1
   _speed: 0.01
   _hitParticle: {fileID: 2699385922014901999, guid: 5184aa9fb89b6ee46b1e3f80053918b3, type: 3}
+  _maxDamage: 20
   _damage: 11

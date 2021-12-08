@@ -5,7 +5,7 @@
     using System.Linq;
     using DefaultNamespace;
 
-    public class StatModifItem : Item, IModifier
+    public abstract class StatModifItem : Item, IModifier
     {
         public IEnumerable<IBonus> AddBonus(Characteristics[] characteristics)
         {

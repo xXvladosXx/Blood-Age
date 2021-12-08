@@ -22,19 +22,12 @@ public class StarterAssetsInputs : MonoBehaviour
 			input.Player.ButtonInput.performed += context =>
 			{
 				ButtonInput = true;
-				print("Smt");
 			};
 			input.Player.ButtonInput.canceled += context => ButtonInput = false;
 
 			input.Player.CancelInput.performed += context => CancelInput = true;
 			input.Player.CancelInput.canceled += context => CancelInput = false;
 		}
-
-		private void Update()
-		{
-			
-		}
-		
 		
 		public Ray GetRay()
 		{

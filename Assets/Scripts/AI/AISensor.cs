@@ -52,7 +52,8 @@
                 if (IsInSight(obj))
                 {
                     _gameObjects.Add(obj);
-                   
+                    print("Fornd");
+
                     if (obj.GetComponent<StarterAssetsInputs>() != null)
                     {
                         _attackRegistrator.AttackData.Target = obj.transform;
@@ -88,7 +89,6 @@
         {
             Mesh mesh = new Mesh();
 
-            
             int numTriangles = 8;
             int numVertices = numTriangles * 3;
 

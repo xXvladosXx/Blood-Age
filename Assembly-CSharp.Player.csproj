@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\SkillSystem\SkillNodes\SkillChoice.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
      <Compile Include="Assets\Scripts\AI\AISensor.cs" />
+     <Compile Include="Assets\Scripts\Entity\ITargetable.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\MainComponents\SkillNodeVisitor.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\PivotBasedCameraRig.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\InputAxisScrollbar.cs" />
@@ -73,10 +74,15 @@
      <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ScaleFactorApplyToMaterial.cs" />
      <Compile Include="Assets\Scripts\InventorySystem\StandardArmor.cs" />
      <Compile Include="Assets\SampleSceneAssets\Scripts\SimpleCameraController.cs" />
+     <Compile Include="Assets\Scripts\InventorySystem\Inventory.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\MainComponents\Strategies\Filtering.cs" />
      <Compile Include="Assets\Scripts\States\StateData.cs" />
      <Compile Include="Assets\Scripts\ECS\System\StarterInputSystem.cs" />
+     <Compile Include="Assets\Scripts\InventorySystem\ItemDatabaseObject.cs" />
+     <Compile Include="Assets\Scripts\Entity\Race\Race.cs" />
+     <Compile Include="Assets\Scripts\InventorySystem\StaticInterface.cs" />
      <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\VariousTranslateMove.cs" />
+     <Compile Include="Assets\GUI PRO Kit - Fantasy RPG\Extensions\UIParticle\UIParticleSystem.cs" />
      <Compile Include="Assets\Scripts\StatsSystem\IModifier.cs" />
      <Compile Include="Assets\Scripts\StatsSystem\FindStats.cs" />
      <Compile Include="Assets\Scripts\StatsSystem\Bonuses\DamageBonus.cs" />
@@ -130,6 +136,7 @@
      <Compile Include="Assets\Scripts\States\AIStates\AIAttackState.cs" />
      <Compile Include="Assets\Scripts\ECS\System\Tags\PlayerTag.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\TiltInput.cs" />
+     <Compile Include="Assets\Scripts\InventorySystem\DynamicInterface.cs" />
      <Compile Include="Assets\Scripts\ECS\Providers\PlayerTagProvider.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\GunAim.cs" />
      <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\NewMaterialChange.cs" />
@@ -144,6 +151,7 @@
      <Compile Include="Assets\Scripts\Entity\AliveEntity.cs" />
      <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\ForEffects\ObjectMoveDestroy.cs" />
      <Compile Include="Assets\Simple Spin Blur\Scripts\OrbitCam.cs" />
+     <Compile Include="Assets\GUI PRO Kit - Fantasy RPG\Scripts\PanelFantasyRPG.cs" />
      <Compile Include="Assets\SampleSceneAssets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\ECS\Components\WeaponComponents\MovableComponent.cs" />
      <Compile Include="Assets\Scripts\UI\ButtonClickable\SkillHolder.cs" />
@@ -173,6 +181,8 @@
      <Compile Include="Assets\Simple Spin Blur\Scripts\SimpleSpinBlur.cs" />
      <Compile Include="Assets\Scripts\ECS\Providers\WeaponProviders\AnimatorWeaponProvider.cs" />
      <Compile Include="Assets\Scripts\IndicatorActivator.cs" />
+     <Compile Include="Assets\GUI PRO Kit - Fantasy RPG\Scripts\PanelControlFantasyRPG.cs" />
+     <Compile Include="Assets\Scripts\InventorySystem\UserInterface.cs" />
      <Compile Include="Assets\Scripts\StatsSystem\Bonuses\AttackSpeedBonus.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\ProtectCameraFromWallClip.cs" />
@@ -197,14 +207,18 @@
      <Compile Include="Assets\Scripts\StatsSystem\IBonus.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\GunShoot.cs" />
      <Compile Include="Assets\FurryS2\Scrips\Deleteable\AbstractTargetFollower.cs" />
+     <Compile Include="Assets\Scripts\States\DeathState.cs" />
      <Compile Include="Assets\SpecialSkillsEffectsPack\Scripts\DelayActive.cs" />
+     <Compile Include="Assets\Scripts\InventorySystem\ItemPicker.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\Skills\EffectApplyingSkills\SpawnEffect.cs" />
+     <Compile Include="Assets\Scripts\Entity\ElfEntity.cs" />
      <Compile Include="Assets\Scripts\States\IdleMovementState.cs" />
      <Compile Include="Assets\Scripts\ECS\System\MeleeCombatSystem.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\Skills\TargetingSkills\IManaChangeable.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\SkillInfo\SkillData.cs" />
      <Compile Include="Assets\Scripts\SkillSystem\Skills\EffectApplyingSkills\DamageTriggerEffect.cs" />
      <Compile Include="Assets\Scripts\HitEffectInstantiator.cs" />
+     <Compile Include="Assets\Scripts\Entity\PlayerUIController.cs" />
      <Compile Include="Assets\Scripts\ECS\Components\WeaponComponents\DirectionComponent.cs" />
      <Compile Include="Assets\Scripts\States\AIStates\AILookingState.cs" />
      <Compile Include="Assets\Scripts\States\AttackState.cs" />
@@ -239,6 +253,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\SkinShaderHDRP_V2.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\HairShaderURP_V3.shader" />
+     <None Include="Assets\GUI PRO Kit - Fantasy RPG\Extensions\UIParticle\hidden particle.shader" />
      <None Include="Assets\SpecialSkillsEffectsPack\Shader_ForEffects\Shader_DistortionEffect.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\HornShaderHDRP.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\HairShaderV2.shader" />
@@ -268,6 +283,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\FurryS2\Shaders\DawnShader\EyesTearShader.shader" />
      <None Include="Assets\Shaders\DawnShaderURP\HairShaderURP.shader" />
+     <None Include="Assets\Dark_Brown_GUI_kit\Dark_Brown_GUI_kit.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\Shaders\DawnShaderURP\ClothingShader2SidesURP.shader" />
      <None Include="Assets\Shaders\DawnShaderHDRP\SkinShaderHDRP_V2.shader" />
@@ -305,6 +321,7 @@
      <None Include="Assets\Hovl Studio\AOE Magic spells Vol.1\Demo AOE skills\HDRP and URP(LWRP).txt" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderHDRP\ClothingShaderHDRP.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\GUI PRO Kit - Fantasy RPG\Extensions\UIParticle\UIAdditive.shader" />
      <None Include="Assets\FurryS2\Shaders\DawnShaderURP\HairShaderURP_V2.shader" />
      <None Include="Assets\Shaders\DawnShader\SkinShader_V2.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />

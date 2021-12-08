@@ -7,48 +7,53 @@ using InventorySystem;
 using SkillSystem.MainComponents;
 using StatsSystem;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(FindStats))]
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(ItemEquipper))]
 
-public class Health : MonoBehaviour
+public class Health
 {
-    [SerializeField] private float _currentHealth;
-    [SerializeField] private float _currentDamage;
-    
-    private Animator _animator;
-    private FindStats _findStats;
-    private ItemEquipper _itemEquipper;
-    private BuffApplier _buffApplier;
-    
+    private float _currentHealth;
+    private bool _isDead;
     public event Action<Transform> OnTakeHit;
-    
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-        _findStats = GetComponent<FindStats>();
-        _itemEquipper = GetComponent<ItemEquipper>();
-        _buffApplier = GetComponent<BuffApplier>();
-        
-        FindHealthStat();
+    public event Action OnHeavyAttackHit;
+    public event Action OnDie;
 
-        _itemEquipper.OnEquipmentChanged += FindHealthStat;
-        _buffApplier.OnBonusAdded += FindHealthStat;
+
+    public Health(float healthPoints)
+    {
+        _currentHealth = healthPoints;
     }
 
-    private void FindHealthStat()
+    public void RenewHealthPoints(float healthPoints)
     {
-        _currentHealth = _findStats.GetStat(_findStats.GetClass, Characteristics.Health);
-        _currentDamage = (_findStats.GetStat(_findStats.GetClass, Characteristics.Damage));
+        _currentHealth = healthPoints;
     }
 
     public void TakeHit(AttackData attackData)
     {
-        if(attackData.HeavyAttack)
-            _animator.Play("Falling");
+        float currentChance = Random.Range(0, 100);
+        attackData.CriticalChance = 15;
+        attackData.CriticalDamage = 110;
 
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _currentHealth);
+
+        if (attackData.Damager.GetComponent<StarterAssetsInputs>() != null)
+        {
+            Debug.Log("Damaged");
+        }
+        
+        if (attackData.HeavyAttack)
+            OnHeavyAttackHit?.Invoke();
+
+        if (_currentHealth <= 0)
+        {
+            OnDie?.Invoke();
+            _isDead = true;
+            Debug.Log("Died");
+        }
+        
         OnTakeHit?.Invoke(attackData.Damager);
-        print("Damaged " + gameObject);
     }
+
+    public bool IsDead() => _isDead;
 }

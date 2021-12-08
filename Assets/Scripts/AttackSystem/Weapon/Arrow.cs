@@ -10,5 +10,6 @@
     [CreateAssetMenu(menuName = "Weapon/Arrow")]
     public class Arrow : Projectile
     {
+
     }
 }

@@ -8,6 +8,7 @@
         public Transform Target { get; set; }
         public bool HeavyAttack { get; set; }
         public float Damage { get; set; }
+        public float MaxDamage { get; set; }
         public float CriticalChance { get; set; }
         public float CriticalDamage { get; set; }
     }

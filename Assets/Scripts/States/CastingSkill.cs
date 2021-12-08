@@ -3,15 +3,20 @@
     using DefaultNamespace.SkillSystem.SkillNodes;
     using global::SkillSystem;
     using UnityEngine;
+    using UnityEngine.AI;
     using UnityEngine.InputSystem;
 
     [CreateAssetMenu (menuName = "State/CastSkill")]
     public class CastingSkill : StateData
     {
         private SkillNode[] _skills;
+        private Movement _movement;
         public override void OnEnter(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
             _skills = animator.GetComponent<SkillBuilder>().GetSkillNodes;
+            _movement = animator.GetComponent<Movement>();
+            
+            _movement.Cancel();
         }
 
         public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)

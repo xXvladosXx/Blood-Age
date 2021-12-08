@@ -195,6 +195,7 @@ m_PackageAssets:
         - 2.8.0
         - 2.8.1
         - 2.8.2
+        - 2.8.3
         - 2.9.0-pre.1
         compatible:
         - 2.5.0
@@ -227,6 +228,7 @@ m_PackageAssets:
         - 2.8.0
         - 2.8.1
         - 2.8.2
+        - 2.8.3
         - 2.9.0-pre.1
         verified: 2.6.11
       dependencies: []
@@ -4566,6 +4568,7 @@ m_PackageAssets:
         - 1.6.0
         - 1.6.1
         - 1.6.2
+        - 1.6.3
         - 1.7.0-pre.1
         compatible:
         - 1.1.1
@@ -4643,6 +4646,7 @@ m_PackageAssets:
         - 1.6.0
         - 1.6.1
         - 1.6.2
+        - 1.6.3
         - 1.7.0-pre.1
         verified: 1.4.11
       dependencies:
@@ -4735,6 +4739,7 @@ m_PackageAssets:
         - 1.0.0-pre.3
         - 1.0.0-pre.5
         - 1.0.0-pre.6
+        - 1.1.0
         compatible:
         - 0.0.9-preview.1
         - 0.0.9-preview.2

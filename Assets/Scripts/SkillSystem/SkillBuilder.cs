@@ -35,7 +35,7 @@
                     Characteristics.Damage => new DamageBonus(value),
                     _ => throw new IndexOutOfRangeException()
                 };
-
+            
             return _skills
                 .OfType<PassiveSkill>()
                 .SelectMany(AllMatchedPassiveSkillBonuses)

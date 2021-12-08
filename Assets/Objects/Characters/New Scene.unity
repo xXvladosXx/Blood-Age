@@ -354,10 +354,10 @@ GameObject:
   - component: {fileID: 281376081}
   - component: {fileID: 281376080}
   - component: {fileID: 281376079}
-  - component: {fileID: 281376078}
   - component: {fileID: 281376082}
   - component: {fileID: 281376083}
   - component: {fileID: 281376084}
+  - component: {fileID: 281376078}
   m_Layer: 4
   m_Name: Capsule
   m_TagString: Enemy
@@ -375,7 +375,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -436,7 +436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281376073}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1, y: 0, z: 9.86}
+  m_LocalPosition: {x: 6.19, y: 0, z: 6.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -451,11 +451,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 281376073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5d3ed17d2f484696beba16ec9f098, type: 3}
+  m_Script: {fileID: 11500000, guid: 6539b553a8a84d00955475d97c772744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 0
-  _currentDamage: 0
 --- !u!114 &281376079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,34 +563,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1354286803350162295, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.546515
-      objectReference: {fileID: 0}
-    - target: {fileID: 1354286803350162295, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 20.957228
-      objectReference: {fileID: 0}
-    - target: {fileID: 1354286803350162295, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.1782188
+    - target: {fileID: 1748701357, guid: 08235663598fe2a44815e94a739226c0, type: 3}
+      propertyPath: _enemyEntities.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3456684678245656161, guid: 08235663598fe2a44815e94a739226c0, type: 3}
       propertyPath: m_Name
       value: Main
       objectReference: {fileID: 0}
-    - target: {fileID: 3691282383274465622, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: _skills.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3691282383274465622, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: _skills.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3bc55c800dd10374c8e0017dfd710513, type: 2}
-    - target: {fileID: 3691282383274465622, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: _skills.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 65fbffb257207704e952e898be19dc08, type: 2}
     - target: {fileID: 4514287093813816971, guid: 08235663598fe2a44815e94a739226c0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -637,20 +615,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8238959309214031960, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.546515
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238959309214031960, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 20.957228
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238959309214031960, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.1782188
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 971049630541624796, guid: 08235663598fe2a44815e94a739226c0, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08235663598fe2a44815e94a739226c0, type: 3}
 --- !u!1 &379577928
 GameObject:
@@ -743,10 +708,10 @@ GameObject:
   - component: {fileID: 814324228}
   - component: {fileID: 814324227}
   - component: {fileID: 814324226}
-  - component: {fileID: 814324225}
   - component: {fileID: 814324224}
   - component: {fileID: 814324223}
   - component: {fileID: 814324222}
+  - component: {fileID: 814324225}
   m_Layer: 4
   m_Name: Capsule (2)
   m_TagString: Enemy
@@ -813,11 +778,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 814324221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5d3ed17d2f484696beba16ec9f098, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e5583becd6c45c58efbbaa8fd450c9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 0
-  _currentDamage: 0
 --- !u!114 &814324226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,7 +843,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -941,7 +904,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 814324221}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.56, y: 0, z: 13.92}
+  m_LocalPosition: {x: 6.56, y: 0, z: 8.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -962,10 +925,10 @@ GameObject:
   - component: {fileID: 1150485824}
   - component: {fileID: 1150485823}
   - component: {fileID: 1150485822}
-  - component: {fileID: 1150485821}
   - component: {fileID: 1150485820}
   - component: {fileID: 1150485819}
   - component: {fileID: 1150485818}
+  - component: {fileID: 1150485821}
   m_Layer: 4
   m_Name: Capsule (3)
   m_TagString: Enemy
@@ -1032,11 +995,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1150485817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5d3ed17d2f484696beba16ec9f098, type: 3}
+  m_Script: {fileID: 11500000, guid: 043b58e1d88544e6975a2a77d4ceabfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 0
-  _currentDamage: 0
 --- !u!114 &1150485822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,7 +1060,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -1166,23 +1127,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1748701350 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3691282383274465631, guid: 08235663598fe2a44815e94a739226c0, type: 3}
-  m_PrefabInstance: {fileID: 365423820}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1748701352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1748701350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba989f026fd4a73be650721d5a413b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1963888815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,11 +1142,11 @@ GameObject:
   - component: {fileID: 1963888822}
   - component: {fileID: 1963888821}
   - component: {fileID: 1963888820}
-  - component: {fileID: 1963888819}
   - component: {fileID: 1963888818}
   - component: {fileID: 1963888817}
   - component: {fileID: 1963888816}
   - component: {fileID: 1963888827}
+  - component: {fileID: 1963888819}
   m_Layer: 4
   m_Name: Capsule (1)
   m_TagString: Enemy
@@ -1269,11 +1213,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1963888815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5d3ed17d2f484696beba16ec9f098, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e5583becd6c45c58efbbaa8fd450c9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 0
-  _currentDamage: 0
 --- !u!114 &1963888820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1336,7 +1278,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

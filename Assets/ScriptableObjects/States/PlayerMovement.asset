@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1339f960d34cf59b508b0f2aa95f97, type: 3}
   m_Name: PlayerMovement
   m_EditorClassIdentifier: 
-  _distanceToAttack: 1.5
+  manualMovement: 0
+  _layer:
+    serializedVersion: 2
+    m_Bits: 1

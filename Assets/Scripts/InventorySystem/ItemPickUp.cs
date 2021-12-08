@@ -7,14 +7,10 @@
     public class ItemPickUp : MonoBehaviour, IEquipable
     {
         [SerializeField] private Item _item;
-        [SerializeField] private Collider _collider;
-
-        private void Awake()
-        {
-            _collider = GetComponent<Collider>();
-        }
-
-        public Item Equip()
+        [SerializeField] private int _amount;
+        public int GetAmount => _amount;
+        
+        public Item GetItem()
         {
             Destroy(gameObject);
             return _item;

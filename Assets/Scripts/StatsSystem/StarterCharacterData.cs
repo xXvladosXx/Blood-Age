@@ -81,12 +81,5 @@
             return levels[level - 1];
         }
 
-        public int GetLevels(Class classChooser, Characteristics characteristics)
-        {
-            CreateData();
-            
-            float[] levels = _classData[classChooser][characteristics];
-            return levels.Length;
-        }
     }
 }

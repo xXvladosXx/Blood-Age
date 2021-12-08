@@ -10,7 +10,7 @@
 
     [CreateAssetMenu (fileName = "Weapon", menuName = "Weapon/Bow")]
 
-    public class BowWeapon : StandardWeapon, IRangeable
+    public class BowWeapon : StandardWeapon, IRangeable, IEquipable
     {
         [Range(1, 10)]
         [SerializeField] private float _attackSpeed;
@@ -27,6 +27,12 @@
         public ProjectileType GetProjectileType()
         {
             return ProjectileType.Arrow;
+        }
+
+
+        public Item GetItem()
+        {
+            return this;
         }
     }
 

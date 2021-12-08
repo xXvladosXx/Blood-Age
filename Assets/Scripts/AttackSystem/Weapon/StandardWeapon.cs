@@ -1,11 +1,7 @@
 ﻿namespace AttackSystem.Weapon
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using DefaultNamespace;
+
     using InventorySystem;
-    using UnityEditor.Animations;
     using UnityEngine;
 
     public abstract class StandardWeapon : StatModifItem
@@ -17,7 +13,7 @@
         public float GetAttackDistance => _attackRange;
 
 
-        [SerializeField] protected AnimatorController _animatorController;
+        [SerializeField] protected RuntimeAnimatorController _animatorController;
         
         [SerializeField] protected GameObject _weaponPrefab;
         [SerializeField] protected bool _isRanged;

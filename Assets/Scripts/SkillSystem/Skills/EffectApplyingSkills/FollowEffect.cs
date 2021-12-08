@@ -17,6 +17,7 @@
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float _speed = 5f;
         [SerializeField] private GameObject _hitParticle;
+        [SerializeField] private float _maxDamage;
 
         private Animator _animator;
         private static readonly int Canceled = Animator.StringToHash("Canceled");
@@ -30,9 +31,7 @@
 
         private IEnumerator WaitUntilCanceled(SkillData skillData, Action finished)
         {
-            float time = 0f;
             GameObject particleEffect = null;
-            bool wasSpawned = false;
 
             yield return new WaitForSeconds(_delayToSpawn);
             
@@ -40,7 +39,8 @@
             particleEffect.GetComponent<CollisionDetector>().ReceiveData(new AttackData
             {
                 Damage = 0,
-                Damager = skillData.GetUser.transform
+                MaxDamage = _maxDamage,
+                Damager = skillData.GetUser.transform,
             }, _hitParticle);
             
             while (true)

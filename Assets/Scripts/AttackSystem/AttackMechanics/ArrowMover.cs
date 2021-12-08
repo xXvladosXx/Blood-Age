@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using Cinemachine;
+    using DefaultNamespace.Entity;
     using DefaultNamespace.MouseSystem;
     using UnityEngine;
 
@@ -13,12 +14,10 @@
         private CinemachineVirtualCamera _cinemachineVirtualCamera;
 
         private AttackData _attackData;
-        private Health _damager;
+        private AliveEntity _damager;
         private Transform _target;
         
-       
-        
-        public void SetInfoForArrow(Health damager, AttackData attackData)
+        public void SetInfoForArrow(AliveEntity damager, AttackData attackData)
         {
             _damager = damager;
             _attackData = attackData;
@@ -46,15 +45,15 @@
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out Health health) && health != _damager)
+            if (other.TryGetComponent(out AliveEntity aliveEntity) && aliveEntity != _damager)
             {
-                if (_damager.GetComponent<StarterAssetsInputs>() != null && _attackData.HeavyAttack)
+                if (aliveEntity.GetComponent<StarterAssetsInputs>() != null && _attackData.HeavyAttack)
                 {
                     _cinemachineVirtualCamera.enabled = true;
                     StartCoroutine(DisableCamera());
                 }
                 
-                health.TakeHit(_attackData);
+                aliveEntity.GetHealth.TakeHit(_attackData);
                 
                 Destroy(gameObject);
             }

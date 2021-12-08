@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using DefaultNamespace.Entity;
     using DefaultNamespace.MouseSystem;
     using DefaultNamespace.SkillSystem.SkillInfo;
     using DefaultNamespace.UI.ButtonClickable;
@@ -31,7 +32,7 @@
                 GameObject hitParticleEffect =
                     Instantiate(_hitParticleEffect, target.transform.position, Quaternion.identity);
                 
-                target.GetComponent<Health>().TakeHit(new AttackData
+                target.GetComponent<AliveEntity>().GetHealth.TakeHit(new AttackData
                 {
                     Damage = _damage,
                     Damager = skillData.GetUser.transform,

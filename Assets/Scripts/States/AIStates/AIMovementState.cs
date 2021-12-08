@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using AI;
+    using DefaultNamespace.Entity;
     using UnityEngine;
 
     [CreateAssetMenu(fileName = ("Movement"), menuName = "State/AIMovement")]
@@ -11,7 +12,7 @@
         [SerializeField] protected Transform _path;
 
         private List<Transform> _points = new List<Transform>();
-        private Health _health;
+        private AliveEntity _aliveEntity;
         
         private int _currentPointIndex;
         private Vector3 _defaultStartPoint;
@@ -23,11 +24,11 @@
         {
             base.OnEnter(characterStateBase, animator, stateInfo);
 
-            _health = animator.GetComponent<Health>();
+            _aliveEntity = animator.GetComponent<AliveEntity>();
             _defaultStartPoint = animator.transform.position;
             _timeSinceLastVisited = 4;
             _isOnPosition = false;
-            _distanceToAttack = _itemEquipper.GetAttackRange;
+            DistanceToAttack = AliveEntity.GetItemEquipper.GetAttackRange;
 
             if (_path != null)
             {
@@ -37,33 +38,36 @@
                 }
             }
 
-            _health.OnTakeHit += transform => _attackRegistrator.AttackData.Target = transform;
+            _aliveEntity.GetHealth.OnTakeHit += transform => AttackRegistrator.AttackData.Target = transform;
         }
 
         public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
+            if(AliveEntity.GetHealth.IsDead()) return;
+            
             AIInput(characterStateBase, animator, stateInfo);
         }
 
         private void AIInput(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
-            if (_attackRegistrator.AttackData.Damager != null)
+            if (AttackRegistrator.AttackData.Damager != null)
             {
-                _attackRegistrator.AttackData.Target = _attackRegistrator.AttackData.Damager;
+                AttackRegistrator.AttackData.Target = AttackRegistrator.AttackData.Damager;
             }
             
-            if (_attackRegistrator.AttackData.Target != null)
+            if (AttackRegistrator.AttackData.Target != null)
             {
-                var targetPosition = _attackRegistrator.AttackData.Target.position;
-                _movement.StartMoveTo(targetPosition, 1f);
+                DistanceToAttack = AliveEntity.GetItemEquipper.GetAttackRange;
+                var targetPosition = AttackRegistrator.AttackData.Target.position;
+                Movement.StartMoveTo(targetPosition, 1f);
 
                 var distanceToTargetSec =
                     Vector3.Distance(animator.transform.position, targetPosition);
                 
-                if (distanceToTargetSec < _distanceToAttack)
+                if (distanceToTargetSec < DistanceToAttack)
                 {
-                    _movement.Cancel();
-                    animator.transform.LookAt(_attackRegistrator.AttackData.Target.position);
+                    Movement.Cancel();
+                    animator.transform.LookAt(AttackRegistrator.AttackData.Target.position);
                     animator.SetBool(Attack, true);
                 }
                
@@ -109,11 +113,11 @@
         {
             if (_points.Count == 0)
             {
-                _movement.StartMoveTo(_defaultStartPoint, 0.2f);
+                Movement.StartMoveTo(_defaultStartPoint, 0.2f);
                 return;
             }
 
-            _movement.StartMoveTo(_points[_currentPointIndex].position, 0.2f);
+            Movement.StartMoveTo(_points[_currentPointIndex].position, 0.2f);
         }
     }
 }

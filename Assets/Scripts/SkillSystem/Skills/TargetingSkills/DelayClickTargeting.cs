@@ -29,7 +29,8 @@
         {
             _user = skillData.GetUser.GetComponent<StarterAssetsInputs>();
             _animator = _user.GetComponent<Animator>();
-
+            _animator.CrossFade($"StartCast", _transitionDuration);
+            
             _user.StartCoroutine(WaitToCastSkill(skillData, finishedAttack, canceledAttack));
         }
 
@@ -45,8 +46,7 @@
             
             _skillRadiusCast.transform.position = _user.transform.position;
             _skillRadiusCast.transform.localScale = new Vector3(_distanceToCastSkill * 2, 0.1f, _distanceToCastSkill * 2);
-
-            _animator.CrossFade($"StartCast", _transitionDuration);
+            
             Cursor.SetCursor(_cursorTexture, _cursorHotspot, CursorMode.Auto);
             
             while (true)
@@ -68,24 +68,24 @@
                         }
                         else
                         {
+                            DestroyRenderers(_skillRenderer, _skillRadiusCast);
                             while (_user.ButtonInput)
                             {
                                 yield return null;
                                 skillData.GetUser.transform.LookAt((raycastHit.point));
                             }
-
+                            
                             skillData.MousePosition = raycastHit.point;
                             skillData.Target = GetGameobjectsInRadius(raycastHit.point);
                             skillData.GetUser.transform.LookAt((raycastHit.point));
-                            DestroyRenderers(_skillRenderer, _skillRadiusCast);
                             
                             break;
                         }
                     }
                     else if (_user.CancelInput)
                     {
-                        canceledAttack();
                         DestroyRenderers(_skillRenderer, _skillRadiusCast);
+                        canceledAttack();
                         
                         yield break;
                     }

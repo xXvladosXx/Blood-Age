@@ -1,5 +1,6 @@
 ﻿namespace DefaultNamespace.PlayerStates
 {
+    using DefaultNamespace.Entity;
     using UnityEngine;
     using UnityEngine.AI;
 
@@ -9,6 +10,7 @@
     {
         private NavMeshAgent _navMeshAgent;
         private StarterAssetsInputs _starterAssetsInputs;
+        private AliveEntity _aliveEntity;
         
         private static readonly int Roll = Animator.StringToHash("Roll");
 
@@ -17,9 +19,10 @@
             base.OnEnter(characterStateBase, animator, stateInfo);
             _navMeshAgent = animator.GetComponent<NavMeshAgent>();
             _starterAssetsInputs = animator.GetComponent<StarterAssetsInputs>();
+            _aliveEntity = animator.GetComponent<AliveEntity>();
             _navMeshAgent.enabled = true;
             
-            _movement.Cancel();
+            Movement.Cancel();
         }
 
         public override void UpdateAbility(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
@@ -28,50 +31,47 @@
             // {
             //     animator.SetBool(Roll, true);
             // }
+            if(_starterAssetsInputs.enabled == false) return;
+            if(AliveEntity.GetHealth.IsDead()) return;
             
             PlayerInput(animator);
             
-            if(_itemEquipper == null) return;
-            _distanceToAttack = _itemEquipper.GetAttackRange;
+            if(AliveEntity.GetItemEquipper == null) return;
+            DistanceToAttack = AliveEntity.GetItemEquipper.GetAttackRange;
         }
 
         private void PlayerInput(Animator animator)
         {
             RaycastHit raycastHit;
             bool hasHit = Physics.Raycast(_starterAssetsInputs.GetRay(), out raycastHit);
-
-            if (_starterAssetsInputs.ButtonInput)
-            {
-                Debug.Log("SWWD");
-            }
-
             if (!hasHit) return;
 
             if (_starterAssetsInputs.ButtonInput)
             {
                 animator.SetBool(ForceTransition, false);
-                if (raycastHit.collider.GetComponent<Health>() != null && (raycastHit.collider.GetComponent<Health>() != animator.GetComponent<Health>()))
+                if (raycastHit.collider.GetComponent<AliveEntity>() != null && 
+                    (raycastHit.collider.GetComponent<AliveEntity>() != _aliveEntity))
                 {
-                    _attackRegistrator.AttackData.Target = raycastHit.transform;
+                    AttackRegistrator.AttackData.Target = raycastHit.transform;
                 }
 
-                _movement.StartMoveTo(raycastHit.point, 1f);
+                Movement.StartMoveTo(raycastHit.point, 1f);
             }
             
-            if (_attackRegistrator.AttackData.Target != null)
+            if (AttackRegistrator.AttackData.Target != null)
             {
                 var distanceToTargetSec =
-                    Vector3.Distance(animator.transform.position, _attackRegistrator.AttackData.Target.position);
+                    Vector3.Distance(animator.transform.position, AttackRegistrator.AttackData.Target.position);
 
-                if (distanceToTargetSec < _distanceToAttack)
+                if (distanceToTargetSec < DistanceToAttack)
                 {
-                    _movement.Cancel();
-                    animator.transform.LookAt(_attackRegistrator.AttackData.Target.position);
+                    Movement.Cancel();
+                    animator.transform.LookAt(AttackRegistrator.AttackData.Target.position);
                     animator.SetBool(Attack, true);
                 }
                 else
                 {
-                    _movement.StartMoveTo(_attackRegistrator.AttackData.Target.position, 1f);
+                    Movement.StartMoveTo(AttackRegistrator.AttackData.Target.position, 1f);
                 }
             }
         }

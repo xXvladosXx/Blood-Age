@@ -52,12 +52,18 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Toggle.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\GraphicRaycaster.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Text.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\VerticalLayoutGroup.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Image.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Toggle.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Button.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\GraphicRaycaster.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\VertexModifiers\Shadow.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\HorizontalLayoutGroup.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Mask.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\LayoutElement.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Text.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Slider.cs" />
+     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\ScrollRect.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Selectable.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\EventData\PointerEventData.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Utility\ListPool.cs" />
@@ -81,12 +87,10 @@
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\GridLayoutGroup.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\RaycasterManager.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\IGraphicEnabledDisabled.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\HorizontalLayoutGroup.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Animation\CoroutineTween.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\FontUpdateTracker.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\ColorBlock.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\VertexModifiers\Outline.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\VerticalLayoutGroup.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\Raycasters\Physics2DRaycaster.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\VertexModifiers\PositionAsUV1.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\ExecuteEvents.cs" />
@@ -98,7 +102,6 @@
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\MaskableGraphic.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\AnimationTriggers.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\InputModules\TouchInputModule.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\VertexModifiers\Shadow.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Utility\VertexHelper.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\EventData\BaseEventData.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\LayoutUtility.cs" />
@@ -112,7 +115,6 @@
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\InputModules\BaseInput.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\ILayoutElement.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\MaskUtilities.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Mask.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\Raycasters\PhysicsRaycaster.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\RectMask2D.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\DefaultControls.cs" />
@@ -122,7 +124,6 @@
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\LayoutRebuilder.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\HorizontalOrVerticalLayoutGroup.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\InputModules\PointerInputModule.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Slider.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\IMaskable.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\VertexModifiers\IMeshModifier.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\CanvasScaler.cs" />
@@ -133,7 +134,6 @@
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Culling\ClipperRegistry.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\EventTrigger.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Culling\Clipping.cs" />
-     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\ScrollRect.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\Properties\AssemblyInfo.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\EventSystem\EventHandle.cs" />
      <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\LayoutGroup.cs" />
