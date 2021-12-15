@@ -36,6 +36,7 @@
 
         [SerializeField] private List<Item> _inventoryItems;
         [SerializeField] private List<Item> _equippedItems = new List<Item>();
+        public List<Item> GetEquippedItems => _equippedItems;
 
         private void Awake()
         {
@@ -48,9 +49,6 @@
 
         private void Update()
         {
-            if(GetComponent<StarterAssetsInputs>() == null)
-                print(_weapon + " " + _weapon.GetAttackDistance);
-                
             if(_itemPicker.GetInventory == null) return;
             
             _inventoryItems = _itemPicker.GetInventory.GetInventoryItems();

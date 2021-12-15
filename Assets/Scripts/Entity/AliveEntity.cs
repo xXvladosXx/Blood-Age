@@ -23,6 +23,9 @@
 
         protected ItemEquipper ItemEquipper;
         protected BuffApplier BuffApplier;
+        protected Dictionary<Stats, float> Stats = new Dictionary<Stats, float>();
+        public Dictionary<Stats, float> GetStats => Stats;
+
         private Animator _animator;
         
         private static readonly int Dead = Animator.StringToHash("Dead");

@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7068f12da7344cc5959d1b7430ba0bb5, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
-  _damageBonus: 12
-  _healthBonus: 111
-  _criticalDamage: 1111
-  _criticalChance: 12
+  _rarity: {fileID: 11400000, guid: 21c7e1ea9f4da364e80883a697136cec, type: 2}
+  Description: SomeDescription
   UIDisplay: {fileID: 21300000, guid: 4605842eabbad4f418393fc5812bca96, type: 3}
   Stackable: 0
   Category: 5
   Data:
     Name: Bow
     Id: 2
+  _damageBonus: 12
+  _healthBonus: 111
+  _criticalDamage: 1111
+  _criticalChance: 12
   _rightHanded: 0
   _attackRange: 11
   _animatorController: {fileID: 9100000, guid: eaf67b6874b15d34b9065146e5408db5, type: 2}

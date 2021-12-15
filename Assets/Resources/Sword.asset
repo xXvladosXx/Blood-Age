@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d0b463d8dd2456981aa34417e5bd5e0, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  _damageBonus: 0
-  _healthBonus: 112
-  _criticalDamage: 110
-  _criticalChance: 25
+  _rarity: {fileID: 11400000, guid: 08a34c523ee1a9240bf407eae06fb324, type: 2}
+  Description: We have a weapon
   UIDisplay: {fileID: 21300000, guid: f9b93a2b90f75e6408143992b388e91b, type: 3}
   Stackable: 0
   Category: 5
   Data:
     Name: Sword
     Id: 3
+  _damageBonus: 11
+  _healthBonus: 112
+  _criticalDamage: 110
+  _criticalChance: 25
   _rightHanded: 1
   _attackRange: 5
   _animatorController: {fileID: 9100000, guid: ec2a231f3fe973546b9e06b025baeef8, type: 2}

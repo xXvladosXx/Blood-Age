@@ -12,7 +12,7 @@
         Wizard
     }
 
-    public enum Characteristics : sbyte
+    public enum Characteristics 
     {
         Health,
         Damage, 
@@ -22,6 +22,13 @@
         ManaRegeneration,
         CriticalChance,
         CriticalDamage
+    }
+
+    public enum Stats
+    {
+        Strength,
+        Intelligence,
+        Agility
     }
 
     [Serializable]

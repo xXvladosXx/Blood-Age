@@ -17,10 +17,10 @@ MonoBehaviour:
     InventorySlots:
     - ItemCategories: 05000000
       ItemData:
-        Name: 
-        Id: -1
+        Name: Bow
+        Id: 2
       Amount: 0
-    - ItemCategories: 02000000
+    - ItemCategories: 05000000
       ItemData:
         Name: 
         Id: -1
