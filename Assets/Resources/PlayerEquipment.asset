@@ -20,7 +20,32 @@ MonoBehaviour:
         Name: Bow
         Id: 2
       Amount: 0
-    - ItemCategories: 05000000
+    - ItemCategories: 02000000
+      ItemData:
+        Name: 
+        Id: -1
+      Amount: 0
+    - ItemCategories: 03000000
+      ItemData:
+        Name: 
+        Id: -1
+      Amount: 0
+    - ItemCategories: 06000000
+      ItemData:
+        Name: 
+        Id: -1
+      Amount: 0
+    - ItemCategories: 04000000
+      ItemData:
+        Name: 
+        Id: -1
+      Amount: 0
+    - ItemCategories: 01000000
+      ItemData:
+        Name: 
+        Id: -1
+      Amount: 0
+    - ItemCategories: 06000000
       ItemData:
         Name: 
         Id: -1

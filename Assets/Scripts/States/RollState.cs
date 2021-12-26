@@ -12,11 +12,13 @@
         private Rigidbody _rigidbody;
         private NavMeshAgent _movement;
         private Collider _collider;
+        private float _positionY;
         public override void OnEnter(BaseState characterStateBase, Animator animator, AnimatorStateInfo stateInfo)
         {
             _rigidbody = animator.GetComponent<Rigidbody>();
             _movement = animator.GetComponent<NavMeshAgent>();
             _collider = animator.GetComponent<Collider>();
+            _positionY = animator.transform.position.y;
             
             _movement.enabled = false;
             _collider.isTrigger = false;
@@ -27,7 +29,8 @@
             var position = animator.transform.position;
             
             position += new Vector3(animator.transform.forward.x,
-                0, animator.transform.forward.z) * _speed * _speedCurve.Evaluate(stateInfo.normalizedTime);
+                _positionY, animator.transform.forward.z) * _speed * _speedCurve.Evaluate(stateInfo.normalizedTime);
+            position.y = _positionY;
             animator.transform.position = position;
         }
 

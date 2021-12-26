@@ -21,7 +21,6 @@
         
         private float _startValue;
 
-        public event Action OnBonusApplied;
         
         public override void Effect(SkillData skillData, Action finished)
         {
@@ -34,7 +33,6 @@
         {
             float time = 0;
           
-            OnBonusApplied?.Invoke();
             skillData.GetUser.GetComponent<BuffApplier>().SetBuff(_temporaryBuffs);
             
             while (true)

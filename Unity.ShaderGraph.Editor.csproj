@@ -72,8 +72,8 @@
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Data\Nodes\Math\Round\FloorNode.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Generation\Processors\PropertyCollector.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Data\Nodes\Input\Texture\SampleTexture2DArrayNode.cs" />
-     <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Generation\Descriptors\SubShaderDescriptor.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Data\Nodes\Utility\SubGraphNode.cs" />
+     <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Generation\Descriptors\SubShaderDescriptor.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Data\Nodes\Input\Texture\SamplerStateNode.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Generation\Enumerations\Cull.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.4.0\Editor\Generation\Enumerations\BlendOp.cs" />

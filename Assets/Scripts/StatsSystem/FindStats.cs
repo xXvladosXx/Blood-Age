@@ -1,17 +1,50 @@
 ﻿namespace DefaultNamespace
 {
+    using System;
     using System.Linq;
     using DefaultNamespace.Entity;
+    using StatsSystem;
     using UnityEngine;
 
     public class FindStats : MonoBehaviour
     {
         [SerializeField] private StarterCharacterData _starterCharacterData;
-        [SerializeField] private Class _character = Class.Warrior;
+        private Class _class;
+        
+        public void SetClass(Class characterClass)
+        {
+            _class = characterClass;
+        }
+        public event Action OnLevelUp;
+        public void UpdateLevel(ref int currentLevel, LevelUp levelUp)
+        {
+            int newLevel = CalculateLevel(levelUp);
 
+            if (newLevel <= currentLevel) return;
+            
+            currentLevel = newLevel;
+            OnLevelUp?.Invoke();
+        }
+
+        private int CalculateLevel(LevelUp levelUp)
+        {
+            int maxLevel = _starterCharacterData.GetLevels(_class, Characteristics.ExperienceToLevelUp);
+
+            for (int level = 1; level < maxLevel; level++)
+            {
+                float expToLevelUp = _starterCharacterData.ReturnLevelValueCharacteristics(_class, Characteristics.ExperienceToLevelUp, level);
+
+                if (expToLevelUp > levelUp.GetCurrentExp)
+                {
+                    return level;
+                }
+            }
+
+            return maxLevel + 1;
+        }
         public float GetStat(Characteristics characteristics)
         {
-            float starterValue = _starterCharacterData.ReturnLevelValueCharacteristics(_character, characteristics, 1);
+            float starterValue = _starterCharacterData.ReturnLevelValueCharacteristics(_class, characteristics, 1);
             float valueWithBonus = GetBonus(characteristics) + starterValue;
 
             return valueWithBonus;

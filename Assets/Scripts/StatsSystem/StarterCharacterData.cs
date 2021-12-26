@@ -19,9 +19,11 @@
         MovementSpeed,
         AttackSpeed,
         HealthRegeneration,
+        Mana,
         ManaRegeneration,
         CriticalChance,
-        CriticalDamage
+        CriticalDamage,
+        ExperienceToLevelUp
     }
 
     public enum Stats
@@ -87,6 +89,13 @@
 
             return levels[level - 1];
         }
-
+        
+        public int GetLevels(Class classChooser, Characteristics characteristics)
+        {
+            CreateData();
+        
+            float[] levels = _classData[classChooser][characteristics];
+            return levels.Length;
+        }
     }
 }

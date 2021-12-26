@@ -25,11 +25,10 @@
         private void Awake()
         {
             _starterAssetsInputs = GetComponent<StarterAssetsInputs>();
-            _itemEquipper = GetComponent<ItemEquipper>();
             _aliveEntity = GetComponent<AliveEntity>();
             
-            _statsPanel.SetStats(_aliveEntity.GetStats);
-
+            _itemEquipper = GetComponent<ItemEquipper>();
+            
             foreach (var userInterface in _interfaces)
             {
                 userInterface.OnInterfaceEnter += () => _interfaceEnter = true;
@@ -55,7 +54,6 @@
                 }
             }
             
-            print(equippedItemsWithCategory.Count);
             ItemTooltip.Instance.AddInfo(equippedItemsWithCategory);
         }
 
@@ -66,6 +64,12 @@
 
         private void Update()
         {
+            if (_statsPanel.GetIsOnInterface)
+            {
+                _starterAssetsInputs.enabled = false;
+                return;
+            }
+            
             if (_interfaceEnter || _itemDrag)
             {
                 _starterAssetsInputs.enabled = false;

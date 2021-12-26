@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: AnimatorFollow
   m_EditorClassIdentifier: 
   _animationSkill: StartCast 0
+  _delay: 0

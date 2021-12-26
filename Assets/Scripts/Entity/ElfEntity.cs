@@ -1,6 +1,7 @@
 ﻿namespace DefaultNamespace.Entity
 {
     using DefaultNamespace.Entity.Race;
+    using StatsSystem;
 
     public class ElfEntity : AliveEntity 
     {

@@ -2,11 +2,14 @@
 {
     using System.Collections;
     using System.Collections.Generic;
+    using DefaultNamespace.Entity;
     using UnityEngine;
 
     public class SkillData
     {
-        public SkillData(GameObject user)
+        private AliveEntity _user;
+
+        public SkillData(AliveEntity user)
         {
             _user = user;
         }
@@ -15,8 +18,7 @@
         public Vector3 MousePosition { get; set; }
         public Transform Renderer { get; set; }
 
-        private GameObject _user;
-        public GameObject GetUser => _user;
+        public AliveEntity GetUser => _user;
               
         private bool _cancelled = false;
         public bool IsCancelled => _cancelled;

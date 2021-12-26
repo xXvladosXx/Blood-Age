@@ -12,17 +12,20 @@
         private Dictionary<CharacteristicBonus, float> _buffEffects = new Dictionary<CharacteristicBonus, float>();
         private Dictionary<CharacteristicBonus, float> _currentBuffEffects = new Dictionary<CharacteristicBonus, float>();
         
-        public event Action OnBonusAdded;
+        public event Action<Dictionary<CharacteristicBonus, float>> OnBonusAdd;
+        public event Action<Dictionary<CharacteristicBonus, float>> OnBonusEnd;
 
         public void SetBuff(Buff[] playerPassiveSkillBonus)
         {
             foreach (var passiveSkillBonus in playerPassiveSkillBonus)
             {
+                if(_buffEffects.ContainsKey(passiveSkillBonus.GetCharacteristicBonus)) continue;
+                
                 _buffEffects.Add(passiveSkillBonus.GetCharacteristicBonus, passiveSkillBonus.GetLenghtOfEffect);
             }
 
             _currentBuffEffects = new Dictionary<CharacteristicBonus, float>(_buffEffects);
-            OnBonusAdded?.Invoke();
+            OnBonusAdd?.Invoke(_currentBuffEffects);
         }
 
         private void Update()
@@ -35,7 +38,7 @@
                 if (buffEffect.Value < 0)
                 {
                     _currentBuffEffects.Remove(buffEffect.Key);
-                    OnBonusAdded?.Invoke();
+                    OnBonusAdd?.Invoke(_currentBuffEffects);
                 }
             }
 
@@ -58,6 +61,7 @@
                     Characteristics.MovementSpeed => new MovementSpeedBonus(value),
                     Characteristics.ManaRegeneration => new ManaRegenerationBonus(value),
                     Characteristics.HealthRegeneration => new HealthRegenerationBonus(value),
+                    Characteristics.Mana => new ManaBonus(value),
                     _ => throw new IndexOutOfRangeException()
                 };
 

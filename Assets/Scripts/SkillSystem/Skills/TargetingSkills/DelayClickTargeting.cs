@@ -17,6 +17,7 @@
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float _distanceToCastSkill;
         [SerializeField] private float _transitionDuration = 0.05f;
+        [SerializeField] private string _animationToPlay = "StartCast";
 
         [SerializeField] private GameObject _skillRadiusRenderer;
         [SerializeField] private GameObject _skillDistanceRenderer;
@@ -39,13 +40,13 @@
             if(_skillRenderer == null)
                 _skillRenderer = Instantiate(_skillRadiusRenderer, _user.transform);
             
-            _skillRenderer.transform.localScale = new Vector3(_skillRadius * 2, 0.1f, _skillRadius * 2);
+            _skillRenderer.transform.localScale = new Vector3(_skillRadius * 1.5f, 0.1f, _skillRadius * 1.5f);
 
             if(_skillRadiusCast == null)
                 _skillRadiusCast = Instantiate(_skillDistanceRenderer, _user.transform);
             
             _skillRadiusCast.transform.position = _user.transform.position;
-            _skillRadiusCast.transform.localScale = new Vector3(_distanceToCastSkill * 2, 0.1f, _distanceToCastSkill * 2);
+            _skillRadiusCast.transform.localScale = new Vector3(_distanceToCastSkill * 1.5f, 0.1f, _distanceToCastSkill * 1.5f);
             
             Cursor.SetCursor(_cursorTexture, _cursorHotspot, CursorMode.Auto);
             
@@ -60,7 +61,7 @@
 
                     var distanceToCast = Vector3.Distance(skillData.GetUser.transform.position, raycastHit.point);
 
-                    if (_user.ButtonInput)
+                    if (Mouse.current.leftButton.isPressed)
                     {
                         if (distanceToCast > _distanceToCastSkill / 2)
                         {
@@ -69,12 +70,12 @@
                         else
                         {
                             DestroyRenderers(_skillRenderer, _skillRadiusCast);
-                            while (_user.ButtonInput)
+                            while (Mouse.current.leftButton.isPressed)
                             {
                                 yield return null;
                                 skillData.GetUser.transform.LookAt((raycastHit.point));
                             }
-                            
+
                             skillData.MousePosition = raycastHit.point;
                             skillData.Target = GetGameobjectsInRadius(raycastHit.point);
                             skillData.GetUser.transform.LookAt((raycastHit.point));
@@ -94,7 +95,6 @@
                 yield return null;
             }
 
-            Debug.Log("Attack");
             finishedAttack();
         }
 

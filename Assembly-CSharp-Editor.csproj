@@ -52,12 +52,17 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Shaders\Editor\RFX4_UberParticleGUI.cs" />
      <Compile Include="Assets\SampleSceneAssets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
      <Compile Include="Assets\StarterAssets\Editor\PackageChecker\PackageChecker.cs" />
      <Compile Include="Assets\StarterAssets\Editor\ScriptingDefineUtils.cs" />
+     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Shaders\Editor\RFX4_UberDecalGUI.cs" />
      <Compile Include="Assets\StarterAssets\Editor\StarterAssetsDeployMenu.cs" />
+     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Editor\RFX4_ReplaceDistortionForMobile.cs" />
      <Compile Include="Assets\StarterAssets\Editor\ThirdPersonStarterAssetsDeployMenu.cs" />
+     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Editor\RFX4_CustomMaterialInspectorParticle.cs" />
      <Compile Include="Assets\Hovl Studio\Render Pipelines support\Editor\ShaderChanger.cs" />
+     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Shaders\Editor\RFX4_UberDistortionGUI.cs" />
      <None Include="Assets\StarterAssets\Editor\PackageChecker\PackageImportList.txt" />
      <None Include="Assets\EffectExamples\Editor\PackageManagerAssembly\PackageImportList.txt" />
  <Reference Include="UnityEngine">

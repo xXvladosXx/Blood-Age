@@ -1,6 +1,7 @@
 ﻿namespace SkillSystem.MainComponents
 {
     using DefaultNamespace;
+    using DefaultNamespace.Entity;
     using DefaultNamespace.SkillSystem.SkillNodes;
     using Sirenix.OdinInspector;
     using UnityEngine;
@@ -11,7 +12,7 @@
     {
         public CharacteristicBonus[] _playerPassiveSkillBonus;
         
-        public override void ApplySkill(GameObject user)
+        public override void ApplySkill(AliveEntity user)
         {
            
         }

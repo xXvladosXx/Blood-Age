@@ -4,6 +4,8 @@
     using System.Collections;
     using DefaultNamespace.MouseSystem;
     using DefaultNamespace.SkillSystem.SkillInfo;
+    using DefaultNamespace.StateMachine;
+    using DefaultNamespace.StateMachine.PlayerStates;
     using DefaultNamespace.UI.ButtonClickable;
     using InventorySystem;
     using UnityEngine;
@@ -46,6 +48,7 @@
             while (true)
             {
                 RaycastHit raycastHit;
+                skillData.GetUser.GetComponent<IStateSwitcher>().SwitchState<CastPlayerState>();
 
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out raycastHit,
                     1000, _layerMask))
@@ -61,6 +64,15 @@
                 {
                     Destroy(particleEffect);
                     _animator.SetBool(Canceled, true);
+                    
+                    var state = skillData.GetUser.GetComponent<IStateSwitcher>().GetCurrentState;
+
+                    if (state is CastPlayerState castPlayerState)
+                    {
+                        castPlayerState.SwitchToIdle();
+                    }
+                    
+                    finished();
                     yield break;
                 }
 

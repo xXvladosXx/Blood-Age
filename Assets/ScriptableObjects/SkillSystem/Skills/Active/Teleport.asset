@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52792713ff794f35af4316763e144300, type: 3}
+  m_Name: Teleport
+  m_EditorClassIdentifier: 
+  _targeting: {fileID: 11400000, guid: dde65f83de3da06499ae849b81a4980b, type: 2}
+  _filtering: []
+  _effectApplying:
+  - {fileID: 11400000, guid: 09da8c04ec2e3f746bed5a8bcd908179, type: 2}
+  - {fileID: 11400000, guid: 92d6b6e36bcfadb43a5e3fe544698ce3, type: 2}

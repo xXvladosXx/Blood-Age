@@ -123,8 +123,8 @@
      <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\Common\ComponentSingleton.cs" />
      <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\Utilities\XRUtils.cs" />
      <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\Debugging\DebugShapes.cs" />
-     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\RenderGraph\RenderGraphLogger.cs" />
      <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\Utilities\HableCurve.cs" />
+     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\RenderGraph\RenderGraphLogger.cs" />
      <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\Debugging\ProfilingScope.cs" />
      <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\Common\ObjectPools.cs" />
      <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Runtime\Utilities\ResourceReloader.cs" />

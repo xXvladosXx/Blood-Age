@@ -42,17 +42,14 @@ public class ItemTooltip : MonoBehaviour
         
         Vector2 anchoredPosition = (Mouse.current.position.ReadValue()) / _canvas.transform.localScale.x;
 
-        if (anchoredPosition.x + _background.rect.width > _canvas.rect.width)
+        if (anchoredPosition.x + _background.rect.width + _offset.x > _canvas.rect.width)
         {
             anchoredPosition.x = _canvas.rect.width - _background.rect.width;
-            print("Left");
-            
         }
 
-        if (anchoredPosition.y + _background.rect.height > _canvas.rect.height)
+        if (anchoredPosition.y + _background.rect.height + _offset.y > _canvas.rect.height)
         {
-            anchoredPosition.y = _canvas.rect.height - _background.rect.height;
-            anchoredPosition.y -= _background.rect.height;
+            anchoredPosition.y -= (2 * _offset.y) + _background.rect.height;
         }
 
         _scale.anchoredPosition = anchoredPosition + _offset;

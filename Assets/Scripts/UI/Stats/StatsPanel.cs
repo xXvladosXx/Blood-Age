@@ -2,37 +2,40 @@
 {
     using System;
     using System.Collections.Generic;
+    using DefaultNamespace.Entity;
     using TMPro;
     using UnityEngine;
+    using UnityEngine.EventSystems;
     using Stats = DefaultNamespace.Stats;
 
-    public class StatsPanel : MonoBehaviour
+    public class StatsPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private int _level;
         [SerializeField] private TextMeshProUGUI _levelUI;
+        [SerializeField] private AliveEntity _aliveEntity;
 
-        private StatsDisplay[] _statsDisplays;
-        private Dictionary<Stats, float> _stats;
+        private bool _isOnInterface;
+        private StatsConfirm _statsConfirm;
+
+        public bool GetIsOnInterface => _isOnInterface;
 
         private void Awake()
         {
-            _statsDisplays = GetComponentsInChildren<StatsDisplay>();
+            _statsConfirm = GetComponentInChildren<StatsConfirm>();
+
+            _statsConfirm.OnStatsConfirmed += StatsTooltip.Instance.ShowStatTooltip;
         }
 
-        private void Start()
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            foreach (var statsDisplay in _statsDisplays)
-            {
-                foreach (var stat in _stats)
-                {
-                    statsDisplay.SetStat(stat.Key, stat.Value);
-                }
-            }
+            _isOnInterface = true;
+            StatsTooltip.Instance.ShowStatTooltip();
         }
 
-        public void SetStats(Dictionary<Stats, float> stats)
+        public void OnPointerExit(PointerEventData eventData)
         {
-            _stats = stats;
+            _isOnInterface = false;
+            StatsTooltip.Instance.HideStatTooltip();
         }
     }
 }
