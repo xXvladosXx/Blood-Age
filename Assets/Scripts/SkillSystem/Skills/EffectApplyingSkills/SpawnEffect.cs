@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using AttackSystem.AttackMechanics;
 using DefaultNamespace.SkillSystem.SkillInfo;
 using Runemark.Common;
@@ -28,6 +29,7 @@ namespace SkillSystem.Skills.EffectApplyingSkills
         [SerializeField] private Vector3 _offset;
         [SerializeField] private float _criticalChance;
         [SerializeField] private float _criticalDamage;
+        [SerializeField] private int _accuracy = 100;
         
         private GameObject _instantiatedGameObject;
         private float _xOffset;
@@ -79,7 +81,7 @@ namespace SkillSystem.Skills.EffectApplyingSkills
                     Damage = _damage,
                     Damager = skillData.GetUser,
                     Targets = skillData.GetUser.Targets,
-                    Accuracy = 100,
+                    Accuracy = _accuracy,
                     CriticalChance = _criticalChance,
                     CriticalDamage = _criticalDamage
                 });
@@ -112,10 +114,17 @@ namespace SkillSystem.Skills.EffectApplyingSkills
             }   
         }
 
-        public void AddData(Dictionary<string, float> data)
-        {
-            if(_damage != 0)
-                data.Add("Damage", _damage);
+        public void AddData(Dictionary<string, StringBuilder> data)
+        { 
+            if(!_hasOwnDamageScript) return;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Damage: ").Append(_damage).AppendLine();
+            stringBuilder.Append("Critical chance: ").Append(_criticalChance).AppendLine();
+            stringBuilder.Append("Critical damage: ").Append(_criticalDamage).AppendLine();
+            stringBuilder.Append("Accuracy: ").Append(_accuracy).AppendLine();
+            stringBuilder.Append("Delay to spawn: ").Append(_delay).AppendLine();
+            
+            data.Add("Spawn damage effects: ", stringBuilder);
         }
     }
 }

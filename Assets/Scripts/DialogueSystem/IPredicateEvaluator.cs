@@ -4,6 +4,6 @@ namespace DialogueSystem
 {
     public interface IPredicateEvaluator
     {
-        bool? Evaluate(AIDialogueQuestCondition parameters);
+        bool? Evaluate(AIDialogueCondition parameters);
     }
 }

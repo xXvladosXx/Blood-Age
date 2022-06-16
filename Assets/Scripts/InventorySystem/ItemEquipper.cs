@@ -23,7 +23,6 @@ namespace InventorySystem
         [SerializeField] private ItemContainer _equipmentItems;
         [SerializeField] private DamageResistance _damageResistance;
         [SerializeField] private string _defaultResistance = "Default Resistance";
-        [SerializeField] private List<InventoryItem> _equippedItems = new List<InventoryItem>();
         [SerializeField] private Transform _handR;
         [SerializeField] private Transform _handL;
         [SerializeField] private StandardWeapon _starterWeapon;
@@ -31,204 +30,124 @@ namespace InventorySystem
         [SerializeField] private Projectile _standartProjectile;
         [SerializeField] private Arrow _projectile;
 
-        private Chest _chest;
-        private Helmet _helmet;
-        private Boots _boots;
         private GameObject _weaponPrefab;
         private Animator _animator;
         private float _attackRange;
-        private ItemContainer _itemContainer;
-        private ItemPicker _itemPicker;
+        private Dictionary<DamageType, float> _resistances = new Dictionary<DamageType, float>();
         
         public DamageResistance GetDamageResistance => _damageResistance;
-        public List<InventoryItem> GetEquippedItems => _equippedItems;
         public Arrow GetProjectile => _projectile;
         public StandardWeapon GetCurrentWeapon => _weapon;
         public float GetAttackRange => _attackRange;
-
-
-        public event Action<AttackMaker> OnWeaponChanged;
-        public event Action OnEquipmentChange;
+        public AttackMaker GetAttackMaker => _weaponPrefab.GetComponent<AttackMaker>();
+        public event Action<InventoryItem> OnEquipmentChange;
 
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
-            _itemPicker = GetComponent<ItemPicker>();
             if (_damageResistance == null)
             {
                 _damageResistance = Resources.Load<DamageResistance>( _defaultResistance);
             }
-            _damageResistance.SetUp();
-            
-            if(_itemPicker == null) return;
-            
-            _equipmentItems.OnItemChange += CheckToUnEquip;
-            _itemPicker.GetItemContainer.OnItemChange += CheckToEquip;
-        }
-        
-        private void Start()
-        {
-            if(_equipmentItems == null) return;
-            foreach (var item in _equipmentItems.GetInventoryItems())   
-            {
-                EquipItem(item as InventoryItem);
-            }
         }
 
-
-        public void SetResistance(DamageResistance.Resistance[] resistances, bool b = false)
+        private void FindStarterResistance()
         {
-            foreach (var resistance in resistances)
+            foreach (var resistance in _damageResistance._settings)
             {
-                if (_damageResistance._resistances.TryGetValue(resistance.DamageType, out var f))
+                if (!_resistances.TryGetValue(resistance.DamageType, out var f))
                 {
-                    _damageResistance._resistances.Remove(resistance.DamageType);
-                    _damageResistance._resistances.Add(resistance.DamageType, f + (b ? -resistance.DamageResistance : resistance.DamageResistance));
+                    _resistances.Add(resistance.DamageType, resistance.DamageResistance);
+                }
+                else
+                {
+                    _resistances.Remove(resistance.DamageType);
+                    _resistances.Add(resistance.DamageType, f+resistance.DamageResistance);
                 }
             }
         }
-        private void CheckToEquip(Item item1, Item item2)
-        {
-            if (!_itemPicker.GetItemContainer.GetInventoryItems().Contains(item2))
-            {
-                EquipItem(item2 as InventoryItem);
-            }
-        }
 
-        private void CheckToUnEquip(Item item1, Item item2)
+        private void FindItemsResistances()
         {
-            if (item1 != null)
+            foreach (var inventoryItem in _equipmentItems.GetInventoryItems())
             {
-                UnequipItem(item2 as IEquipable);
-                EquipItem(item1 as InventoryItem);
-            }
-            
-            if (item1 == null)
-            {
-                UnequipItem(item2 as IEquipable);
-            }
-        }
-
-        private void EquipItem(InventoryItem item)
-        {
-            switch (item)
-            {
-                case Projectile projectile:
-                    EquipProjectile(projectile);
-                    break;
-                case StandardWeapon standardWeapon:
-                    EquipWeapon(standardWeapon);
-                    break;
-                case StandardArmor standardArmor:
-                    EquipArmor(standardArmor);
-                    break;
-            }
-        }
-
-        private void UnequipItem(IEquipable item)
-        {
-            switch (item)
-            {
-                case StandardWeapon standardWeapon:
-                    UnequipWeapon(standardWeapon);
-                    break;
-                case StandardArmor standardArmor:
-                    UnequipArmor(standardArmor);
-                    break;
-            }
-        }
-
-        private void UnequipWeapon(StandardWeapon standardWeapon)
-        {
-            var equippedItems = new List<InventoryItem>(_equippedItems);
-
-            foreach (var item in equippedItems)
-            {
-                if (item.Data.Id == standardWeapon.Data.Id)
+                if (inventoryItem is StandardArmor standardArmor)
                 {
-                    _equippedItems.Remove(standardWeapon);
-                    Destroy(_weaponPrefab);
-                    _weapon = _starterWeapon;
-                    _weaponPrefab = Instantiate(_weapon.GetPrefab, _weapon.IsRightHand ? _handR : _handL);
-                    _weapon.EquipWeapon(_animator);
+                    foreach (var resistance in standardArmor.GetDamageResistances)
+                    {
+                        if (_resistances.TryGetValue(resistance.DamageType, out var f))
+                        {
+                            _resistances.Remove(resistance.DamageType);
+                            _resistances.Add(resistance.DamageType, f + resistance.DamageResistance);
+                        }
+                    }
                 }
             }
         }
-        
-        private void UnequipArmor(StandardArmor standardArmor)
+
+        public float CalculateResistance(float damage, DamageType damageType)
         {
-            switch (standardArmor)
+            FindStarterResistance();
+            FindItemsResistances();
+            
+            foreach (var resistance in _resistances)
             {
-                case Boots boots:
-                    _equippedItems.Remove(_boots);
-                    SetResistance(_boots.GetDamageResistances, true);
-                    _boots = null;
-
-                    break;
-                case Chest chest:
-                    _equippedItems.Remove(_chest);
-                    SetResistance(_chest.GetDamageResistances, true);
-                    _chest = null;
-
-                    break;
-                case Helmet helmet:
-                    _equippedItems.Remove(_helmet);
-                    SetResistance(_helmet.GetDamageResistances, true);
-                    _helmet = null;
-
-                    break;
+                if (resistance.Key == damageType)
+                {
+                    float f = damage * (1 - resistance.Value);
+                    _resistances.Clear();
+                    return f;
+                }
             }
             
-            OnEquipmentChange?.Invoke();
+            return 0;
         }
-
-        private void EquipProjectile(Projectile item)
+        
+        private void Update()
         {
-            if (_weapon is IRangeable weaponProjectile)
+            foreach (var damageResistanceResistance in _resistances)
             {
-                _equippedItems.Add(_projectile);
-            }
-            else
-            {
-                _equippedItems.Remove(_projectile);
+                print(damageResistanceResistance.Key +" " +damageResistanceResistance.Value);
             }
         }
 
-        private void EquipWeapon(StandardWeapon standardWeapon)
+        private void OnEnable()
         {
-            _equippedItems.Remove(_weapon);
-            _weapon = standardWeapon;
+            _animator = GetComponent<Animator>();
+            OnInventoryUpdate();
+            
+            _equipmentItems.OnInventoryChange += OnInventoryUpdate;
+        }
+
+        private void OnInventoryUpdate()
+        {
+            var itemsInInventory = _equipmentItems.GetInventoryItems();
+            
+            foreach (var inventoryItem in itemsInInventory)
+            {
+                switch (inventoryItem)
+                {
+                    case StandardWeapon standardWeapon:
+                        WeaponEquip(standardWeapon);
+                        break;
+                    case StandardArmor standardArmor:
+                        OnEquipmentChange?.Invoke(standardArmor);
+                        break;
+                }
+            }
+            
+            var weapon = itemsInInventory.OfType<StandardWeapon>().FirstOrDefault();
+            if(weapon == null)
+                WeaponEquip(_starterWeapon);
+        }
+
+        private void WeaponEquip(StandardWeapon weapon)
+        {
+            _weapon = weapon;
+            weapon.EquipWeapon(_animator);
             Destroy(_weaponPrefab);
-            _equippedItems.Add(_weapon);
-            _weaponPrefab = Instantiate(_weapon.GetPrefab, _weapon.IsRightHand ? _handR : _handL);
-
-            _attackRange = _weapon.GetAttackDistance;
-            _weapon.EquipWeapon(_animator);
-            OnEquipmentChange?.Invoke();
-            OnWeaponChanged?.Invoke(_weaponPrefab.GetComponent<AttackMaker>());
-        }
-        
-        private void EquipArmor(StandardArmor standardArmor)
-        {
-            switch (standardArmor)
-            {
-                case Boots boots:
-                    _equippedItems.Remove(_boots);
-                    _boots = boots;
-                    break;
-                case Chest chest:
-                    _equippedItems.Remove(_chest);
-                    _chest = chest;
-                    break;
-                case Helmet helmet:
-                    _equippedItems.Remove(_helmet);
-                    _helmet = helmet;
-                    break;
-            }
-
-            SetResistance(standardArmor.GetDamageResistances);
-            _equippedItems.Add(standardArmor);
-            OnEquipmentChange?.Invoke();
+            _weaponPrefab = Instantiate(weapon.GetPrefab, weapon.IsRightHand ? _handR : _handL);
+            _attackRange = weapon.GetAttackDistance;
+            OnEquipmentChange?.Invoke(weapon);
         }
 
         public IEnumerable<IBonus> AddBonus(Characteristics[] characteristics)
@@ -236,7 +155,7 @@ namespace InventorySystem
             IEnumerable<IBonus> AllModifierBonuses(IModifier modifier)
                 => modifier.AddBonus(characteristics);
 
-            return _equippedItems
+            return _equipmentItems.GetInventoryItems()
                 .OfType<IModifier>()
                 .SelectMany(AllModifierBonuses);
         }
@@ -253,11 +172,10 @@ namespace InventorySystem
             _equipmentItems.ClearInventory();
             foreach (var item in items)
             {
-                var equipItem = _equipmentItems.FindNecessaryItemInData(item.ItemData.Id);
+                var equipItem = _equipmentItems.Database.GetItemByID(item.ItemData.Id);
                 if (equipItem != null)
                 {
                     _equipmentItems.AddItem(equipItem.Data, item.Amount);
-                    EquipItem(equipItem as InventoryItem);
                 }
             }
         }

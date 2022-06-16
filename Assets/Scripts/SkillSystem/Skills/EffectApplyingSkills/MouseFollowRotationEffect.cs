@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using AttackSystem.AttackMechanics;
 using DefaultNamespace.SkillSystem.SkillInfo;
 using Entity;
@@ -21,18 +22,14 @@ namespace SkillSystem.Skills.EffectApplyingSkills
         [SerializeField] private GameObject _hitParticle;
         [SerializeField] private float _maxDamage;
         [SerializeField] private float _delayToDamage;
-        [SerializeField] private float _criticalChance;
-        [SerializeField] private float _criticalDamage;
         [SerializeField] private float _damage;
         [SerializeField] private float _manaPerSecond;
         [SerializeField] private float _staminaPerSecond;
+        [SerializeField] private float _timeToDestroy;
         
-        private Camera _camera;
-
         public override void Effect(SkillData skillData, Action cancel, Action finished)
         {
             skillData.StartCoroutine(WaitUntilCanceled(skillData, cancel, finished));
-            _camera = Camera.main;
         }
 
         private IEnumerator WaitUntilCanceled(SkillData skillData, Action cancel, Action finished)
@@ -52,6 +49,9 @@ namespace SkillSystem.Skills.EffectApplyingSkills
                 }, _hitParticle, _delayToDamage);
             }
             
+            if(_timeToDestroy != 0)
+                Destroy(particleEffect, _timeToDestroy);
+
             while (true)
             {
                 if (!skillData.GetUser.GetMana.HasEnoughMana(_manaPerSecond))
@@ -84,17 +84,16 @@ namespace SkillSystem.Skills.EffectApplyingSkills
             finished();
         }
 
-        public void AddData(Dictionary<string, float> data)
+        public void AddData(Dictionary<string, StringBuilder> data)
         {
-            if(_criticalChance != 0)
-                data.Add("Critical Chance", _criticalChance);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Start damage: ").Append(_damage).AppendLine();
+            stringBuilder.Append("Max damage: ").Append(_maxDamage).AppendLine();
+            stringBuilder.Append("Delay: ").Append(_delayToSpawn).AppendLine();
+            stringBuilder.Append("Stamina per second: ").Append(_staminaPerSecond).AppendLine();
+            stringBuilder.Append("Mana per second: ").Append(_manaPerSecond).AppendLine();
             
-            if(_criticalDamage != 0)
-                data.Add("Critical Damage", _criticalDamage);
-            
-            if(_damage != 0)
-                data.Add("Damage", _maxDamage);
-            data.Add("Accuracy", 100);
+            data.Add("Continuous damage effects: ", stringBuilder);
         }
     }
 }

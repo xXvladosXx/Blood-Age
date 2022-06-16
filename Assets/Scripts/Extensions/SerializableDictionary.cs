@@ -1,5 +1,6 @@
 ﻿using System;
 using Entity.Classes;
+using InventorySystem;
 using QuestSystem;
 using Resistance;
 using RotaryHeart.Lib.SerializableDictionary;
@@ -12,4 +13,7 @@ namespace Extensions
     
     [Serializable] 
     public class StatModifyDictionary : SerializableDictionaryBase<Characteristics, ModifyStatBonus> {}
+
+    [Serializable]
+    public class InventoryDictionary : SerializableDictionaryBase<int, Item>{}
 }

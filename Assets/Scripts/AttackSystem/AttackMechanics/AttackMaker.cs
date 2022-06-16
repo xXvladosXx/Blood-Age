@@ -52,16 +52,6 @@ namespace AttackSystem.AttackMechanics
             {
                 _attackData.Entities = new List<AliveEntity> {aliveEntity};
                 aliveEntity.GetHealth.TakeHit(_attackData);
-
-                // if (aliveEntity.GetComponent<StarterAssetsInputs>() != null) return;
-                //if(_attackData.StunnedAttack <= 0) return;
-                // if (aliveEntity.TryGetComponent(out IStateSwitcher stateSwitcher))
-                // {
-                //     if(stateSwitcher.GetCurrentState is StunnedBaseState) return;
-                //     
-                //     StartCoroutine(stateSwitcher
-                //         .SwitchState<StunnedBaseState>()
-                //         .ChangeStateToStunned(_attackData.StunnedAttack));
             }
             
         }
@@ -77,8 +67,10 @@ namespace AttackSystem.AttackMechanics
         public void MakeHit(AttackData calculateAttackData)
         {
             _attackData = calculateAttackData;
-            if(_attackData.PointTarget != null)
+            if (_attackData.PointTarget != null)
+            {
                 _attackData.PointTarget.GetHealth.TakeHit(_attackData);
+            }
         }
     }
 }

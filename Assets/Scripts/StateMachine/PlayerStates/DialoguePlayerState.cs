@@ -1,11 +1,7 @@
 ﻿using DialogueSystem;
 using DialogueSystem.AIDialogue;
 using Entity;
-using MouseSystem;
-using UI.Shop;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace StateMachine.PlayerStates
 {
@@ -18,33 +14,33 @@ namespace StateMachine.PlayerStates
         {
             base.GetComponents(aliveEntity);
             _playerConversant = aliveEntity.GetComponent<PlayerConversant>();
+            
         }
 
-        public override void RunState(AliveEntity aliveEntity)
-        {
-            if (PointerOverUI()) return;
-            if (StarterAssetsInputs.ButtonInput)
-            {
-                RaycastHit raycastHit;
-                Physics.Raycast(AliveEntity.GetRay(), out raycastHit, Mathf.Infinity);
-                if (raycastHit.collider.TryGetComponent(out AIConversant aiConversant))
-                {
-                    if (aiConversant == _aiConversant) return;
-                    
-                }
-                
-                EndDialogue();
-            }
-        }
-
-        public override void StartState(float time)
+        public override void EndState(AliveEntity aliveEntity)
         {
             
         }
 
-        public void EndDialogue()
+        public override bool CanBeChanged => true;
+
+        
+        public override void RunState(AliveEntity aliveEntity)
         {
-            _aiConversant.DisableOutline();
+         
+        }
+
+        public override void StartState(AliveEntity aliveEntity)
+        {
+            PlayerEntity.OnDied += entity => StateSwitcher.SwitchState<IdlePlayerState>();
+            
+        }
+
+        private void EndDialogue()
+        {
+            if(_aiConversant != null)
+                _aiConversant.DisableOutline();
+            
             _playerConversant.Quit();
             StateSwitcher.SwitchState<IdlePlayerState>();
             _aiConversant = null;
@@ -52,9 +48,15 @@ namespace StateMachine.PlayerStates
 
         public void StartDialogue(AIConversant aiConversant)
         {
+            _playerConversant.OnDialogueEnd += EndDialogue;
             _aiConversant = aiConversant;
-            _aiConversant.EnableOutLine();
+
+            Transform transform;
+            (transform = _aiConversant.transform).LookAt(PlayerEntity.transform);
+            PlayerEntity.transform.LookAt(transform);
+
             _playerConversant.StartDialogue(_aiConversant, aiConversant.GetDialogue);
+           
         }
     }
 }

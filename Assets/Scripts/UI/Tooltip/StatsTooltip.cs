@@ -1,4 +1,5 @@
 ﻿using Entity;
+using TMPro;
 using UI.Stats;
 using UI.Tooltip.Components;
 using UnityEngine;
@@ -12,17 +13,13 @@ namespace UI.Tooltip
         [SerializeField] private RectTransform _canvas;
         [SerializeField] private RectTransform _background;
         [SerializeField] private ItemComparer _itemComparer;
-        [SerializeField] private StatsComparer[] _statsComparers;
+        [SerializeField] private TextMeshProUGUI _stats;
+        
 
-        private AliveEntity _aliveEntity;
-
-        public void ShowStatTooltip()
+        public void ShowStatTooltip(string s)
         {
-            foreach (var statsComparer in _statsComparers)
-            {
-                statsComparer.UpdateCharacteristics(_aliveEntity);
-            }
-
+            _stats.text = s;
+            
             gameObject.SetActive(true);
         }
 
@@ -33,10 +30,8 @@ namespace UI.Tooltip
 
         public override void Initialize(AliveEntity aliveEntity)
         {
-            _aliveEntity = aliveEntity;
             Instance = this;
 
-            _statsComparers = GetComponentsInChildren<StatsComparer>();
             HideStatTooltip();
         }
     }

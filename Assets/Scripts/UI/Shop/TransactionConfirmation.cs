@@ -1,4 +1,5 @@
 ﻿using System;
+using InventorySystem;
 using InventorySystem.Items;
 using ShopSystem;
 using TMPro;
@@ -9,7 +10,7 @@ namespace UI.Shop
 {
     public abstract class TransactionConfirmation : MonoBehaviour
     {
-        [SerializeField] private Button _yes;
+        [SerializeField] protected Button Yes;
         [SerializeField] private Button _no;
         [SerializeField] private Button _add;
         [SerializeField] private Button _remove;
@@ -17,7 +18,6 @@ namespace UI.Shop
         [SerializeField] protected TextMeshProUGUI _confirmationText;
 
         protected Customer Customer;
-        protected int CustomerGold;
         protected InventoryItem ItemToPurchase;
         protected Seller Seller;
         protected int MaxAmount;
@@ -25,7 +25,7 @@ namespace UI.Shop
 
         private void OnEnable()
         {
-            _yes.onClick.AddListener(ConfirmTransaction);
+            Yes.onClick.AddListener(ConfirmTransaction);
             _no.onClick.AddListener(RejectTransaction);
             _add.onClick.AddListener(AddAmount);
             _remove.onClick.AddListener(RemoveAmount);
@@ -58,7 +58,7 @@ namespace UI.Shop
 
         private void OnDisable()
         {
-            _yes.onClick.RemoveAllListeners();
+            Yes.onClick.RemoveAllListeners();
             _no.onClick.RemoveAllListeners();
             _add.onClick.RemoveAllListeners();
             _remove.onClick.RemoveAllListeners();

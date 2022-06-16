@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
 using StatsSystem;
@@ -8,7 +10,7 @@ using UnityEngine;
 namespace SkillSystem.Skills.EffectApplyingSkills
 {
     [CreateAssetMenu (menuName = "Skill/Effect/BonusToCharacteristic")]
-    public class BonusEffect : EffectApplying
+    public class BonusEffect : EffectApplying, ICollectable
     {
         [SerializeField] private string _bonus;
         [SerializeField] private float _modifier;
@@ -16,33 +18,53 @@ namespace SkillSystem.Skills.EffectApplyingSkills
         [SerializeField] public Buff[] _temporaryBuffs;
         
         private float _startValue;
-        private Animator _animator;
-        
+        private LTDescr _leanTween;
         public override void Effect(SkillData skillData, Action cancel, Action finished)
         {
-            _animator = skillData.GetUser.GetComponent<Animator>();
-            _startValue = _animator.GetFloat(_bonus);
-            _animator.SetFloat(_bonus, _modifier);
-            skillData.StartCoroutine(WaitToDisableBonus(skillData));
-        }
-        private IEnumerator WaitToDisableBonus(SkillData skillData)
-        {
-            float time = 0;
-
             skillData.GetUser.GetComponent<BuffApplier>().SetBuff(_temporaryBuffs);
+        }
 
-            while (true)
+        public void AddData(Dictionary<string, StringBuilder> data)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            
+            if (_temporaryBuffs.Length > 1)
+                stringBuilder.Append("Bonuses:").AppendLine();
+            else 
+                stringBuilder.Append("Bonus:").AppendLine();
+            
+            foreach (var buff in _temporaryBuffs)
             {
-                time += Time.deltaTime;
-
-                if (time > _time)
+                switch (buff.GetCharacteristicBonus.Characteristics)
                 {
-                    _animator.SetFloat(_bonus, _startValue);
-                    yield break;
+                    case Characteristics.Damage:
+                        stringBuilder.Append("Damage: ");
+                        break;
+                    case Characteristics.Accuracy:
+                        stringBuilder.Append("Accuracy: ");
+                        break;
+                    case Characteristics.Evasion:
+                        stringBuilder.Append("Evasion: ");
+                        break;
+                    case Characteristics.CriticalChance:
+                        stringBuilder.Append("Critical chance: ");
+                        break;
+                    case Characteristics.CriticalDamage:
+                        stringBuilder.Append("Critical damage: ");
+                        break;
+                    case Characteristics.Health:
+                        stringBuilder.Append("Health: ");
+                        break;
+                    case Characteristics.HealthRegeneration:
+                        stringBuilder.Append("Health regeneration: ");
+                        break;
                 }
-                
-                yield return null;
+
+                stringBuilder.Append(buff.GetCharacteristicBonus.Value).AppendLine();
+                stringBuilder.Append("Time: ").Append(buff.GetLenghtOfEffect).AppendLine();
             }
+            
+            data.Add("Bonus", stringBuilder);
         }
     }
 }

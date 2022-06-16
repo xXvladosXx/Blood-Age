@@ -10,82 +10,62 @@ namespace StateMachine.PlayerStates
     public class CastPlayerState : BasePlayerState
     {
         private SkillTree _skillTree;
-        private AbilityTree _abilityTree;
-        private Dictionary<int, ActiveSkill> _indexSkills;
 
         public override void GetComponents(AliveEntity aliveEntity)
         {
             base.GetComponents(aliveEntity);
             _skillTree = aliveEntity.GetComponent<SkillTree>();
-            _abilityTree = aliveEntity.GetComponent<AbilityTree>();
         }
 
-        public void CastSkill(int index, AliveEntity aliveEntity)
+        public bool CastSkill(int index, AliveEntity aliveEntity)
         {
-            int skillIndex = -1;
-            _indexSkills = new Dictionary<int, ActiveSkill>();
-            
-            foreach (var id in _skillTree.GetActionIds)
+            if (_skillTree.CanCastSkill(index))
             {
-                skillIndex++;
-
-                if (id < 0)
-                {
-                    continue;
-                }
-
-                var item = _skillTree.GetActionSkills.FindNecessaryItemInData(id);
-                if(item is ActiveSkill activeSkill)
-                {
-                    _indexSkills.Add(skillIndex, activeSkill);
-                }
+                _skillTree.CastSkill(index, aliveEntity);
+                return true;
             }
 
-            if (!_indexSkills.ContainsKey(index))
-            {
-                StateSwitcher.SwitchState<IdlePlayerState>();
-                return;
-            }
-            if (!_skillTree.CanCastSkill(_indexSkills[index], aliveEntity))
-            { 
-                StateSwitcher.SwitchState<IdlePlayerState>();
-            }
-            else
-            {
-                Movement.enabled = true;
-                Movement.Cancel();
-            }
+            StateSwitcher.SwitchState<IdlePlayerState>();
+            Movement.enabled = true;
+            Movement.Cancel();
+            return false;
         }
-        
-        public void CastAbility(int index, AliveEntity aliveEntity)
-        {
-            var casted = _abilityTree.CastAbility(index, aliveEntity);
-            if (!casted)
-                StateSwitcher.SwitchState<IdlePlayerState>();
-        }
+
+        // public void CastAbility(int index, AliveEntity aliveEntity)
+        // {
+        //     var casted = _abilityTree.CastAbility(index, aliveEntity);
+        //     if (!casted)
+        //         StateSwitcher.SwitchState<IdlePlayerState>();
+        // }
 
         public void ComboCastSkill(AliveEntity aliveEntity, ActiveSkill activeSkill)
         {
-            if (activeSkill is AbilitySkill abilitySkill)
-            {
-                _abilityTree.CastAbility(abilitySkill, aliveEntity);
-            }
-            else
-            {
-                _skillTree.ComboSkillCast(activeSkill, aliveEntity);
-            }
+            _skillTree.ComboSkillCast(activeSkill, aliveEntity);
+
+            // if (activeSkill is AbilitySkill abilitySkill)
+            // {
+            //     _abilityTree.CastAbility(abilitySkill, aliveEntity);
+            // }
+            // else
+            // {
+            //}
         }
 
         public override void RunState(AliveEntity aliveEntity)
         {
-            if(Health.IsDead())
-                StateSwitcher.SwitchState<IdlePlayerState>();
-            
             Movement.Cancel();
         }
 
-        public override void StartState(float time)
+        public override void EndState(AliveEntity aliveEntity)
         {
+            
+        }
+
+        public override bool CanBeChanged => true;
+
+        public override void StartState(AliveEntity aliveEntity)
+        {
+            PlayerEntity.OnDied += entity => StateSwitcher.SwitchState<IdlePlayerState>();
         }
     }
 }

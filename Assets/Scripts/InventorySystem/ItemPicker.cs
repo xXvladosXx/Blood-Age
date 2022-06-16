@@ -15,7 +15,7 @@ namespace InventorySystem
         [SerializeField] private ItemContainer _itemContainer;
         public ItemContainer GetItemContainer => _itemContainer;
 
-        public event Action<InventoryItem> OnItemPickUp;
+        public event Action<InventoryItem, int> OnItemPickUp;
         public void AddItem(ItemPickUp lootObject, int amount = 1)
         {
             if (lootObject == null) return;
@@ -25,7 +25,7 @@ namespace InventorySystem
                 return;
             }
 
-            OnItemPickUp?.Invoke(lootObject.GetInventoryItem);
+            OnItemPickUp?.Invoke(lootObject.GetInventoryItem, amount);
             Destroy(lootObject.gameObject);
         }
         
@@ -41,7 +41,7 @@ namespace InventorySystem
             _itemContainer.ClearInventory();
             foreach (var item in items)
             {
-                var equipItem = _itemContainer.FindNecessaryItemInData(item.ItemData.Id);
+                var equipItem = _itemContainer.Database.GetItemByID(item.ItemData.Id);
                 if (equipItem != null)
                 {
                     _itemContainer.AddItem(equipItem.Data, item.Amount);

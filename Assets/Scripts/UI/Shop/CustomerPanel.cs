@@ -10,8 +10,6 @@ namespace UI.Shop
 {
     public class CustomerPanel : Panel
     {
-        public static CustomerPanel Instance { get; private set; }
-
         [SerializeField] private Transform _content;
         [SerializeField] private SellerItemDisplay _sellerItemDisplay;
         [SerializeField] private TransactionConfirmation _sellingConfirmation;
@@ -26,19 +24,16 @@ namespace UI.Shop
 
         public override void Initialize(AliveEntity aliveEntity)
         {
-            Instance = this;
             _customer = aliveEntity.GetComponent<Customer>();
-            _customer.OnInventoryChange += RefreshInventory;
             _inventoryContainer = _customer.GetItemContainer;
+            
+            _inventoryContainer.OnInventoryChange += DisplayItems;
+            _customer.OnInventoryShopOpen += SetSeller;
+
             _sellingConfirmation = GetComponentInChildren<SellingConfirmation>();
             
             _sellingConfirmation.gameObject.SetActive(false);
             gameObject.SetActive(false);
-        }
-
-        private void RefreshInventory()
-        {
-            DisplayItems();
         }
 
         private void DisplayItems()
@@ -48,7 +43,8 @@ namespace UI.Shop
             
             foreach (var key in _sellerItemsDisplay.Keys)
             {
-                Destroy(key.gameObject);
+                if(key != null)
+                    Destroy(key.gameObject);
             }
             
             _sellerItemsDisplay.Clear();
@@ -63,15 +59,16 @@ namespace UI.Shop
             }
         }
 
-        private void ConfirmPurchase(InventoryItem itemToSell)
+        private void ConfirmPurchase(Slot itemToSell)
         {
-            _sellingConfirmation.SetItemToPurchase(itemToSell, _customer, _seller, _inventoryContainer.FindSlotInInventory(itemToSell.Data).Amount);
+            _sellingConfirmation.SetItemToPurchase(_inventoryContainer.Database.GetItemByID(itemToSell.ItemData.Id) as InventoryItem, _customer, _seller, itemToSell.Amount);
             _sellingConfirmation.gameObject.SetActive(true);
         }
 
-        public void SetSeller(Seller seller)
+        private void SetSeller(Seller seller)
         {
             _seller = seller;
+
             DisplayItems();
         }
     }

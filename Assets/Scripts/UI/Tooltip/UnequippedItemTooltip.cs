@@ -20,25 +20,32 @@ namespace UI.Tooltip
         [SerializeField] private TextMeshProUGUI _price;
 
         private StringBuilder _stringBuilder;
-        private List<ItemComparer> _itemComparers;
 
-        public void ShowTooltip(Item overlappedInventoryItem)
+        public void ShowTooltip(Item overlappedInventoryItem, int priceModifier = 1)
         {
             _canvas.ForceUpdateRectTransforms();
-            Update();
 
             if (overlappedInventoryItem == null) return;
             if (overlappedInventoryItem is InventoryItem inventoryItem)
             {
-                _itemNameText.text = inventoryItem.name;
+                _itemNameText.text = inventoryItem.Data.Name;
+                _itemNameText.color = inventoryItem.Rarity.GetColor;
                 _itemSlotText.text = inventoryItem.Category.ToString();
-                _price.text = $"Price: {inventoryItem.Price.ToString()}";
+
+                var itemPrice = inventoryItem.Price;
+                if (priceModifier > 1)
+                {
+                    itemPrice += inventoryItem.Price * priceModifier / 100;
+                }
+                
+                _price.text = $"Price: {itemPrice.ToString()}";
 
                 _stringBuilder.Length = 0;
                 _stringBuilder.Append(inventoryItem.ItemInfo());
 
                 _itemStatsText.text = _stringBuilder.ToString();
 
+                Update();
                 gameObject.SetActive(true);
             }
         }
@@ -46,20 +53,11 @@ namespace UI.Tooltip
         public void HideTooltip()
         {
             gameObject.SetActive(false);
-
-            foreach (var itemComparer in _itemComparers)
-            {
-                Destroy(itemComparer.gameObject);
-            }
-
-            _itemComparers.Clear();
         }
 
         protected override void Initialize()
         {
             Instance = this;
-            _itemComparers = new List<ItemComparer>();
-
             HideTooltip();
 
             _stringBuilder = new StringBuilder();

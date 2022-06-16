@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace StateMachine.BaseStates
 {
-    public abstract class TauntBaseState : BaseComponentsState, ISwitchable
+    public abstract class TauntBaseState : BaseComponentsState
     {
         protected void MoveInOppositeDirection(Vector3 target)
         {
@@ -12,9 +12,6 @@ namespace StateMachine.BaseStates
             Movement.StartMoveTo(own, 1f);
         }
 
-        public bool CanSwitch()
-        {
-            return false;
-        }
+        
     }
 }

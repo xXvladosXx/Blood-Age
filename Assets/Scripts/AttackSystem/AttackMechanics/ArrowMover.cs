@@ -16,18 +16,13 @@ namespace AttackSystem.AttackMechanics
 
         private AttackData _attackData;
         private AliveEntity _damager;
+        private bool _stopped;
 
         public void SetInfoForArrow(AttackData attackData)
         {
             _damager = attackData.Damager;
             _attackData = attackData;
             _target = attackData.PointTarget;
-        }
-
-        private void Awake()
-        {
-            // _cinemachineVirtualCamera =
-            //     GameObject.FindWithTag("CinemachineShake").GetComponent<CinemachineVirtualCamera>();
         }
 
         private void Start()
@@ -40,33 +35,48 @@ namespace AttackSystem.AttackMechanics
 
             Destroy(gameObject, 4f);
             Vector3 direction = new Vector3(_target.transform.position.x,
-                _target.GetComponent<CapsuleCollider>().height / 2 + _target.transform.position.y, _target.transform.position.z) - transform.position;
+                _target.GetComponent<CapsuleCollider>().height / 2 + _target.transform.position.y,
+                _target.transform.position.z) - transform.position;
 
             transform.forward = direction;
         }
 
         private void Update()
         {
+            if(_stopped) return;
+            
             transform.position += transform.forward * Time.deltaTime * _speed;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            print(other);
-            if (other.TryGetComponent(out AliveEntity aliveEntity) && aliveEntity == _target)
+            if (other.TryGetComponent(out IDamageable destroyable))
             {
-                if(_attackData != null)
-                    aliveEntity.GetHealth.TakeHit(_attackData);
+                if (_attackData != null)
+                {
+                    if ((AliveEntity) destroyable == _target)
+                    {
+                        destroyable.Damage(_attackData);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
                 if (_particle != null)
                 {
-                    var collisionEffect = Instantiate(_particle, new Vector3(aliveEntity.transform.position.x,
-                            aliveEntity.GetComponent<CapsuleCollider>().height / 2 + _target.transform.position.y, aliveEntity.transform.position.z),
+                    var collisionEffect = Instantiate(_particle, new Vector3(_target.transform.position.x,
+                            _target.GetComponent<CapsuleCollider>().height / 2 + _target.transform.position.y,
+                            _target.transform.position.z),
                         Quaternion.identity);
 
                     Destroy(collisionEffect, _time);
                 }
-
-                Destroy(gameObject);
+                
+                _stopped = true;
+               
+                Destroy(gameObject, 3f);
             }
         }
     }

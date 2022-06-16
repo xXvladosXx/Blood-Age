@@ -5,7 +5,9 @@ using Entity;
 using InventorySystem;
 using InventorySystem.Items;
 using ShopSystem;
+using TMPro;
 using UI.Inventory;
+using UI.Tooltip;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,6 +20,7 @@ namespace UI.Shop
         [SerializeField] private Transform _content;
         [SerializeField] private SellerItemDisplay _sellerItemDisplay;
         [SerializeField] private TransactionConfirmation _buyingConfirmation;
+        [SerializeField] private TextMeshProUGUI _priceModifier;
         
         private List<AdditionFilter> _additionFilters = new List<AdditionFilter>();
         private List<ItemFilter> _itemFilters = new List<ItemFilter>();
@@ -26,6 +29,7 @@ namespace UI.Shop
 
         private Dictionary<SellerItemDisplay, InventoryItem> _sellerItemsDisplay =
             new Dictionary<SellerItemDisplay, InventoryItem>();
+        private List<InventoryItem> _lastFilteredInventoryItems = new List<InventoryItem>();
 
         private InventoryContainer _inventoryContainer;
         private Seller _seller;
@@ -69,14 +73,21 @@ namespace UI.Shop
         private void DisplayFilteredItems(List<InventoryItem> filteredInventoryItems)
         {
             DisplayItems(filteredInventoryItems);
+            _lastFilteredInventoryItems = filteredInventoryItems;
         }
 
         private void DisplaySellerInventory(InventoryContainer inventoryContainer)
         {
+            _priceModifier.text = $"{_seller.GetPriceModifier}%";
             _inventoryContainer = inventoryContainer;
+
+            var inventoryItems = _lastFilteredInventoryItems;
             
-            var inventoryItems = _inventoryContainer.GetInventoryItems()
-                .Select(item => item as InventoryItem).ToList();
+            if (inventoryItems.Count == 0)
+            {
+                inventoryItems = _inventoryContainer.GetInventoryItems()
+                    .Select(item => item as InventoryItem).ToList();
+            }
             
             DisplayItems(inventoryItems);
             
@@ -104,15 +115,15 @@ namespace UI.Shop
             {
                 var sellerItemDisplay = Instantiate(_sellerItemDisplay, _content);
                 sellerItemDisplay.SetInventoryItem(inventoryItem,
-                    _inventoryContainer.FindSlotInInventory(inventoryItem.Data));
+                    _inventoryContainer.FindSlotInInventory(inventoryItem.Data), _seller.GetPriceModifier);
                 _sellerItemsDisplay.Add(sellerItemDisplay, inventoryItem);
                 sellerItemDisplay.OnItemClicked += ConfirmPurchase;
             }
         }
 
-        private void ConfirmPurchase(InventoryItem itemToPurchase)
+        private void ConfirmPurchase(Slot itemToPurchase)
         {
-            _buyingConfirmation.SetItemToPurchase(itemToPurchase, _customer, _seller, _inventoryContainer.FindSlotInInventory(itemToPurchase.Data).Amount);
+            _buyingConfirmation.SetItemToPurchase(_inventoryContainer.Database.GetItemByID(itemToPurchase.ItemData.Id) as InventoryItem, _customer, _seller, itemToPurchase.Amount);
             _buyingConfirmation.gameObject.SetActive(true);
         }
 
@@ -143,8 +154,16 @@ namespace UI.Shop
         {
             _seller = seller;
             _seller.OnInventoryChange += RefreshShop;
+            
             DisplaySellerInventory(sellerInventory);
             gameObject.SetActive(true);
+        }
+
+        public void CloseShop()
+        {
+            _lastFilteredInventoryItems.Clear();
+            _seller.CloseShop();
+            ChangeUI(this);
         }
     }
 

@@ -2,7 +2,7 @@
 {
     public interface IStateSwitcher
     {
-        T SwitchState<T>(float time = 0) where T : BaseState;
+        T SwitchState<T>() where T : BaseState;
         public BaseState GetCurrentState { get; }
     }
 }

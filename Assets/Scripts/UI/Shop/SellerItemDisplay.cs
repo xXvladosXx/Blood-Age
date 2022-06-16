@@ -13,25 +13,30 @@ namespace UI.Shop
     {
         [SerializeField] private Image _image;
         [SerializeField] private TextMeshProUGUI _amount;
-        
+
+        private int _priceModifier;
         private InventoryItem _inventoryItem;
-        public event Action<InventoryItem> OnItemClicked;
+        private Slot _slot;
+        public event Action<Slot> OnItemClicked;
         
-        public void SetInventoryItem(InventoryItem inventoryItem, Slot slot)
+        public void SetInventoryItem(InventoryItem inventoryItem, Slot slot, int priceModifier = 1)
         {
             _inventoryItem = inventoryItem;
+            _slot = slot;
+            _priceModifier = priceModifier;
+
             _image.sprite = inventoryItem.UIDisplay;
             _amount.text = inventoryItem.Stackable ? slot.Amount.ToString() : "";
         }
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            OnItemClicked?.Invoke(_inventoryItem);
+            OnItemClicked?.Invoke(_slot);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            UnequippedItemTooltip.Instance.ShowTooltip(_inventoryItem);
+            UnequippedItemTooltip.Instance.ShowTooltip(_inventoryItem, _priceModifier);
         }
 
         public void OnPointerExit(PointerEventData eventData)

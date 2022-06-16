@@ -22,10 +22,17 @@ namespace StateMachine.PlayerStates
             if (PointerOverUI()) return;
         }
 
-        public override void StartState(float time)
+        public override void StartState(AliveEntity aliveEntity)
         {
             
         }
+
+        public override void EndState(AliveEntity aliveEntity)
+        {
+            
+        }
+
+        public override bool CanBeChanged => true;
 
         private void InterruptPicking()
         {

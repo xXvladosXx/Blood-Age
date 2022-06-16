@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
 using UnityEngine;
@@ -36,12 +37,14 @@ namespace SkillSystem.Skills.EffectApplyingSkills
             cancel();
         }
 
-        public void AddData(Dictionary<string, float> data)
+        public void AddData(Dictionary<string, StringBuilder> data)
         {
-            if(_healingValue != 0)
-                data.Add("Heal", _healingValue);
-            if(_delay != 0)
-                data.Add("Delay", _delay);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Healing: ").Append(_healingValue).AppendLine();
+            stringBuilder.Append("Delay: ").Append(_delay).AppendLine();
+            stringBuilder.Append("Waves: ").Append(_waves).AppendLine();
+            
+            data.Add("Healing effects: ", stringBuilder);
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.AI;
 
 namespace StateMachine
 {
+    [RequireComponent(typeof(NavMeshAgent))]
     public class Movement : MonoBehaviour, ISavable
     {
         private float _maxSpeed;
@@ -36,7 +37,6 @@ namespace StateMachine
         public void StartMoveTo(Vector3 destination, float speedFraction)
         {
             if(!_navMeshAgent.enabled) return;
-            print("MNoibe");
 
             _navMeshAgent.speed = _maxSpeed * Mathf.Clamp01(speedFraction);
             _navMeshAgent.destination = destination;
@@ -71,7 +71,6 @@ namespace StateMachine
 
         public void RestoreState(object state)
         {
-            print("restored");
             SerializableVector position =(SerializableVector)state;
 
             _navMeshAgent.enabled = false;

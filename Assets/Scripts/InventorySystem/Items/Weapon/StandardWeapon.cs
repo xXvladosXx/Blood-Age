@@ -14,9 +14,7 @@ namespace InventorySystem.Items.Weapon
         [SerializeField] protected RuntimeAnimatorController _animatorController;
         [SerializeField] private SerializableDictionary _additionalDamage;
         [SerializeField] protected GameObject _weaponPrefab;
-        [SerializeField] protected bool _isRanged;
         public GameObject GetPrefab => _weaponPrefab;
-        public bool GetIsRanged => _isRanged;
         public float GetAttackDistance => _attackRange;
         public bool IsRightHand => _rightHanded;
         public RPGCharacterAnims.Weapon GetWeaponType => _weaponType;

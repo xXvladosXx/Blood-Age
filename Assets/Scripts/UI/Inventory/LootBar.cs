@@ -1,4 +1,5 @@
 ﻿using System;
+using Entity;
 using LootSystem;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,12 @@ namespace UI.Inventory
 
         public void ShowBar()
         {
+            transform.position =
+                (_itemPickUp.transform.position + Vector3.up * _positionOffset);
+            
+            transform.LookAt(_camera.transform.position);
+            transform.Rotate(0, 180, 0);
+            
             gameObject.SetActive(true);
         }
 
@@ -28,17 +35,9 @@ namespace UI.Inventory
             gameObject.SetActive(false);
         }
         
-        private void LateUpdate()
-        {
-            transform.position =
-                (_itemPickUp.transform.position + Vector3.up * _positionOffset);
-            transform.LookAt(_camera.transform);
-            transform.Rotate(0, 180, 0);
-        }
-
         public void SetItemInfo(ItemPickUp item, int amount)
         {
-            _textMeshProUGUI.text = item.GetInventoryItem.name + amount;
+            _textMeshProUGUI.text = amount > 0 ? $"{item.GetInventoryItem.name} ({amount})" : item.GetInventoryItem.name;
             _textMeshProUGUI.color = item.GetInventoryItem.Rarity.GetColor;
             _itemPickUp = item;
         }

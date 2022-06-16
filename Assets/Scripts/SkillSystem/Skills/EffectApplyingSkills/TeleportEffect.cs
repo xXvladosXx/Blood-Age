@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using DefaultNamespace.SkillSystem.SkillInfo;
 using Entity;
 using SkillSystem.MainComponents.Strategies;
@@ -56,9 +57,9 @@ namespace SkillSystem.Skills.EffectApplyingSkills
             Destroy(particlesEnd, 1);
         }
 
-        public void AddData(Dictionary<string, float> data)
+        public void AddData(Dictionary<string, StringBuilder> data)
         {
-            data.Add("Delay", _delay);
+            return;
         }
 
         

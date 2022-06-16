@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using StateMachine;
 using UnityEngine;
 
 namespace States
@@ -6,7 +7,7 @@ namespace States
     public class AnimatorState : StateMachineBehaviour
     {
         public List<StateData> ListAbilityData = new List<StateData>();
-        private StarterAssetsInputs _starterAssetsInputs;
+        private PlayerInputs _playerInputs;
 
         private void UpdateAll(AnimatorState characterStateAnimator, Animator animator, AnimatorStateInfo animatorStateInfo)
         {
@@ -18,8 +19,8 @@ namespace States
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _starterAssetsInputs = animator.GetComponent<StarterAssetsInputs>();
-            if(_starterAssetsInputs == null) return;
+            _playerInputs = animator.GetComponent<PlayerInputs>();
+            if(_playerInputs == null) return;
 
             foreach (var stateData in ListAbilityData)
             {
@@ -29,14 +30,14 @@ namespace States
     
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
         {
-            if(_starterAssetsInputs == null) return;
+            if(_playerInputs == null) return;
 
             UpdateAll(this, animator, animatorStateInfo);
         }
     
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if(_starterAssetsInputs == null) return;
+            if(_playerInputs == null) return;
 
             foreach (var stateData in ListAbilityData)
             {

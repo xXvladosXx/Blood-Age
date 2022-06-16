@@ -27,19 +27,11 @@ namespace UI.Tooltip
             if (userInterface is DynamicInterface dynamicInterface)
             {
                 UnequippedItemTooltip.Instance.ShowTooltip(item);
-
-                foreach (var equippedItem in _aliveEntity.GetItemEquipper.GetEquippedItems)
-                {
-                    if (item is StandardWeapon && equippedItem is StandardWeapon)
-                    {
-                        EquippedItemTooltip.Instance.ShowTooltip(equippedItem);
-                    }
-                }
             }
 
             if (userInterface is StaticInterface staticInterface)
             {
-                EquippedItemTooltip.Instance.ShowTooltip(item, staticInterface.GetItemContainer);
+                EquippedItemTooltip.Instance.ShowTooltip(item);
             }
         }
 

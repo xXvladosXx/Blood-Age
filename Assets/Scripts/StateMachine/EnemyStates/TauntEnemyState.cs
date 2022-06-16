@@ -7,6 +7,8 @@ namespace StateMachine.EnemyStates
     public class TauntEnemyState : TauntBaseState
     {
         private LTDescr _delay;
+        private bool _canBeChanged;
+
         private void StopTaunt()
         {
             LeanTween.cancel(_delay.uniqueId);
@@ -18,20 +20,31 @@ namespace StateMachine.EnemyStates
         {
         }
 
-        public override void StartState(float time)
+        public override void EndState(AliveEntity aliveEntity)
         {
-            if (time == 0) return;
+            
+        }
+
+        public override bool CanBeChanged => _canBeChanged;
+
+        
+        public override void StartState(AliveEntity aliveEntity)
+        {
+            /*if (time == 0) return;
             if (_delay != null)
             {
                 return;
             }
+            _canBeChanged = false;
 
             MoveInOppositeDirection(Entity.transform.forward);
             _delay = LeanTween.delayedCall(time, () =>
             {
+                
+                _canBeChanged = true;
                 StopTaunt();
                 StateSwitcher.SwitchState<IdleBaseState>();
-            });
+            });*/
         }
     }
 }

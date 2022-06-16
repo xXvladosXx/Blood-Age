@@ -7,20 +7,20 @@ namespace SkillSystem.SkillNodes
 {
     public abstract class SkillNode : Item
     {
-        [SerializeField] private List<SkillNode> _skills;
-        [SerializeField] private int _requiredLevel;
+        [SerializeField] protected List<SkillNode> Skills;
+        [SerializeField] protected int RequiredLevel;
         public Sprite GetSkillSprite => UIDisplay;
 
         public abstract void ApplySkill(AliveEntity user);
 
         public int LevelRequirement()
         {
-            return _requiredLevel;
+            return RequiredLevel;
         }
         
         public List<SkillNode> SkillRequirements()
         {
-            return _skills;
+            return Skills;
         }
     }
     

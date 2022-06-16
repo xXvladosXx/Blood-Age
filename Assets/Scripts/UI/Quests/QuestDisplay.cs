@@ -17,7 +17,7 @@ namespace UI.Quests
         public void SetQuest(QuestStatus status)
         {
             _questStatus = status;
-            _completedQuests.text = $"{status.GetCompletedObjectives}/{status.GetQuest.GetProgress}";
+            _completedQuests.text = $"{status.GetCompletedObjectivesCount}/{status.GetQuest.GetProgress}";
             _questTitle.text = status.GetQuest.GetTitle;
         }
 
@@ -28,7 +28,7 @@ namespace UI.Quests
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            QuestTooltip.Instance.ShowTooltip(transform, _questStatus);
+            QuestTooltip.Instance.ShowTooltip( _questStatus);
         }
 
         public void OnPointerExit(PointerEventData eventData)

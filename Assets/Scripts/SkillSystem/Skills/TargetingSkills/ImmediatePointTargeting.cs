@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
+using StateMachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,20 +14,21 @@ namespace SkillSystem.Skills.TargetingSkills
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float _groundOffset = 1f;
 
-        private StarterAssetsInputs _player;
         public override void StartTargeting(SkillData skillData, Action finishedAttack, Action canceledAttack)
         {
-            _player = skillData.GetUser.GetComponent<StarterAssetsInputs>();
-            
-            var playerRotation = _player.transform.rotation;
-            var transform = skillData.GetUser.transform;
-
             RaycastHit raycastHit;
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if (Physics.Raycast(ray, out raycastHit, 1000, _layerMask))
             {
                 skillData.MousePosition = raycastHit.point + ray.direction * (_groundOffset / ray.direction.y);
+
+                if (Vector3.Distance(skillData.GetUser.transform.position, raycastHit.transform.position) < 1)
+                {
+                    finishedAttack();
+                    return;
+                }
+                
                 skillData.GetUser.transform.LookAt(raycastHit.point);
             }
             

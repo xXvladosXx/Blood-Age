@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
+using StateMachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,13 +15,13 @@ namespace SkillSystem.Skills.TargetingSkills
     {
         [SerializeField] private float _skillRadius;
 
-        private StarterAssetsInputs _user;
+        private PlayerInputs _user;
         private Animator _animator;
         private GameObject _skillRenderer;
 
         public override void StartTargeting(SkillData skillData, Action finishedAttack, Action canceledAttack)
         {
-            _user = skillData.GetUser.GetComponent<StarterAssetsInputs>();
+            _user = skillData.GetUser.GetComponent<PlayerInputs>();
             _animator = _user.GetComponent<Animator>();
             var position = skillData.GetUser.transform.position;
             skillData.MousePosition = new Vector3(position.x, position.y+0.1f, position.z);
@@ -38,10 +40,12 @@ namespace SkillSystem.Skills.TargetingSkills
             }
         }
 
-        public void AddData(Dictionary<string, float> data)
+        public void AddData(Dictionary<string, StringBuilder> data)
         {
-            if(_skillRadius != 0)
-                data.Add("Radius", _skillRadius);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Radius: ").Append(_skillRadius).AppendLine();
+            
+            data.Add("Targeting: ", stringBuilder);
         }
     }
 }

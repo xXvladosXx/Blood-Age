@@ -36,7 +36,7 @@ namespace States
             _aliveEntity = animator.GetComponent<AliveEntity>();
             _skillTree = _aliveEntity.GetComponent<SkillTree>();
             _wasApplied = false;
-            ComboKeySpawner.Instance.ResetKeyEnd();
+            ComboKeySpawner.Instance.ResetComboKey();
 
             _playerStateManager.SwitchState<CastPlayerState>();
 
@@ -57,11 +57,11 @@ namespace States
             if (stateInfo.normalizedTime >= _startTime && stateInfo.normalizedTime <= _endTime && !_wasApplied)
             {
                 if(_mouseButton != MouseButton.Back)
-                    ComboKeySpawner.Instance.SetKeyEnd();
+                    ComboKeySpawner.Instance.SetComboKey();
             }
             else
             {
-                ComboKeySpawner.Instance.ResetKeyEnd();
+                ComboKeySpawner.Instance.ResetComboKey();
             }
             
             if(_wasApplied) return;
@@ -69,7 +69,7 @@ namespace States
             if (MouseButton.Back == _mouseButton)
             {
                 ManualApplySkill(animator, stateInfo);
-                ComboKeySpawner.Instance.ResetKeyEnd();
+                ComboKeySpawner.Instance.ResetComboKey();
                 return;
             }
 
@@ -77,7 +77,7 @@ namespace States
             {
                 if (!(stateInfo.normalizedTime >= _startTime) || !(stateInfo.normalizedTime <= _endTime)) return;
                 animator.SetBool(SkillCombo, true);
-                ComboKeySpawner.Instance.ResetKeyEnd();
+                ComboKeySpawner.Instance.ResetComboKey();
                 
                 if (_activeSkill == null) return;
                 _playerStateManager.SwitchState<CastPlayerState>().ComboCastSkill(_aliveEntity, _activeSkill);
@@ -99,7 +99,7 @@ namespace States
             AnimatorStateInfo stateInfo)
         {
             _playerStateManager.SwitchState<IdlePlayerState>();
-            ComboKeySpawner.Instance.ResetKeyEnd();
+            ComboKeySpawner.Instance.ResetComboKey();
             
             animator.SetBool(SkillCombo, false);
             animator.SetBool(Canceled, false);

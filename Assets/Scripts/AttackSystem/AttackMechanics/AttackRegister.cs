@@ -9,7 +9,6 @@ namespace AttackSystem.AttackMechanics
 {
     public class AttackRegister
     {
-        private CinemachineVirtualCamera _cinemachineVirtualCamera;
         private Transform _arrowSpawnPosition;
 
         private float _arrowSpeed = 15f;
@@ -23,7 +22,7 @@ namespace AttackSystem.AttackMechanics
             _attackData = new AttackData();
         }
 
-        public AttackData CalculateAttackData(FindStats findStats, AliveEntity aliveEntity, ItemEquipper itemEquipper)
+        public AttackData CalculateAttackData(FindStats findStats, AliveEntity aliveEntity, ItemEquipper itemEquipper, bool vampiric = false)
         {
             _attackData.Damager = aliveEntity;
             _attackData.Damage = findStats.GetStat(Characteristics.Damage);
@@ -32,6 +31,7 @@ namespace AttackSystem.AttackMechanics
             _attackData.ElementalDamage = itemEquipper.GetCurrentWeapon.GetDamageDictionary;
             _attackData.Accuracy = findStats.GetStat(Characteristics.Accuracy);
             _attackData.Targets = aliveEntity.Targets;
+            _attackData.Vampiric = vampiric;
                 
             return _attackData;
         }

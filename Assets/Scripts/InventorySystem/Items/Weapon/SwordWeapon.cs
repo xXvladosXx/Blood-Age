@@ -7,6 +7,8 @@ namespace InventorySystem.Items.Weapon
     {
         public override void EquipWeapon(Animator animator)
         {
+            if(animator == null) return;
+            
             animator.runtimeAnimatorController = _animatorController;
         }
 

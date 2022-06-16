@@ -1,36 +1,47 @@
 ﻿using System;
 using System.Linq;
 using DefaultNamespace;
+using SaveSystem;
 using StatsSystem.Bonuses;
 using UnityEngine;
 
 namespace StatsSystem
 {
-    public class FindStats : MonoBehaviour
+    public class FindStats : MonoBehaviour, ISavable
     {
         [SerializeField] private StarterCharacterData _starterCharacterData;
+        [SerializeField] private GameObject _levelupParticle;
         
         private Class _class;
         private int _level = 1;
         
         public Class GetClass => _class;
+        public int GetLevel => _level;
 
         public void SetClass(Class characterClass)
         {
             _class = characterClass;
         }
         public event Action OnLevelUp;
-        public void UpdateLevel(ref int currentLevel, LevelUp levelUp)
+        public event Action OnLevelRestored;
+        public void UpdateLevel(ref int currentLevel, float currentExp)
         {
-            int newLevel = CalculateLevel(levelUp);
+            int newLevel = CalculateLevel(currentExp);
 
             if (newLevel <= currentLevel) return;
             
             currentLevel = newLevel;
             OnLevelUp?.Invoke();
+            PlayLevelUpEffect();
         }
 
-        private int CalculateLevel(LevelUp levelUp)
+        private void PlayLevelUpEffect()
+        {
+            var levelEffect = Instantiate(_levelupParticle, transform);
+            Destroy(levelEffect, 2f);
+        }
+
+        public int CalculateLevel(float currentExp)
         {
             int maxLevel = _starterCharacterData.GetLevels(_class, Characteristics.ExperienceToLevelUp);
 
@@ -38,7 +49,7 @@ namespace StatsSystem
             {
                 float expToLevelUp = _starterCharacterData.ReturnLevelValueCharacteristics(_class, Characteristics.ExperienceToLevelUp, level);
 
-                if (expToLevelUp > levelUp.GetCurrentExp)
+                if (expToLevelUp > currentExp)
                 {
                     _level = level;
 
@@ -82,6 +93,19 @@ namespace StatsSystem
                 .SelectMany(x => x.AddBonus(new[] { characteristic }))
                 .Where(IsBonusAssignableToCharacteristics)
                 .Sum(x => x.Value);
+        }
+
+        public object CaptureState()
+        {
+            return _level;
+        }
+
+        public void RestoreState(object state)
+        {
+            _level = (int) state;
+            
+            OnLevelRestored?.Invoke();
+            Debug.Log(_level);
         }
     }
 }

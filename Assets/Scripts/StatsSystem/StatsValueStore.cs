@@ -17,43 +17,46 @@ namespace StatsSystem
 
         private Dictionary<Stats, int> _assignedPoints = new Dictionary<Stats, int>();
         private Dictionary<Stats, int> _transitionPoints = new Dictionary<Stats, int>();
+        
         private CharacteristicModifierContainer _characteristicModifierContainer;
         private StatStartContainer _statStartContainer;
-
-        private int _unassignedPoints = 10;
-        private int _defaultLevelUpPoints = 2;
+        private FindStats _findStats;
+        
+        private int _unassignedPoints = 18;
+        private int _defaultLevelUpPoints = 5;
+        private int _lastLevel;
         
         public int GetUnassignedPoints => _unassignedPoints;
         public event Action OnStatsChange;
+        
 
-        public StatsValueStore(FindStats findStats, BaseCharacterClass characterClass,
-            CharacteristicModifierContainer characteristicModifierContainer, StatStartContainer statStartContainer)
+        public StatsValueStore(FindStats findStats, CharacteristicModifierContainer characteristicModifierContainer, StatStartContainer statStartContainer)
         {
             findStats.OnLevelUp += AddNewUnassignedPoints;
 
+            _findStats = findStats;
             _characteristicModifierContainer = characteristicModifierContainer;
             _statStartContainer = statStartContainer;
             if(characteristicModifierContainer != null) 
                 _statsAccordingToClass = characteristicModifierContainer.GetStatModifiers;
 
-            if (_characteristicModifierContainer != null)
+            if (_characteristicModifierContainer == null) return;
+            
+            foreach (var statBonus in statStartContainer.GetStatBonuses)
             {
-                foreach (var statBonus in statStartContainer.GetStatBonuses)
+                switch(statBonus.Stat)
                 {
-                    switch(statBonus.Stat)
-                    {
-                        case Stats.Strength:
-                            _assignedPoints[Stats.Strength] = statBonus.Value;
-                            break;
-                        case Stats.Intelligence:
-                            _assignedPoints[Stats.Agility] = statBonus.Value;
-                            break;
-                        case Stats.Agility:
-                            _assignedPoints[Stats.Intelligence] = statBonus.Value;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    case Stats.Strength:
+                        _assignedPoints[Stats.Strength] = statBonus.Value;
+                        break;
+                    case Stats.Intelligence:
+                        _assignedPoints[Stats.Agility] = statBonus.Value;
+                        break;
+                    case Stats.Agility:
+                        _assignedPoints[Stats.Intelligence] = statBonus.Value;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -64,9 +67,17 @@ namespace StatsSystem
             
             if(_statsAccordingToClass.TryGetValue(characteristic, out var c))
             {
-                return (from assignedPoint in _assignedPoints 
-                    where assignedPoint.Key == c.Stat 
-                    select assignedPoint.Value * c.Value).FirstOrDefault();
+                if (_assignedPoints == null) return 0;
+                foreach (var assignedPoint in _assignedPoints)
+                {
+                    if (assignedPoint.Key == c.Stat)
+                    {
+                        float f = assignedPoint.Value * c.Value;
+                        return f;
+                    }
+                }
+
+                return 0;
             }
             return 0;
         }
@@ -116,6 +127,9 @@ namespace StatsSystem
 
         private void AddNewUnassignedPoints()
         {
+            if (_statStartContainer == null) return;
+            if(_lastLevel >= _findStats.GetLevel) return;
+            
             foreach (var statBonus in _statStartContainer.GetStatBonuses)
             {
                 switch (statBonus.Stat)
@@ -141,7 +155,8 @@ namespace StatsSystem
             var storedValues = new StoredStats
             {
                 AssignedPoints = _assignedPoints,
-                UnassignedPoints = _unassignedPoints 
+                UnassignedPoints = _unassignedPoints,
+                LastLevel = _findStats.GetLevel
             };
 
             foreach (var stat in _transitionPoints.Keys)
@@ -157,6 +172,7 @@ namespace StatsSystem
             var storedValues = (StoredStats) state;
 
             _assignedPoints = storedValues.AssignedPoints;
+            _lastLevel = storedValues.LastLevel;
             _unassignedPoints = storedValues.UnassignedPoints;
         }
         
@@ -165,6 +181,7 @@ namespace StatsSystem
         {
             public Dictionary<Stats, int> AssignedPoints;
             public int UnassignedPoints;
+            public int LastLevel;
         }
     }
 }

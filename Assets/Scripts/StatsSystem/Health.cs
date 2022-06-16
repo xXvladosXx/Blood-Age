@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using AttackSystem.AttackMechanics;
 using Entity;
+using InventorySystem;
 using SaveSystem;
+using StateMachine;
 using UnityEngine;
 using Random = System.Random;
 
 namespace StatsSystem
 {
     [Serializable]
-    public class Health : ISavable
+    public class Health : ISavable, IRenewable
     {
         private float _currentHealth;
         private float _maxHealth;
@@ -21,11 +23,10 @@ namespace StatsSystem
         public event Action<float> OnHealthPctChanged = delegate(float f) { };
         public event Action OnDie;
         public event Action OnBloodyDie;
+        public event Action OnStatRenewed;
 
         public float GetMaxHealth => _maxHealth;
         public float GetCurrentHealth => _currentHealth;
-
-        public FindStats GetUser => _findStats;
 
         public bool IsDead() => _isDead;
 
@@ -34,8 +35,6 @@ namespace StatsSystem
             _currentHealth = findStats.GetStat(Characteristics.Health);
             _maxHealth = findStats.GetStat(Characteristics.Health);
             _findStats = findStats;
-
-            if (findStats.GetComponent<StarterAssetsInputs>() != null) return;
         }
 
         public void RenewHealthPoints(float healthPoints)
@@ -50,15 +49,20 @@ namespace StatsSystem
             if (CheckEnemiesList(attackData)) return;
             if (CalculateChanceOfHit(attackData)) return;
             CalculateCriticalHit(attackData);
-            CalculateElementDamage(attackData);
+
+            var clearDamage = attackData.Damage;
             
+            CalculateElementDamage(attackData);
+
             _currentHealth = Mathf.Clamp(_currentHealth - attackData.Damage, 0, _currentHealth);
+            
+            if(attackData.Vampiric)
+                attackData.Damager.GetHealth.AddHealthPoints(attackData.Damage);
 
             float currentHealthPct = _currentHealth / _maxHealth;
             
             OnHealthPctChanged?.Invoke(currentHealthPct);
             OnTakeHit?.Invoke(attackData.Damager);
-            Debug.Log("Damage " + attackData.Damage);
             
             if (_maxHealth < attackData.Damage)
             {
@@ -78,17 +82,13 @@ namespace StatsSystem
         {
             Random random = new Random();
             var num = random.NextDouble() * 100;
-            Debug.Log(attackData.Damage);
-            Debug.Log(attackData.CriticalDamage);
             if (num < attackData.CriticalChance)
             {
-                var startDamage =  attackData.Damage;
-                attackData.Damage += attackData.Damage * (attackData.CriticalDamage/100);
-                attackData.Damage -= startDamage;
+                attackData.Damage *= (attackData.CriticalDamage/100);
             }
         }
 
-        private static bool CheckEnemiesList(AttackData attackData)
+        private bool CheckEnemiesList(AttackData attackData)
         {
             if (attackData.Entities != null)
             {
@@ -101,9 +101,9 @@ namespace StatsSystem
             return false;
         }
 
-        private static void CalculateElementDamage(AttackData attackData)
+        private void CalculateElementDamage(AttackData attackData)
         {
-            var resistance = attackData.Damager.GetItemEquipper.GetDamageResistance;
+            var resistance = _findStats.GetComponent<ItemEquipper>();
 
             float damage = 0;
             if (attackData.ElementalDamage != null)
@@ -119,10 +119,12 @@ namespace StatsSystem
 
         private bool CalculateChanceOfHit(AttackData attackData)
         {
+            if (attackData.Accuracy > _findStats.GetStat(Characteristics.Evasion)) return false;
+            
             Random random = new Random();
             var num = random.NextDouble() * 100;
             var limit = (attackData.Accuracy + _findStats.GetStat(Characteristics.Evasion))
-                        * (100 - _findStats.GetStat(Characteristics.Evasion));
+                        * (100 - _findStats.GetStat(Characteristics.Evasion))/100;
 
             if (num > limit) return true;
             return false;
@@ -130,12 +132,21 @@ namespace StatsSystem
 
         public object CaptureState()
         {
-            return _currentHealth;
+            var healthData = new HealthData
+            {
+                Health = _currentHealth,
+                WasDead = _isDead
+            };
+            
+            return healthData;
         }
 
         public void RestoreState(object state)
         {
-            _currentHealth = (float) state;
+            var healthData = (HealthData) state;
+
+            _currentHealth = healthData.Health;
+            _isDead = healthData.WasDead;
         }
 
         public void AddHealthPoints(float healthReg)
@@ -145,6 +156,26 @@ namespace StatsSystem
 
             float currentHealthPct = _currentHealth / _maxHealth;
             OnHealthPctChanged?.Invoke(currentHealthPct);
+        }
+
+
+        public void Renew()
+        {
+            _currentHealth = _findStats.GetStat(Characteristics.Health);
+            _maxHealth = _findStats.GetStat(Characteristics.Health);
+            _isDead = false;
+            
+            float currentHealthPct = _currentHealth / _maxHealth;
+            
+            OnHealthPctChanged?.Invoke(currentHealthPct);
+            OnStatRenewed?.Invoke();
+        }
+        
+        [Serializable]
+        public class HealthData
+        {
+            public bool WasDead;
+            public float Health;
         }
     }
 }

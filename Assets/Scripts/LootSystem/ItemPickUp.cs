@@ -2,6 +2,7 @@
 using Entity;
 using InventorySystem.Items;
 using MouseSystem;
+using SaveSystem;
 using StatsSystem;
 using UnityEngine;
 
@@ -34,11 +35,9 @@ namespace LootSystem
         }
 
         public CursorType GetCursorType() => CursorType.PickUp;
-        public void ClickAction()
-        {
-            
-        }
+       
 
         public bool HandleRaycast(PlayerEntity player) => true;
+       
     }
 }

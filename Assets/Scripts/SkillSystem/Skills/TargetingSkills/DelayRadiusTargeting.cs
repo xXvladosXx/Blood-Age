@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
+using StateMachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,14 +23,14 @@ namespace SkillSystem.Skills.TargetingSkills
         [SerializeField] private GameObject _skillRadiusRenderer;
         [SerializeField] private GameObject _skillDistanceRenderer;
 
-        private StarterAssetsInputs _user;
+        private PlayerInputs _user;
         private Animator _animator;
         private GameObject _skillRenderer;
         private GameObject _skillRadiusCast;
 
         public override void StartTargeting(SkillData skillData, Action finishedAttack, Action canceledAttack)
         {
-            _user = skillData.GetUser.GetComponent<StarterAssetsInputs>();
+            _user = skillData.GetUser.GetComponent<PlayerInputs>();
             _animator = _user.GetComponent<Animator>();
 
             _user.StartCoroutine(WaitToCastSkill(skillData, finishedAttack, canceledAttack));
@@ -115,13 +117,15 @@ namespace SkillSystem.Skills.TargetingSkills
             }
         }
 
-        public void AddData(Dictionary<string, float> data)
+        public void AddData(Dictionary<string, StringBuilder> data)
         {
-            data.Add("AOE", 1);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Radius: ").Append(_skillRadius).AppendLine();
+
             if(_distanceToCastSkill != 0)
-                data.Add("Distance", _distanceToCastSkill);
-            if(_skillRadius != 0)
-                data.Add("Radius", _skillRadius);
+                stringBuilder.Append("Distance to cast: ").Append(_distanceToCastSkill).AppendLine();
+            
+            data.Add("Targeting: ", stringBuilder);
         }
     }
 }

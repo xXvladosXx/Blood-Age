@@ -20,21 +20,36 @@ namespace UI.Stats
             _currentMana = _aliveEntity.GetMana.GetCurrentMana;
         
             _aliveEntity.GetMana.OnManaPctChanged += OnManaChanged;
-            _aliveEntity.OnCharacteristicChange += () => OnCharacteristicChange();
+            _aliveEntity.OnCharacteristicChange += OnCharacteristicChange;
         
             _manaValue.text = $"{_currentMana:#} / {_aliveEntity.GetMana.GetMaxMana}";
         }
 
-        private string OnCharacteristicChange()
+        private void OnEnable()
+        {
+            StartCoroutine(WaitSecondToRefreshHealth());
+        }
+
+        private IEnumerator WaitSecondToRefreshHealth()
+        {
+            yield return new WaitForSeconds(.1f);
+            
+            OnCharacteristicChange();
+            
+            _aliveEntity.GetMana.OnManaPctChanged += OnManaChanged;
+            _aliveEntity.OnCharacteristicChange += OnCharacteristicChange;
+        }
+        private void OnCharacteristicChange()
         {
             _currentMana = _aliveEntity.GetMana.GetCurrentMana;
             StartCoroutine(ChangeToPct(_currentMana / _aliveEntity.GetMana.GetMaxMana));
-            return _manaValue.text = $"{_currentMana:#} / {_aliveEntity.GetMana.GetMaxMana}";
+            _manaValue.text = $"{_currentMana:#} / {_aliveEntity.GetMana.GetMaxMana}";
         }
 
         private void OnDisable()
         {
             _aliveEntity.GetMana.OnManaPctChanged -= OnManaChanged;
+            _aliveEntity.OnCharacteristicChange -= OnCharacteristicChange;
         }
 
         private void OnManaChanged(float health)

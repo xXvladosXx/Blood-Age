@@ -6,5 +6,6 @@ namespace QuestSystem.QuestObjectives
     {
         public string Reference;
         public string Description;
+        
     }
 }

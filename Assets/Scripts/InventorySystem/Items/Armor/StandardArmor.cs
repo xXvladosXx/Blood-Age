@@ -69,7 +69,7 @@ namespace InventorySystem.Items.Armor
                         break;
                     case DamageType.Thunder:
                         if (damage.DamageResistance != 0)
-                            stringBuilder.Append("<color=#B8F3FF>").Append("Thunder: ").Append(damage.DamageResistance).Append("%").Append("</color>").AppendLine();
+                            stringBuilder.Append("<color=#B8F3FF>").Append("Thunder: ").Append(damage.DamageResistance*100).Append("%").Append("</color>").AppendLine();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

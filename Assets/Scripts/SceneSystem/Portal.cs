@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using AttackSystem.Weapon;
 using Entity;
 using MouseSystem;
 using SaveSystem;
-using SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,8 +14,10 @@ namespace SceneSystem
         [SerializeField] private int _sceneToLoad = -1;
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private DestinationPortal destinationPortal = DestinationPortal.A;
+        [SerializeField] private bool _destroyOnAwake;
 
         private string _defaultSaveFile = "QuickSave";
+        private bool _wasActive;
 
         enum DestinationPortal
         {
@@ -24,31 +26,36 @@ namespace SceneSystem
             C
         }
 
-        public void StartTransition()
+        private void Start()
         {
-            StartCoroutine(WaitSceneToLoad());
+            gameObject.SetActive(false);
+            if (_destroyOnAwake)
+                Destroy(gameObject);
         }
 
-        IEnumerator WaitSceneToLoad()
+        public void StartTransition(AliveEntity aliveEntity)
+        {
+            StartCoroutine(WaitSceneToLoad(aliveEntity));
+        }
+
+        IEnumerator WaitSceneToLoad(AliveEntity aliveEntity)
         {
             DontDestroyOnLoad(gameObject);
-            SavingHandler savingHandler = FindObjectOfType<SavingHandler>();
-            savingHandler.Save(_defaultSaveFile);
-//            LevelLoader.Instance.StartFading();
-
+            
+            SavingHandler.Instance.Save(_defaultSaveFile);
+           
             yield return new WaitForSeconds(1f);
             yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_sceneToLoad);
 
-            savingHandler.Load(_defaultSaveFile);
+            SavingHandler.Instance.Load(_defaultSaveFile);
 
             Portal otherPortal = GetOtherPortal();
-            UpdatePlayer(otherPortal);
-
-
+            UpdatePlayer(otherPortal, aliveEntity);
+            SavingHandler.Instance.Save(_defaultSaveFile);
             Destroy(gameObject);
         }
 
-        private void UpdatePlayer(Portal otherPortal)
+        private void UpdatePlayer(Portal otherPortal, AliveEntity aliveEntity)
         {
             GameObject player = GameObject.FindWithTag("Player");
             player.GetComponent<NavMeshAgent>().enabled = false;
@@ -75,10 +82,6 @@ namespace SceneSystem
         public CursorType GetCursorType()
         {
             return CursorType.PickUp;
-        }
-
-        public void ClickAction()
-        {
         }
 
         public bool HandleRaycast(PlayerEntity player)

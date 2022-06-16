@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entity;
 using UnityEngine;
 
 namespace UI.MainMenu
 {
-    public class MainMenuSwitcher : MonoBehaviour
+    public class MainMenuSwitcher : PanelEnabler
     {
         private static MainMenuSwitcher _instance;
         [SerializeField] private Menu _startingMenu;
         [SerializeField] private Menu[] _menus;
         
-        
         private Menu _currentMenu;
         private readonly Stack<Menu> _history = new Stack<Menu>();
+        
         private void Awake()
         {
             _instance = this;
@@ -77,5 +78,16 @@ namespace UI.MainMenu
                 Show(_instance._history.Pop(), false);
             }
         }
+
+        public static void Hide()
+        {
+            _instance._currentMenu.Hide();
+            _instance._history.Pop();
+        }
+        public void SetStartMenu()
+        {
+            Show(_startingMenu, true);
+        }
+
     }
 }

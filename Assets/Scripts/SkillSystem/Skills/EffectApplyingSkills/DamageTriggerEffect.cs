@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using AttackSystem.AttackMechanics;
 using Entity;
 using Runemark.Common;
 using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
 using StatsSystem;
+using UI.Stats;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -50,6 +52,8 @@ namespace SkillSystem.Skills.EffectApplyingSkills
                 target.TryGetComponent(out AliveEntity aliveEntity);
                 if(aliveEntity != null)
                 {
+                    HealthBarEntity.Instance.ShowHealth(aliveEntity);
+                    
                     aliveEntity.GetHealth.TakeHit(new AttackData
                     {
                         Damage = _damage + skillData.GetUser.GetStat(Characteristics.Damage),
@@ -64,18 +68,15 @@ namespace SkillSystem.Skills.EffectApplyingSkills
         }
 
 
-        public void AddData(Dictionary<string, float> data)
+        public void AddData(Dictionary<string, StringBuilder> data)
         {
-            if(_criticalChance != 0)
-                data.Add("Critical Chance", _criticalChance);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Damage: ").Append(_damage).AppendLine();
+            stringBuilder.Append("Critical chance: ").Append(_criticalChance).AppendLine();
+            stringBuilder.Append("Critical damage: ").Append(_criticalDamage).AppendLine();
+            stringBuilder.Append("Accuracy: ").Append(100).AppendLine();
             
-            if(_criticalDamage != 0)
-                data.Add("Critical Damage", _criticalDamage);
-            
-            if(_damage != 0)
-                data.Add("Damage", _damage);
-           
-            data.Add("Accuracy", 100);
+            data.Add("Damage effects: ", stringBuilder);
         }
     }
 }

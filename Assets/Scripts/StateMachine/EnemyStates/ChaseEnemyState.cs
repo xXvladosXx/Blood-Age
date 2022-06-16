@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace StateMachine.EnemyStates
 {
-    public class ChaseEnemyState : BaseState, ISwitchable
+    public class ChaseEnemyState : BaseState
     {
         private AliveEntity _entity;
         private Movement _movement;
@@ -37,6 +37,13 @@ namespace StateMachine.EnemyStates
             aliveEntity.GetHealth.OnTakeHit += o => _aggredByDamage = true;
         }
 
+        public override void EndState(AliveEntity aliveEntity)
+        {
+            
+        }
+
+        public override bool CanBeChanged => true;
+        
         public override void RunState(AliveEntity aliveEntity)
         {
             if (aliveEntity.GetHealth.IsDead())
@@ -57,8 +64,7 @@ namespace StateMachine.EnemyStates
                 if (_stateDistanceConfiguration.IsInRange(aliveEntity, _target, _itemEquipper.GetAttackRange))
                 {
                     _movement.Cancel();
-                    var nState = _stateSwitcher.SwitchState<AttackEnemyState>();
-                    nState.TriggeredByDamage = TriggeredByDamage;
+                    _stateSwitcher.SwitchState<AttackBaseState>();
                 }
                 else
                 {
@@ -71,7 +77,7 @@ namespace StateMachine.EnemyStates
             }
         }
 
-        public override void StartState(float time)
+        public override void StartState(AliveEntity aliveEntity)
         {
             _target = _entity.Targets.FirstOrDefault();
         }
@@ -79,14 +85,11 @@ namespace StateMachine.EnemyStates
         private void SwitchToIdle()
         {
             _movement.Cancel();
-            _stateSwitcher.SwitchState<IdleEnemyState>();
+            _stateSwitcher.SwitchState<IdleBaseState>();
             TriggeredByDamage = false;
         }
 
         public bool TriggeredByDamage { get; set; }
-        public bool CanSwitch()
-        {
-            return true;
-        }
+        
     }
 }

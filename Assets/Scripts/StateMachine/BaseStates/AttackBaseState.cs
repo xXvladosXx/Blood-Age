@@ -7,11 +7,19 @@ using UnityEngine;
 
 namespace StateMachine.BaseStates
 {
-    public abstract class AttackBaseState : BaseComponentsState, ISwitchable
+    public abstract class AttackBaseState : BaseComponentsState
     {
-        public bool CanSwitch()
+        protected static readonly int Attack = Animator.StringToHash("Attack");
+        protected static readonly int ForceTransition = Animator.StringToHash("ForceTransition");
+        public override void StartState(AliveEntity aliveEntity)
         {
-            return true;
+            Animator.SetBool(ForceTransition, false);
+            Entity.OnDied += entity => StateSwitcher.SwitchState<IdleBaseState>();
+        }
+        
+        public override void EndState(AliveEntity aliveEntity)
+        {
+            
         }
     }
 }

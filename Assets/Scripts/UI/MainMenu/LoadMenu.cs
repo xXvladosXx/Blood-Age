@@ -1,4 +1,5 @@
 using System;
+using Entity;
 using SaveSystem;
 using TMPro;
 using UnityEngine;
@@ -25,11 +26,13 @@ namespace UI.MainMenu
             
             foreach (var save in SavingHandler.Instance.SaveList())
             {
-                Button savePrefab = Instantiate(_loadButton, _content);
-                savePrefab.GetComponentInChildren<TextMeshProUGUI>().text = save;
+                Button loadPrefab = Instantiate(_loadButton, _content);
+                loadPrefab.GetComponentInChildren<TextMeshProUGUI>().text = save;
             
-                _loadButton.onClick.AddListener((() => { SavingHandler.Instance.LoadGame(save); }));
+                loadPrefab.onClick.AddListener((() => { SavingHandler.Instance.LoadGame(save); }));
             }
         }
+
+        
     }
 }

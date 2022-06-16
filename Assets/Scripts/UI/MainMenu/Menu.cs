@@ -8,16 +8,11 @@ namespace UI.MainMenu
 {
     public abstract class Menu : MonoBehaviour
     {
-        protected string _saveFile = " ";
-        protected string _lastSave;
-
+        protected string SaveFile = " ";
+        protected SavingHandler SavingHandler;
         private void Awake()
         {
-            _lastSave = Directory.GetFiles(Path.Combine(Application.persistentDataPath))
-                .Select(x => new FileInfo(x))
-                .OrderByDescending(x => x.LastWriteTime)
-                .FirstOrDefault()
-                ?.ToString();
+            SavingHandler = FindObjectOfType<SavingHandler>();
         }
 
         public abstract void Initialize();

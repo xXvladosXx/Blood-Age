@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace StatsSystem
 {
-    public class Mana : ISavable
+    public class Mana : ISavable, IRenewable
     {
         private float _currentMana;
         private float _maxMana;
 
         public event Action<float> OnManaPctChanged = delegate(float f) { };
+        public event Action OnStatRenewed;
 
         public float GetMaxMana => _maxMana;
         public float GetCurrentMana => _currentMana;
@@ -20,10 +21,9 @@ namespace StatsSystem
             _maxMana = maxMana;
         }
 
-        public void RenewStaminaPoints(float maxMana)
+        public void RenewManaPoints(float maxMana)
         {
             _maxMana = maxMana;
-            _currentMana = maxMana;
         }
 
         public bool HasEnoughMana(float staminaPoints)
@@ -51,6 +51,14 @@ namespace StatsSystem
         public void RestoreState(object state)
         {
             _currentMana = (float) state;
+        }
+
+
+        public void Renew()
+        {
+            float manaPtc = _currentMana / _maxMana;
+            OnManaPctChanged?.Invoke(manaPtc);
+            OnStatRenewed?.Invoke();
         }
     }
 }

@@ -7,54 +7,79 @@ using SkillSystem.Skills;
 using TMPro;
 using UI.Skill;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Tooltip
 {
-    public class SkillTooltip : Tooltip
+    public class SkillTooltip : DynamicTooltip
     {
         public static SkillTooltip Instance { get; private set; }
         
         [SerializeField] private TextMeshProUGUI _skillName;
-        [SerializeField] private SkillInfoDisplay _skillInfoDisplay;
         [SerializeField] private TextMeshProUGUI _cooldown;
         [SerializeField] private TextMeshProUGUI _type;
-        [SerializeField] private TextMeshProUGUI _area;
+        [SerializeField] private TextMeshProUGUI _bonus;
+        [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private TextMeshProUGUI _requirements;
+        [SerializeField] private Image _clock;
 
-        private StringBuilder _stringBuilder;
-        private List<SkillInfoDisplay> _skillInfoDisplays = new List<SkillInfoDisplay>();
         protected override void Initialize()
         {
             Instance = this;
         
             HideTooltip();
-        
-            _stringBuilder = new StringBuilder();
         }
         
         public void ShowTooltip(Item overlappedInventoryItem)
         {
             if(overlappedInventoryItem == null) return;
+            StringBuilder topLevelString = new StringBuilder();
             
             if (overlappedInventoryItem is ActiveSkill activeSkill)
             {
+                _type.text = activeSkill.Description;
                 _skillName.text = activeSkill.Data.Name;
+                _requirements.text = "";
+                _bonus.text = "";
+                _clock.enabled = true;
 
-                var sortedDictionary = activeSkill.GetData().OrderBy(x => x.Key).
-                    ToDictionary(x => x.Key, y => y.Value);
-                
-                foreach (var data in sortedDictionary)
+                foreach (var data in activeSkill.GetData())
                 {
                     if (data.Key == "Cooldown")
                     {
-                        _cooldown.text = data.Value.ToString(CultureInfo.InvariantCulture);
+                        _cooldown.text = data.Value.ToString();
+                        continue;
+                    }
+
+                    if (data.Key == "Bonus")
+                    {
+                        _bonus.text = data.Value.ToString();
+                        continue;
+                    }
+
+                    if (data.Key == "Requirements")
+                    {
+                        _requirements.text = data.Value.ToString();
                         continue;
                     }
                     
-                    var skillInfo = Instantiate(_skillInfoDisplay, transform);
-                    _skillInfoDisplays.Add(skillInfo);
-                    skillInfo.SetData(data.Key, data.Value);
+                    topLevelString.Append(data.Value);
                 }
 
+                _text.text = topLevelString.ToString();
+                Update();
+                gameObject.SetActive(true);
+            }else if (overlappedInventoryItem is ActiveSkillUpgrade activeSkillUpgrade)
+            {
+                _skillName.text = activeSkillUpgrade.Data.Name;
+                _type.text = activeSkillUpgrade.Description;
+                _bonus.text = "";
+                _text.text = "";
+                _cooldown.text = "";
+                _requirements.text = "";
+                _clock.enabled = false;
+
+                Update();
                 gameObject.SetActive(true);
             }
         }
@@ -63,13 +88,6 @@ namespace UI.Tooltip
         public void HideTooltip()
         {
             gameObject.SetActive(false);
-
-            foreach (var skillInfoDisplay in _skillInfoDisplays)
-            {
-                Destroy(skillInfoDisplay.gameObject);
-            }
-            
-            _skillInfoDisplays.Clear();
         }
     }
 }

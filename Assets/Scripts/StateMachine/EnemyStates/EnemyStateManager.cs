@@ -11,77 +11,72 @@ using UnityEngine.Serialization;
 
 namespace StateMachine.EnemyStates
 {
+    [RequireComponent(typeof(EnemyEntity))]
     public class EnemyStateManager : MonoBehaviour, IStateSwitcher, IRaycastable
     {
-        [SerializeField] private List<BaseState> _allStates;
-        [SerializeField] private StateDistanceConfiguration _stateDistanceConfiguration;
-        [SerializeField] private Transform _pathToPatrol;
-        
-        private BaseState _currentBaseState;
-        private AliveEntity _aliveEntity;
-        
-        private void Awake()
+        [SerializeField] protected List<BaseState> AllStates;
+        [SerializeField] protected StateDistanceConfiguration StateDistanceConfiguration;
+        [SerializeField] protected Transform PathToPatrol;
+
+        protected BaseState CurrentBaseState;
+        protected AliveEntity AliveEntity;
+
+        protected virtual void Awake()
         {
-            _aliveEntity = GetComponent<AliveEntity>();
+            AliveEntity = GetComponent<EnemyEntity>();
 
-            if (_stateDistanceConfiguration == null)
+            if (StateDistanceConfiguration == null)
             {
-                _stateDistanceConfiguration = Resources.Load<StateDistanceConfiguration>("DistanceConfigurationDefaultEnemy");
+                StateDistanceConfiguration =
+                    Resources.Load<StateDistanceConfiguration>("DistanceConfigurationDefaultEnemy");
             }
-            
 
-            _allStates = new List<BaseState>
+
+            AllStates = new List<BaseState>
             {
-                new IdleEnemyState(_pathToPatrol, _stateDistanceConfiguration),
-                new ChaseEnemyState(_stateDistanceConfiguration),
-                new AttackEnemyState(_stateDistanceConfiguration),
+                new IdleEnemyState(PathToPatrol, StateDistanceConfiguration),
+                new ChaseEnemyState(StateDistanceConfiguration),
+                new AttackEnemyState(StateDistanceConfiguration),
                 new StunEnemyState(),
                 new TauntEnemyState()
             };
-            _currentBaseState = _allStates[0];
+            CurrentBaseState = AllStates[0];
         }
 
         private void Start()
         {
-            foreach (var state in _allStates)
+            foreach (var state in AllStates)
             {
-                state.GetComponents(_aliveEntity);
+                state.GetComponents(AliveEntity);
             }
         }
 
         private void Update()
         {
-            _currentBaseState.RunState(_aliveEntity);
+            CurrentBaseState.RunState(AliveEntity);
         }
 
-        public T SwitchState<T>(float time) where T : BaseState
+        public T SwitchState<T>() where T : BaseState
         {
-            var state = _allStates.FirstOrDefault(s => s is T);
+            var state = AllStates.FirstOrDefault(s => s is T);
             if (state == null) return null;
-            if (_currentBaseState is ISwitchable curState && state is ISwitchable nextState)
-            {
-                if (!curState.CanSwitch() && !nextState.CanSwitch())
-                {
-                    return null;
-                }
-            }
-            
-            state.StartState(time);
-            _currentBaseState = state;
+            if(!CurrentBaseState.CanBeChanged && !(state is DeathBaseState))
+                return null;
+
+            CurrentBaseState.EndState(AliveEntity);
+            state.StartState(AliveEntity);
+            CurrentBaseState = state;
 
             return (T) state;
         }
 
-        public BaseState GetCurrentState => _currentBaseState;
+        public BaseState GetCurrentState => CurrentBaseState;
         public CursorType GetCursorType() => CursorType.Combat;
-        public void ClickAction()
-        {
-            HealthBarEntity.Instance.ShowHealth(_aliveEntity);
-        }
+
 
         public bool HandleRaycast(PlayerEntity player)
         {
-            return !_aliveEntity.GetHealth.IsDead();
+            return !AliveEntity.GetHealth.IsDead();
         }
     }
 }

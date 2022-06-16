@@ -1,3 +1,4 @@
+using System;
 using Entity;
 using StatsSystem;
 using TMPro;
@@ -24,6 +25,12 @@ namespace UI.Stats
             _level.text = _aliveEntity.GetLevel.ToString();
         
             _levelUp.OnExperienceGivePct += LevelUpOnExperienceGivePct;
+            _aliveEntity.GetFindStats.OnLevelRestored += OnLevelRestored;
+        }
+
+        private void OnLevelRestored()
+        {
+            _level.text = _aliveEntity.GetLevel.ToString();
         }
 
         private void LevelUpOnExperienceGivePct(float pct)
@@ -32,8 +39,8 @@ namespace UI.Stats
         
             if (pct >= 1)
             {
-                _image.fillAmount = 0;
-                format = $"0%";
+                _image.fillAmount = pct-1;
+                format = $"0";
             }
             else
             {
@@ -43,6 +50,12 @@ namespace UI.Stats
 
             _level.text = _aliveEntity.GetLevel.ToString();
             _experiencePercentage.text = $"{format}%";
+        }
+
+        private void OnDisable()
+        {
+            _levelUp.OnExperienceGivePct -= LevelUpOnExperienceGivePct;
+            _aliveEntity.GetFindStats.OnLevelRestored -= OnLevelRestored;
         }
     }
 }

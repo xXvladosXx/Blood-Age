@@ -8,11 +8,11 @@ using UnityEngine.EventSystems;
 
 namespace StateMachine.PlayerStates
 {
-    public abstract class BasePlayerState : BaseState, ISwitchable
+    public abstract class BasePlayerState : BaseState
     {
         protected Movement Movement;
-        protected PlayerEntity AliveEntity;
-        protected StarterAssetsInputs StarterAssetsInputs;
+        protected PlayerEntity PlayerEntity;
+        protected PlayerInputs PlayerInputs;
         protected AttackRegister AttackRegister;
         protected Animator Animator;
         protected ItemEquipper ItemEquipper;
@@ -20,9 +20,9 @@ namespace StateMachine.PlayerStates
 
         public override void GetComponents(AliveEntity aliveEntity)
         {
-            AliveEntity = aliveEntity.GetComponent<PlayerEntity>();
+            PlayerEntity = aliveEntity.GetComponent<PlayerEntity>();
             StateSwitcher = aliveEntity.GetComponent<IStateSwitcher>();
-            StarterAssetsInputs = aliveEntity.GetComponent<StarterAssetsInputs>();
+            PlayerInputs = aliveEntity.GetComponent<PlayerInputs>();
             Animator = aliveEntity.GetComponent<Animator>();
             Movement = aliveEntity.GetComponent<Movement>();
             AttackRegister = aliveEntity.GetAttackRegister;
@@ -35,9 +35,5 @@ namespace StateMachine.PlayerStates
             return EventSystem.current.IsPointerOverGameObject();
         }
 
-        public bool CanSwitch()
-        {
-            return true;
-        }
     }
 }

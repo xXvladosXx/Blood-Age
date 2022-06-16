@@ -1,6 +1,7 @@
 ﻿
 using System.IO;
 using System.Linq;
+using Entity;
 using SaveSystem;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ namespace UI.MainMenu
 
         public override void Initialize()
         {
-            if (_lastSave == null)
+            if (SavingHandler.GetLastSave == null)
             {
                 _continueButton.gameObject.SetActive(false);
             }
@@ -25,8 +26,16 @@ namespace UI.MainMenu
             _startButton.onClick.AddListener(() => MainMenuSwitcher.Show<StartMenu>());
             _loadButton.onClick.AddListener(() => MainMenuSwitcher.Show<LoadMenu>());
             _settingButton.onClick.AddListener(() => MainMenuSwitcher.Show<SettingsMenu>());
-            _continueButton.onClick.AddListener(() => SavingHandler.Instance.ContinueGame(_lastSave));
-            _quitButton.onClick.AddListener(() => print("Quit"));
+            _continueButton.onClick.AddListener(() => SavingHandler.Instance.ContinueGame(SavingHandler.GetLastSave));
+            _quitButton.onClick.AddListener( () =>
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
+            });
         }
+        }
+
     }
-}

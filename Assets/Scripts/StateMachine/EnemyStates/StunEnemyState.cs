@@ -7,6 +7,7 @@ namespace StateMachine.EnemyStates
     public class StunEnemyState : StunBaseState
     {
         private LTDescr _delay;
+        private bool _canBeChanged;
 
         private static readonly int Stun = Animator.StringToHash("StopStun");
 
@@ -22,9 +23,16 @@ namespace StateMachine.EnemyStates
         {
         }
 
-        public override void StartState(float time)
+        public override void EndState(AliveEntity aliveEntity)
         {
-            if (time == 0) return;
+            
+        }
+
+        public override bool CanBeChanged => _canBeChanged;
+
+        public override void StartState(AliveEntity aliveEntity)
+        {
+            /*if (time == 0) return;
             if (_delay != null)
             {
                 return;
@@ -33,13 +41,16 @@ namespace StateMachine.EnemyStates
             Animator.Play($"Stun");
             Movement.Cancel();
             Animator.SetBool(Stun, false);
+            _canBeChanged = false;
 
             _delay = LeanTween.delayedCall(time, () =>
             {
+                _canBeChanged = true;
                 StopStun();
                 Animator.Play($"Idle Walk Run Blend");
                 StateSwitcher.SwitchState<IdleBaseState>();
             });
+        }*/
         }
     }
 }

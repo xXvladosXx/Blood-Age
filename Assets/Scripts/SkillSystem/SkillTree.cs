@@ -4,6 +4,7 @@ using SkillSystem.SkillNodes;
 using SkillSystem.Skills;
 using StatsSystem;
 using StatsSystem.Bonuses;
+using UI.Skill;
 
 namespace SkillSystem
 {
@@ -16,10 +17,10 @@ namespace SkillSystem
     public class SkillTree : MonoBehaviour, IModifier, ISavable
     {
         [SerializeField] private List<SkillNode> _skillNodes;
-        [SerializeField] private List<ActiveSkill> _activeSkills = new List<ActiveSkill>();
         [SerializeField] private ItemContainer _unknownSkills;
         [SerializeField] private ItemContainer _knownSkills;
         [SerializeField] private ItemContainer _skillActionBar;
+        [SerializeField] private int _pointsToUpgrade;
 
         private Dictionary<ActiveSkill, float> _skillsInCooldown = new Dictionary<ActiveSkill, float>();
         private Dictionary<ActiveSkill, float> _currentSkillsInCooldown = new Dictionary<ActiveSkill, float>();
@@ -27,13 +28,15 @@ namespace SkillSystem
 
         public List<SkillNode> _knownSkillsList = new List<SkillNode>();
         public List<SkillNode> _unknownSkillsList = new List<SkillNode>();
+        private List<ActiveSkill> _activeSkills = new List<ActiveSkill>();
+
         public Dictionary<ActiveSkill, float> GetSkillsInCooldown => _skillsInCooldown;
-        public List<int> GetActionIds => _skillActionBar.GetAllItems();
         public ItemContainer GetActionSkills => _skillActionBar;
         public ItemContainer GetKnownSkills => _knownSkills;
 
+        public int GetPoints => _pointsToUpgrade;
         public event Action OnSkillsChanged;
-
+        
         private void Awake()
         {
             _knownSkillsList = _knownSkills.GetInventoryItems().OfType<SkillNode>().ToList();
@@ -41,15 +44,29 @@ namespace SkillSystem
 
             _itemEquipper = GetComponent<ItemEquipper>();
 
+            ChangeActionSkills();
+
+            _skillActionBar.OnInventoryChange += ChangeActionSkills;
+            _knownSkills.OnInventoryChange += ChangeActionSkills;
+        }
+
+        private void ChangeActionSkills()
+        {
             foreach (var skillNode in _skillActionBar.GetInventoryItems())
             {
                 if (skillNode is ActiveSkill activeSkill)
                 {
-                    _activeSkills.Add(activeSkill);
                     activeSkill.OnSkillCast += (aliveEntity) => StartCooldown(activeSkill);
                 }
             }
+            
+            _activeSkills.Clear();
+            foreach (var item in _skillActionBar.GetAllItems())
+            {
+                _activeSkills.Add(_skillActionBar.Database.GetItemByID(item) as ActiveSkill);
+            }
         }
+        
 
         private void Update()
         {
@@ -69,24 +86,42 @@ namespace SkillSystem
 
         private void StartCooldown(ActiveSkill activeSkill)
         {
-            if (_skillsInCooldown.ContainsKey(activeSkill))
-                _skillsInCooldown.Remove(activeSkill);
+            if (_skillsInCooldown.ContainsKey(activeSkill)) return;
 
             _skillsInCooldown.Add(activeSkill, activeSkill.GetCooldown);
             _currentSkillsInCooldown = new Dictionary<ActiveSkill, float>(_skillsInCooldown);
         }
 
-        public bool CanCastSkill(ActiveSkill activeSkill, AliveEntity aliveEntity)
+        public bool CanCastSkill(int index)
         {
-            if (_skillsInCooldown.ContainsKey(activeSkill)) return false;
-            if (!activeSkill.GetWeaponTypeSkill.Contains(_itemEquipper.GetCurrentWeapon.GetWeaponType)) return false;
-            activeSkill.ApplySkill(aliveEntity);
+            if (_activeSkills[index] == null) return false;
+            if (_skillsInCooldown.ContainsKey(_activeSkills[index])) return false;
+            if (!_activeSkills[index].GetWeaponTypeSkill.Contains(_itemEquipper.GetCurrentWeapon.GetWeaponType)) return false;
+           
             return true;
         }
-
+        public void CastSkill(int index, AliveEntity aliveEntity)
+        {
+            if (_activeSkills[index] != null)
+            {
+                _activeSkills[index].ApplySkill(aliveEntity);
+            }
+        }
+        
         public void ComboSkillCast(ActiveSkill activeSkill, AliveEntity aliveEntity)
         {
             activeSkill.ApplySkill(aliveEntity);
+        }
+
+        public void UpgradeSkill()
+        {
+            _pointsToUpgrade--;
+        }
+
+        public void AddPoints()
+        {
+            _pointsToUpgrade++;
+            OnSkillsChanged?.Invoke();
         }
 
         public IEnumerable<IBonus> AddBonus(Characteristics[] characteristics)
@@ -118,25 +153,37 @@ namespace SkillSystem
                 .Select(x => CharacteristicToBonus(x.Characteristics, x.Value));
         }
 
-        public bool CheckDependencies(SkillNode activeSkill, SkillUpgradeData skillUpgradeData)
+        public bool HasSkill(SkillNode activeSkill)
         {
-            var hasSkillRequirements = activeSkill.SkillRequirements().All(x => _knownSkillsList.Contains(x));
-            if (!hasSkillRequirements || _knownSkillsList.Contains(activeSkill)) return false;
+            return _knownSkillsList.Contains(activeSkill);
+        }
 
-            var levelRequirements = 0;
-            levelRequirements = skillUpgradeData.Entity.GetLevel;
+        public bool MeetsTheConditionsOfRequiredSkills(SkillNode activeSkill)
+        {
+            return activeSkill.SkillRequirements().All(x => _knownSkillsList.Contains(x));
+        }
 
-            return levelRequirements > activeSkill.LevelRequirement();
+        public bool CheckLevel(SkillNode activeSkill, SkillUpgradeData skillUpgradeData)
+        {
+            var level = skillUpgradeData.Entity.GetLevel;
+
+            return level >= activeSkill.LevelRequirement();
+        }
+
+        public bool EnoughPoints()
+        {
+            if (_pointsToUpgrade <= 0) return false;
+
+            return true;
         }
 
         public void UnlockSkill(SkillNode activeSkill, SkillUpgradeData skillUpgradeData)
         {
-            if (!CheckDependencies(activeSkill, skillUpgradeData)) return;
-
             _knownSkills.AddItem(new ItemData(activeSkill), 1);
 
             _knownSkillsList = _knownSkills.GetInventoryItems().OfType<SkillNode>().ToList();
             _unknownSkillsList = _unknownSkills.GetInventoryItems().OfType<SkillNode>().ToList();
+            skillUpgradeData.RemovePoints();
 
             OnSkillsChanged?.Invoke();
         }
@@ -152,49 +199,54 @@ namespace SkillSystem
 
             foreach (var item in _unknownSkills.GetAllSlots())
             {
-                var skillItem = _unknownSkills.FindNecessaryItemInData(item.ItemData.Id);
+                var skillItem = _unknownSkills.Database.GetItemByID(item.ItemData.Id);
                 if (skillItem != null)
                     skillSaver.UnknownSkills.Add(item);
             }
 
             foreach (var item in _knownSkills.GetAllSlots())
             {
-                var skillItem = _unknownSkills.FindNecessaryItemInData(item.ItemData.Id);
+                var skillItem = _unknownSkills.Database.GetItemByID(item.ItemData.Id);
                 if (skillItem != null)
                     skillSaver.KnownSkills.Add(item);
             }
 
             foreach (var item in _skillActionBar.GetAllSlots())
             {
-                var skillItem = _unknownSkills.FindNecessaryItemInData(item.ItemData.Id);
+                var skillItem = _unknownSkills.Database.GetItemByID(item.ItemData.Id);
                 if (skillItem != null)
                     skillSaver.ActionsSkills.Add(item);
             }
+
+            skillSaver.Points = _pointsToUpgrade;
 
             return skillSaver;
         }
 
         public void RestoreState(object state)
         {
-            var skillSaves = (SkillSaver) state;
+            var skillSaver = (SkillSaver) state;
             _skillActionBar.ClearInventory();
             _unknownSkills.ClearInventory();
             _knownSkills.ClearInventory();
 
-            foreach (var skill in skillSaves.ActionsSkills)
+            foreach (var skill in skillSaver.ActionsSkills)
             {
                 _skillActionBar.AddItem(skill.ItemData, 1);
             }
 
-            foreach (var skill in skillSaves.UnknownSkills)
+            foreach (var skill in skillSaver.UnknownSkills)
             {
                 _unknownSkills.AddItem(skill.ItemData, 1);
             }
 
-            foreach (var skill in skillSaves.KnownSkills)
+            foreach (var skill in skillSaver.KnownSkills)
             {
                 _knownSkills.AddItem(skill.ItemData, 1);
             }
+
+            _pointsToUpgrade = skillSaver.Points;
+            OnSkillsChanged?.Invoke();
         }
 
         [Serializable]
@@ -203,6 +255,7 @@ namespace SkillSystem
             public List<Slot> UnknownSkills;
             public List<Slot> KnownSkills;
             public List<Slot> ActionsSkills;
+            public int Points;
         }
     }
 }

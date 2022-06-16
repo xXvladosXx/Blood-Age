@@ -11,5 +11,6 @@ namespace QuestSystem.QuestObjectives
         [SerializeField] private Class _questGiver;
 
         public Class GetQuestGiver => _questGiver;
+       
     }
 }

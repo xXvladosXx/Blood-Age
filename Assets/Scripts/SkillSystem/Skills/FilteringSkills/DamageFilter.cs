@@ -15,7 +15,7 @@ namespace SkillSystem.Skills.FilteringSkills
         {
             if (objectToFilter == null) return null;
             
-            return objectToFilter.Where(gameObject => gameObject.TryGetComponent(out IDestroyable destroyable) 
+            return objectToFilter.Where(gameObject => gameObject.TryGetComponent(out IDamageable destroyable) 
                                                       && userTargets.Contains(destroyable));
         }
     }

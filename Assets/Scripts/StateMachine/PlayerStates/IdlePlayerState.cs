@@ -4,10 +4,12 @@ using DialogueSystem;
 using DialogueSystem.AIDialogue;
 using Entity;
 using LootSystem;
+using QuestSystem;
 using SceneSystem;
 using StateMachine.BaseStates;
 using StateMachine.EnemyStates;
 using States;
+using UI.Stats;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -18,55 +20,58 @@ namespace StateMachine.PlayerStates
     {
         private AIConversant _lastClickedConversant;
         private ItemPickUp _lastClickedLootObject;
-        private StarterAssetsInputs _starterAssetsInputs;
+        
+        private PlayerInputs _playerInputs;
+        private PlayerEntity _playerEntity;
+        private PlayerQuestList _playerQuests;
+
         private Portal _lastClickedPortal;
         private bool _transitionStarted;
 
         private float _distanceToAttack;
         private float _distanceToSpeak = 3f;
         private float _distanceToPickUp = 1f;
-        private float _timeToClick = .1f;
+        private float _distanceToTeleport = 2f;
+        private float _timeToClick = .5f;
         private float _clicking;
 
-        private static readonly int ForceTransition = Animator.StringToHash("ForceTransition");
 
         public override void GetComponents(AliveEntity aliveEntity)
         {
             base.GetComponents(aliveEntity);
-            _starterAssetsInputs = Movement.GetComponent<StarterAssetsInputs>();
+            _playerEntity = aliveEntity as PlayerEntity;
+            _playerInputs = _playerEntity.GetComponent<PlayerInputs>();
+            _playerQuests = _playerEntity.GetComponent<PlayerQuestList>();
         }
 
         public override void RunState(AliveEntity aliveEntity)
         {
+            if(Health.IsDead()) 
+                StateSwitcher.SwitchState<DeathBaseState>();
+            
             _distanceToAttack = aliveEntity.GetItemEquipper.GetAttackRange;
-            if(Health.IsDead())
-                StateSwitcher.SwitchState<DeathPlayerState>();
+            if (_playerInputs.enabled == false) return;
 
-            if (_starterAssetsInputs.enabled == false) return;
-
-            Animator.SetBool(ForceTransition, false);
-
-            if (aliveEntity.GetHealth.IsDead()) return;
-
-            PlayerCastSkillInput(aliveEntity);
+            PlayerInput(aliveEntity);
         }
 
-        public override void StartState(float time)
-        {
-        }
 
-        private void PlayerCastSkillInput(AliveEntity aliveEntity)
+
+        public override bool CanBeChanged => true;
+
+
+        private void PlayerInput(AliveEntity aliveEntity)
         {
             if (StateSwitcher.GetCurrentState is CastPlayerState) return;
 
             MakeCast(aliveEntity);
 
-            if (PointerOverUI()) return;
+            if (_playerEntity.PointerOverUI()) return;
             MovementInput(aliveEntity);
             DialogueBehaviour(aliveEntity);
+            TeleportBehaviour(aliveEntity);
             AttackBehaviour(aliveEntity);
             PickingItemBehaviour(aliveEntity);
-            TeleportBehaviour(aliveEntity);
         }
 
         private void TeleportBehaviour(AliveEntity aliveEntity)
@@ -74,24 +79,28 @@ namespace StateMachine.PlayerStates
             if (_lastClickedPortal == null) return;
 
             var enoughToStartNewState = EnoughDistanceToTarget(aliveEntity,
-                _lastClickedPortal.transform, _distanceToPickUp);
+                _lastClickedPortal.transform, _distanceToTeleport);
 
             if (enoughToStartNewState)
             {
-                _lastClickedPortal.StartTransition();
+                _playerQuests.CheckPortalQuests();
+                _lastClickedPortal.StartTransition(aliveEntity);
                 StateSwitcher.SwitchState<TeleportPlayerState>();
             }
         }
 
         private void MovementInput(AliveEntity aliveEntity)
         {
-            if (_starterAssetsInputs.ButtonInput)
+            
+            RaycastHit raycastHit;
+            bool hasHit = Physics.Raycast(_playerEntity.GetRay(), out raycastHit, Mathf.Infinity);
+            
+            if (!hasHit) return;
+
+            if (_playerInputs.ButtonInput)
             {
                 _clicking += Time.deltaTime;
-                var player = aliveEntity as PlayerEntity;
-                RaycastHit raycastHit;
-                bool hasHit = Physics.Raycast(player.GetRay(), out raycastHit, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Unwalkable")));
-                if (!hasHit) return;
+                
                 if(raycastHit.collider.gameObject == aliveEntity.gameObject) return;
 
                 if (raycastHit.collider.TryGetComponent(out AliveEntity target)
@@ -99,22 +108,33 @@ namespace StateMachine.PlayerStates
                     target.GetComponent<EnemyStateManager>() != null)
                 {
                     AttackRegister.GetAttackData.PointTarget = target;
+                    HealthBarEntity.Instance.ShowHealth(target);
+                    AttackRegister.GetAttackData.PointTarget.EnableOutLine();
                 }
                 else
                 {
+                    if(_lastClickedConversant != null)
+                        _lastClickedConversant.DisableOutline();
+                    if(AttackRegister.GetAttackData.PointTarget != null)
+                        AttackRegister.GetAttackData.PointTarget .DisableOutline();
+                    
                     Movement.StartMoveTo(raycastHit.point, 1f);
                     AttackRegister.GetAttackData.PointTarget = null;
                     _lastClickedConversant = null;
                     _lastClickedLootObject = null;
+                    _lastClickedPortal = null;
+                    
+                    HealthBarEntity.Instance.HideHealth();
                 }
                 if(_clicking < _timeToClick && raycastHit.collider.TryGetComponent(out AIConversant aiConversant))
                 {
                     _lastClickedConversant = aiConversant;
+                    _lastClickedConversant.EnableOutLine();
                 }
                 else if (_clicking < _timeToClick &&raycastHit.collider.TryGetComponent(out ItemPickUp lootObject))
                 {
                     _lastClickedLootObject = lootObject;
-                }else if (_clicking < _timeToClick && raycastHit.collider.TryGetComponent(out Portal portal))
+                }else if (_clicking < _timeToClick &&raycastHit.collider.TryGetComponent(out Portal portal))
                 {
                     _lastClickedPortal = portal;
                 }
@@ -148,7 +168,6 @@ namespace StateMachine.PlayerStates
 
             if (enoughToStartNewState)
             {
-                AttackRegister.GetAttackData.PointTarget.EnableOutLine();
                 StateSwitcher.SwitchState<AttackPlayerState>();
             }
         }
@@ -180,6 +199,23 @@ namespace StateMachine.PlayerStates
 
             Movement.StartMoveTo(target.position, 1f);
             return false;
+        }
+        
+        private void MakeCast(AliveEntity aliveEntity)
+        {
+            if(GameZoneManager.Instance.GetGameZone == GameZoneManager.GameZone.Savezone) return;
+            
+            for(int i = 0; i < 3; i++) {
+                if(Keyboard.current[(Key) ((int)Key.Digit1 + i)].wasPressedThisFrame) {
+                    CastSkillOnIndex(aliveEntity, i);
+                }
+            }
+        }
+        
+        private void CastSkillOnIndex(AliveEntity aliveEntity, int index)
+        {
+            var skillCast = StateSwitcher.SwitchState<CastPlayerState>();
+            skillCast.CastSkill(index, aliveEntity);
         }
     }
 }

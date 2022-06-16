@@ -14,7 +14,7 @@ namespace DialogueSystem
 
         private readonly Dictionary<string, DialogueNode> _nodeLookup = new Dictionary<string, DialogueNode>();
 
-        private void OnValidate()
+        private void OnEnable()
         {
             _nodeLookup.Clear();
             foreach (DialogueNode node in GetAllNodes())
@@ -27,10 +27,32 @@ namespace DialogueSystem
 
         public IEnumerable<DialogueNode> GetAllNodes() => _nodes;
 
+        public void SetVisitedNode(List<string> visitedNodes)
+        {
+            foreach (var nodeLookupKey in _nodeLookup.Keys)
+            {
+                foreach (var visitedNode in visitedNodes)
+                {
+                    if (nodeLookupKey == visitedNode)
+                        _nodeLookup[nodeLookupKey].WasVisited = true;
+                }
+            }
+        }
+
         public IEnumerable<DialogueNode> GetAllChildren(DialogueNode parentNode)
             => from childID in parentNode.GetTextChildren()
                 where _nodeLookup.ContainsKey(childID)
                 select _nodeLookup[childID];
+        
+        public IEnumerable<DialogueNode> GetPlayerChildren(DialogueNode currentNode)
+        {
+            return GetAllChildren(currentNode).Where(dialogueNode => dialogueNode.IsPlayerSpeaking());
+        }
+
+        public IEnumerable<DialogueNode> GetAIChildren(DialogueNode currentNode)
+        {
+            return GetAllChildren(currentNode).Where(dialogueNode => !dialogueNode.IsPlayerSpeaking() && !dialogueNode.WasVisited);
+        }
 
 #if UNITY_EDITOR
         public void CreateNode(DialogueNode parent)
@@ -45,7 +67,7 @@ namespace DialogueSystem
         {
             Undo.RecordObject(this, "Deleted Dialogue Node");
             _nodes.Remove(nodeToDelete);
-            OnValidate();
+            OnEnable();
             CleanDanglingChildren(nodeToDelete);
             Undo.DestroyObjectImmediate(nodeToDelete);
         }
@@ -67,7 +89,7 @@ namespace DialogueSystem
         private void AddNode(DialogueNode newNode)
         {
             _nodes.Add(newNode);
-            OnValidate();
+            OnEnable();
         }
 
         private void CleanDanglingChildren(DialogueNode nodeToDelete)
@@ -105,14 +127,6 @@ namespace DialogueSystem
         {
         }
 
-        public IEnumerable<DialogueNode> GetPlayerChildren(DialogueNode currentNode)
-        {
-            return GetAllChildren(currentNode).Where(dialogueNode => dialogueNode.IsPlayerSpeaking());
-        }
-
-        public IEnumerable<DialogueNode> GetAIChildren(DialogueNode currentNode)
-        {
-            return GetAllChildren(currentNode).Where(dialogueNode => !dialogueNode.IsPlayerSpeaking());
-        }
+        
     }
 }

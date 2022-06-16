@@ -18,7 +18,6 @@ namespace UI.Inventory
             foreach (var inventorySlot in ItemContainer.Container.InventorySlots)
             {
                 var o = Instantiate(_itemPrefab, _content);
-                o.AddComponent<ItemSlot>().SetItemData(ItemContainer.FindNecessaryItemInData(inventorySlot.ItemData.Id));
                 
                 AddEvent(o, EventTriggerType.PointerEnter, delegate { OnEnter(o); });
                 AddEvent(o, EventTriggerType.PointerExit, delegate { OnExit(); });

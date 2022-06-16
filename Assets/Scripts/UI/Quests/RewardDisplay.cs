@@ -1,10 +1,9 @@
-﻿using InventorySystem;
-using InventorySystem.Items;
+﻿using InventorySystem.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace QuestSystem
+namespace UI.Quests
 {
     public class RewardDisplay : MonoBehaviour
     {
@@ -13,7 +12,13 @@ namespace QuestSystem
 
         public void SetData(InventoryItem inventoryItem, int amount)
         {
-            
+            _itemImage.sprite = inventoryItem.UIDisplay;
+            _amount.text = amount.ToString();
+        }
+
+        public void SetData(float experienceReward)
+        {
+            _amount.text = experienceReward.ToString();
         }
     }
 }

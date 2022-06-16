@@ -8,15 +8,13 @@ namespace StateMachine.EnemyStates
 {
     public class AttackEnemyState : AttackBaseState
     {
-        private AliveEntity _target;
-        private AliveEntity _entity;
-        private StateDistanceConfiguration _stateDistanceConfiguration;
-        private static readonly int Attack = Animator.StringToHash("Attack");
-        private static readonly int ForceTransition = Animator.StringToHash("ForceTransition");
+        protected AliveEntity Target;
+        protected StateDistanceConfiguration StateDistanceConfiguration;
+        
 
         public AttackEnemyState(StateDistanceConfiguration stateDistanceConfiguration)
         {
-            _stateDistanceConfiguration = stateDistanceConfiguration;
+            StateDistanceConfiguration = stateDistanceConfiguration;
         }
 
         public bool TriggeredByDamage { get; set; }
@@ -30,7 +28,7 @@ namespace StateMachine.EnemyStates
             }
             Movement.Cancel();
             
-            if (_target.GetHealth.IsDead() || !_stateDistanceConfiguration.IsInRange(_target, aliveEntity, ItemEquipper.GetAttackRange))
+            if (Target.GetHealth.IsDead() || !StateDistanceConfiguration.IsInRange(Target, aliveEntity, ItemEquipper.GetAttackRange))
             {
                 ChaseSwitch();
             }
@@ -40,22 +38,26 @@ namespace StateMachine.EnemyStates
             }   
         }
 
-        public override void StartState(float time)
+        public override void StartState(AliveEntity aliveEntity)
         {
-            _target = Entity.Targets.FirstOrDefault();
+            Target = Entity.Targets.FirstOrDefault();
         }
+
+        public override bool CanBeChanged => true;
 
         private void ChaseSwitch()
         {
+            if(Animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8) return;
+            
             StateSwitcher.SwitchState<ChaseEnemyState>();
             Animator.SetBool(Attack, false);
             Animator.SetBool(ForceTransition, true);
         }
 
-        private void MakeAttack()
+        protected void MakeAttack()
         {
-            AttackRegister.GetAttackData.PointTarget = _target;
-            Entity.transform.LookAt(_target.transform);
+            AttackRegister.GetAttackData.PointTarget = Target;
+            Entity.transform.LookAt(Target.transform);
             Animator.SetBool(Attack, true);
         }
     }

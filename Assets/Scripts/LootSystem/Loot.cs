@@ -18,15 +18,15 @@ namespace LootSystem
         public class Drop
         {
             public ItemPickUp InventoryItem;
-            public int Amount;
+            public int MinAmount;
+            public int MaxAmount;
             public int Probability;
         }
 
         public List<Drop> GetDrop()
         {
             _droppedLoot = new List<Drop>();
-           
-
+            
             foreach (var drop in _loot)
             {
                 int roll = Random.Range(0, 100);

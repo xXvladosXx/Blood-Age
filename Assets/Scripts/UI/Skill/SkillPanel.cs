@@ -1,66 +1,62 @@
-/*using System.Collections.Generic;
+﻿using System;
 using Entity;
-using InventorySystem;
 using SkillSystem;
-using SkillSystem.MainComponents;
-using SkillSystem.Skills;
-using UI.Inventory;
+using TMPro;
 using UnityEngine;
 
 namespace UI.Skill
 {
     public class SkillPanel : Panel
     {
-        [SerializeField] private List<Item> _activeSkills = new List<Item>();
-
+        [SerializeField] private TextMeshProUGUI _skillPoints;
+        
+        private AliveEntity _aliveEntity;
+        private SkillLearn[] _skillUpgrades;
         private SkillTree _skillTree;
-        private SkillDisplay[] _skillDisplays;
-        private UserInterface _userInterface;
-
-        /*private void SetDataToDisplay()
-        {
-            for (int i = 0; i < _skillDisplays.Length; i++)
-            {
-                if (i > _skillTree.GetActionSkills.GetAllItems().Count - 1) break;
-
-                if (_skillTree.GetActionSkills.FindNecessaryItemInData(_skillTree.GetActionSkills.GetAllItems()[i]) is
-                    ActiveSkill activeSkill)
-                {
-                    _skillDisplays[i].SetSkill(activeSkill);
-                }
-                else
-                {
-                    _skillDisplays[i].ResetSkill();
-                }
-            }
-        }#1#
-
-        private void Update()
-        {
-            foreach (var skillDisplay in _skillDisplays)
-            {
-                skillDisplay.SetSkills(_skillTree.GetSkillsInCooldown);
-            }
-        }
+        private SkillUpgradeData _skillUpgradeData;
 
         public override void Initialize(AliveEntity aliveEntity)
         {
             _skillTree = aliveEntity.GetComponent<SkillTree>();
-            _userInterface = GetComponent<UserInterface>();
+            _aliveEntity = aliveEntity;
+            _skillPoints.text = _skillTree.GetPoints.ToString();
+            _skillTree.OnSkillsChanged += FindPoints;
 
-            foreach (var skillNode in _skillTree.GetActionItems)
+            SetSkillsData();
+        }
+
+        private void FindPoints()
+        {
+            _skillPoints.text = _skillTree.GetPoints.ToString();
+        }
+
+        private void SetSkillsData()
+        {
+            _skillUpgradeData = new SkillUpgradeData(_skillTree, _aliveEntity);
+            _skillUpgrades = GetComponentsInChildren<SkillLearn>();
+
+            for (int i = 0; i < _skillTree._unknownSkillsList.Count; i++)
             {
-                _activeSkills.Add(skillNode);
-
-                if (_userInterface.GetItemContainer.FindSlotInInventory(new ItemData(skillNode)) != null) continue;
-
-                _userInterface.GetItemContainer.AddItem(new ItemData(skillNode), 1);
+                _skillUpgrades[i].SetSkill(_skillTree._unknownSkillsList[i], _skillUpgradeData);
             }
-
-            // _skillTree.OnSkillsChanged += SetDataToDisplay;
-            // _skillDisplays = GetComponentsInChildren<SkillDisplay>();
-            //
-            // SetDataToDisplay();
         }
     }
-}*/
+    
+    [Serializable]
+    public class SkillUpgradeData
+    {
+        public SkillTree SkillTree;
+        public AliveEntity Entity;
+
+        public SkillUpgradeData(SkillTree skillTree, AliveEntity entity)
+        {
+            Entity = entity;
+            SkillTree = skillTree;
+        }
+
+        public void RemovePoints()
+        {
+            SkillTree.UpgradeSkill();
+        }
+    }
+}

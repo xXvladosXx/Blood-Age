@@ -22,12 +22,6 @@ namespace SaveSystem
          _user = GetComponent<AliveEntity>();
       }
 
-      private void Start()
-      {
-         if(_user != null)
-            _savableComponents = _user.GetSavableComponents;
-      }
-
       public string GetUniqueIdentifier()
       {
          return _uniqueIdentifier;
@@ -41,7 +35,8 @@ namespace SaveSystem
          {
             state[savable.GetType().ToString()] = savable.CaptureState();
          }
-         
+         if(_user != null)
+            _savableComponents = _user.GetSavableComponents;
          foreach (var savable in _savableComponents)
          {
             state[savable.GetType().ToString()] = savable.CaptureState();
@@ -59,10 +54,13 @@ namespace SaveSystem
             string savableSerialize = savable.GetType().ToString();
             if (state is Dictionary<string,object> records)
             {
+               if(!restoredState.ContainsKey(savableSerialize)) continue;
+               
                savable.RestoreState(restoredState[savableSerialize]);
             }
          }
-         
+         if(_user != null)
+            _savableComponents = _user.GetSavableComponents;
          foreach (var savable in _savableComponents)
          {
             string savableSerialize = savable.GetType().ToString();

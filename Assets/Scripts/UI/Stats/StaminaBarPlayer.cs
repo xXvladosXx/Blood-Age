@@ -20,21 +20,22 @@ namespace UI.Stats
             _currentStamina = _aliveEntity.GetStamina.GetCurrentStamina;
         
             _aliveEntity.GetStamina.OnStaminaPctChanged += OnStaminaChanged;
-            _aliveEntity.OnCharacteristicChange += () => OnCharacteristicChange();
+            _aliveEntity.OnCharacteristicChange += OnCharacteristicChange;
         
             _staminaValue.text = $"{_currentStamina:#} / {_aliveEntity.GetStamina.GetMaxStamina}";
         }
 
-        private string OnCharacteristicChange()
+        private void OnCharacteristicChange()
         {
             _currentStamina = _aliveEntity.GetStamina.GetCurrentStamina;
             StartCoroutine(ChangeToPct(_currentStamina / _aliveEntity.GetStamina.GetMaxStamina));
-            return _staminaValue.text = $"{_currentStamina:#} / {_aliveEntity.GetStamina.GetMaxStamina}";
+            _staminaValue.text = $"{_currentStamina:#} / {_aliveEntity.GetStamina.GetMaxStamina}";
         }
 
         private void OnDisable()
         {
             _aliveEntity.GetStamina.OnStaminaPctChanged -= OnStaminaChanged;
+            _aliveEntity.OnCharacteristicChange -= OnCharacteristicChange;
         }
 
         private void OnStaminaChanged(float stamina)

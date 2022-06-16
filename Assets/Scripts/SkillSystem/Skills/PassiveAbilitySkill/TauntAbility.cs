@@ -28,7 +28,7 @@ namespace SkillSystem.Skills.PassiveAbilitySkill
                             CriticalDamage = CriticalDamage
                         });
 
-                    aliveEntity.GetComponent<IStateSwitcher>().SwitchState<TauntBaseState>(_tauntDuration);
+                    //aliveEntity.GetComponent<IStateSwitcher>().SwitchState<TauntBaseState>(_tauntDuration);
                 }
             }
         }

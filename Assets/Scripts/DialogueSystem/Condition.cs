@@ -9,10 +9,7 @@ namespace DialogueSystem
     [Serializable]
     public class Condition
     {
-        [SerializeField] private string _predicate;
-        [SerializeField] private AIDialogueQuestCondition _parameters;
-
-        public AIDialogueQuestCondition GetDialogueCondition => _parameters;
+        [SerializeField] private AIDialogueCondition _parameters;
         
         public bool Check(IEnumerable<IPredicateEvaluator> evaluators)
         {

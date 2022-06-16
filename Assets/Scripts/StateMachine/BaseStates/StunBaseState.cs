@@ -6,11 +6,8 @@ using UnityEngine;
 
 namespace StateMachine.BaseStates
 {
-    public abstract class StunBaseState : BaseComponentsState, ISwitchable
+    public abstract class StunBaseState : BaseComponentsState
     {
-        public bool CanSwitch()
-        {
-            return false;
-        }
+       
     }
 }

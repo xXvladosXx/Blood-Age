@@ -21,21 +21,38 @@ namespace UI.Stats
             _currentHealth = _aliveEntity.GetHealth.GetCurrentHealth;
         
             _aliveEntity.GetHealth.OnHealthPctChanged += OnHealthChanged;
-            _aliveEntity.OnCharacteristicChange += () => OnCharacteristicChange();
+            _aliveEntity.OnCharacteristicChange += OnCharacteristicChange;
+            
         
             _healthValue.text = $"{_currentHealth:#} / {_aliveEntity.GetHealth.GetMaxHealth}";
         }
 
-        private string OnCharacteristicChange()
+        private void OnEnable()
+        {
+            StartCoroutine(WaitSecondToRefreshHealth());
+        }
+
+        private IEnumerator WaitSecondToRefreshHealth()
+        {
+            yield return new WaitForSeconds(.1f);
+            
+            OnCharacteristicChange();
+            
+            _aliveEntity.GetHealth.OnHealthPctChanged += OnHealthChanged;
+            _aliveEntity.OnCharacteristicChange += OnCharacteristicChange;
+        }
+
+        private void OnCharacteristicChange()
         {
             _currentHealth = _aliveEntity.GetHealth.GetCurrentHealth;
             StartCoroutine(ChangeToPct(_currentHealth / _aliveEntity.GetHealth.GetMaxHealth));
-            return _healthValue.text = $"{_currentHealth:#} / {_aliveEntity.GetHealth.GetMaxHealth}";
+            _healthValue.text = $"{_currentHealth:#} / {_aliveEntity.GetHealth.GetMaxHealth}";
         }
 
         private void OnDisable()
         {
             _aliveEntity.GetHealth.OnHealthPctChanged -= OnHealthChanged;
+            _aliveEntity.OnCharacteristicChange -= OnCharacteristicChange;
         }
 
         private void OnHealthChanged(float health)

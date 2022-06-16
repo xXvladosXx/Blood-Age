@@ -1,4 +1,6 @@
 ﻿using Entity;
+using SceneSystem;
+using UnityEngine;
 
 namespace StateMachine.PlayerStates
 {
@@ -6,12 +8,19 @@ namespace StateMachine.PlayerStates
     {
         public override void RunState(AliveEntity aliveEntity)
         {
+           
+        }
+
+        public override void EndState(AliveEntity aliveEntity)
+        {
             
         }
 
-        public override void StartState(float time)
+        public override bool CanBeChanged => false;
+
+        public override void StartState(AliveEntity aliveEntity)
         {
-            StarterAssetsInputs.enabled = false;
+            PlayerInputs.enabled = false;
         }
     }
 }

@@ -2,11 +2,8 @@
 
 namespace StateMachine.BaseStates
 {
-    public abstract class DeathBaseState : BaseComponentsState, ISwitchable
+    public abstract class DeathBaseState : BaseComponentsState
     {
-        public bool CanSwitch()
-        {
-            return false;
-        }
+       
     }
 }

@@ -14,18 +14,17 @@ namespace UI.Ability
         private ActiveSkill _activeSkill;
         private bool _startCooldown;
         private float _time;
-        
+
         public event Action<SlotHandler> OnAbilityClick;
-        public ActiveSkill GetActiveSkill => _activeSkill;
 
         public void SetItem(ActiveSkill item)
         {
             _activeSkill = item;
         }
-        
-        public void StartCooldown(Item item, float time)
+
+        public void StartCooldown(ActiveSkill item, float time)
         {
-            if(_activeSkill == null) return;
+            if (_activeSkill == null) return;
             if (_activeSkill.Data.Id == item.Data.Id)
             {
                 _startCooldown = true;
@@ -41,9 +40,19 @@ namespace UI.Ability
             }
         }
 
+        public void RefreshIcon(ActiveSkill activeSkill)
+        {
+            if (_activeSkill == null) return;
+            if (_activeSkill.Data.Id == activeSkill.Data.Id)
+            {
+                _startCooldown = false;
+                _background.fillAmount = 0;
+            }
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
-            OnAbilityClick?.Invoke(this);     
+            OnAbilityClick?.Invoke(this);
         }
     }
 }

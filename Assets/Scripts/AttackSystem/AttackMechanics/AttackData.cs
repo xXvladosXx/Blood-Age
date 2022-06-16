@@ -13,11 +13,11 @@ namespace AttackSystem.AttackMechanics
         public List<AliveEntity> Entities { get; set; }
         public List<AliveEntity> Targets { get; set; }
         public SerializableDictionary ElementalDamage { get; set; }
-        public bool HeavyAttack { get; set; }
         public float Damage { get; set; }
         public float MaxDamage { get; set; }
         public float CriticalChance { get; set; }
         public float CriticalDamage { get; set; }
         public float Accuracy { get; set; }
+        public bool Vampiric { get; set; }
     }
 }

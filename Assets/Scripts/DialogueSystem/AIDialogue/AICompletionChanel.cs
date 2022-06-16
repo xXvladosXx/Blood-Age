@@ -9,11 +9,11 @@ namespace DialogueSystem.AIDialogue
     public class AICompletionChanel : AIDialogueChanel
     {
         [SerializeField] private Quest _quest;
-        [SerializeField] private Objective[] _objectives;
+        [SerializeField] private Objective _objective;
         
         public override void Visit(AIConversant aiConversant, PlayerConversant playerConversant)
         {
-            playerConversant.GetComponent<PlayerQuestList>().CompleteObjective(_quest, _objectives);
+            playerConversant.GetComponent<PlayerQuestList>().CompleteObjective(_quest, _objective);
         }
     }
 }

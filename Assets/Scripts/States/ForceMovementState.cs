@@ -1,4 +1,6 @@
-﻿using StateMachine;
+﻿using System.Collections.Generic;
+using Entity;
+using StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,17 +11,22 @@ namespace States
     {
         [SerializeField] private AnimationCurve _speedCurve;
         [SerializeField] private float _speed;
+        [SerializeField] private float _distance = 2;
+        [SerializeField] private LayerMask _layerMask;
 
         private Rigidbody _rigidbody;
+        private PlayerEntity _playerEntity;
         private Movement _movement;
         private Collider _collider;
-        private float _positionY;
+        private List<GameObject> _raycasters;
+
         public override void OnEnter(AnimatorState characterStateAnimator, Animator animator, AnimatorStateInfo stateInfo)
         {
             _rigidbody = animator.GetComponent<Rigidbody>();
             _movement = animator.GetComponent<Movement>();
             _collider = animator.GetComponent<Collider>();
-            _positionY = animator.transform.position.y;
+            _playerEntity = animator.GetComponent<PlayerEntity>();
+            _raycasters = _playerEntity.GetRaycasters;
             
             _collider.isTrigger = false;
             _movement.EnableMovement(false);
@@ -27,6 +34,16 @@ namespace States
 
         public override void UpdateAbility(AnimatorState characterStateAnimator, Animator animator, AnimatorStateInfo stateInfo)
         {
+            foreach (var raycaster in _raycasters)
+            {
+                RaycastHit raycastHit;
+                if (Physics.Raycast(raycaster.transform.position, raycaster.transform.forward, out raycastHit,
+                        _distance, 1 << LayerMask.NameToLayer("Unwalkable")))
+                {
+                    return;
+                }
+            }
+            
             var transform = animator.transform;
             var position = transform.position;
             var forward = transform.forward;

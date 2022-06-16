@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Entity;
 using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
@@ -17,12 +18,12 @@ namespace SkillSystem.Skills.TargetingSkills
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float _distance;
 
-        private StarterAssetsInputs _player;
+        private PlayerInputs _player;
         private IStateSwitcher _stateSwitcher;
 
         public override void StartTargeting(SkillData skillData, Action finishedAttack, Action canceledAttack)
         {
-            _player = skillData.GetUser.GetComponent<StarterAssetsInputs>();
+            _player = skillData.GetUser.GetComponent<PlayerInputs>();
 
             RaycastHit raycastHit;
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -53,10 +54,13 @@ namespace SkillSystem.Skills.TargetingSkills
             finishedAttack();
         }
 
-        public void AddData(Dictionary<string, float> data)
+        public void AddData(Dictionary<string, StringBuilder> data)
         {
+            StringBuilder stringBuilder = new StringBuilder();
             if(_distance != 0)
-                data.Add("Distance", _distance);
+                stringBuilder.Append("Distance: ").Append(_distance).AppendLine();
+            
+            data.Add("Targeting: ", stringBuilder);
         }
     }
 }

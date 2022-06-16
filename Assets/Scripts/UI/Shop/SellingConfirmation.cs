@@ -4,7 +4,7 @@
     {
         protected override void ConfirmTransaction()
         {
-            Customer.ConfirmSelling(ItemToPurchase, Seller, CurrentAmount);
+            Customer.ConfirmPurchase(ItemToPurchase, Seller, CurrentAmount);
             base.ConfirmTransaction();
         }
 

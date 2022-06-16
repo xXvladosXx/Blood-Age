@@ -9,6 +9,7 @@
         public ItemData Data = new ItemData();
         public bool Stackable;
         public ItemCategory Category;
+        public string Description;
 
         [SerializeField] private bool StrictSwap = false;
         public bool GetStrictSwap => StrictSwap;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using SceneSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,7 +38,7 @@ namespace SaveSystem
             using (FileStream fileStream = File.Open(path, FileMode.Create))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                if(!type.IsSerializable) return;
+                if (!type.IsSerializable) return;
 
                 formatter.Serialize(fileStream, captureState);
             }
@@ -45,8 +46,6 @@ namespace SaveSystem
 
         public void Load(string saveFile)
         {
-            print("loading  " + saveFile);
-
             RestoreState(LoadFile(saveFile));
         }
 
@@ -81,18 +80,30 @@ namespace SaveSystem
         public IEnumerator LoadScene(string saveFile)
         {
             Dictionary<string, object> state = LoadFile(saveFile);
-            print("buildIndex");
-            if (state.ContainsKey("SceneIndexToLoad"))
+            int buildIndex = GetSceneIndex(saveFile);
+
+            if (buildIndex != SceneManager.GetActiveScene().buildIndex)
             {
-                int buildIndex = (int) state["SceneIndexToLoad"];
-                
-                if (buildIndex != SceneManager.GetActiveScene().buildIndex)
-                {
-                    yield return SceneManager.LoadSceneAsync(buildIndex);
-                }
+                LevelLoader.Instance.LoadScene(buildIndex);
+                yield return null;
             }
 
             RestoreState(state);
+        }
+
+        public bool IsInCurrentScene(string saveFile) => GetSceneIndex(saveFile) == SceneManager.GetActiveScene().buildIndex;
+
+        public int GetSceneIndex(string saveFile)
+        {
+            Dictionary<string, object> state = LoadFile(saveFile);
+            if (state.ContainsKey("SceneIndexToLoad"))
+            {
+                int buildIndex = (int) state["SceneIndexToLoad"];
+
+                return buildIndex;
+            }
+
+            return -1;
         }
 
         public IEnumerable<string> SavesList()

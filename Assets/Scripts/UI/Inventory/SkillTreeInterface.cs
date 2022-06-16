@@ -20,6 +20,8 @@ namespace UI.Inventory
 
             foreach (var inventorySlot in ItemContainer.Container.InventorySlots)
             {
+                if(Index >= _slots.Length) return;
+                
                 var o = _slots[Index];
                 
                 AddEvent(o, EventTriggerType.PointerEnter, delegate { OnEnter(o); });

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
+using StateMachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,10 +19,10 @@ namespace SkillSystem.Skills.TargetingSkills
         [SerializeField] private bool _rotationChange;
         [SerializeField] private GameObject _radiusDisplay;
 
-        private StarterAssetsInputs _player;
+        private PlayerInputs _player;
         public override void StartTargeting(SkillData skillData, Action finishedAttack, Action canceledAttack)
         {
-            _player = skillData.GetUser.GetComponent<StarterAssetsInputs>();
+            _player = skillData.GetUser.GetComponent<PlayerInputs>();
             var playerRotation = _player.transform.rotation;
                         
             RaycastHit raycastHit;
@@ -28,7 +30,6 @@ namespace SkillSystem.Skills.TargetingSkills
 
             if (Physics.Raycast(ray, out raycastHit, 1000, _layerMask))
             {
-                Debug.Log(raycastHit.collider.gameObject);
                 var transform = skillData.GetUser.transform;
                 if (_rotationChange)
                 {
@@ -48,14 +49,6 @@ namespace SkillSystem.Skills.TargetingSkills
             finishedAttack();
         }
 
-        public void AddData(Dictionary<string, float> data)
-        {
-            if(_distance != 0)
-                data.Add("Distance", _distance);
-            if(_radius != 0)
-                data.Add("Radius", _radius);
-        }
-        
         private IEnumerable<GameObject> GetGameobjectsInRadius(Vector3 point)
         {
             var hits = Physics.SphereCastAll(point, _radius, Vector3.up, 100);
@@ -64,6 +57,14 @@ namespace SkillSystem.Skills.TargetingSkills
             {
                 yield return raycastHit.collider.gameObject;
             }
+        }
+        
+        public void AddData(Dictionary<string, StringBuilder> data)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Radius: ").Append(_radius).AppendLine();
+           
+            data.Add("Targeting: ", stringBuilder);
         }
     }
 }

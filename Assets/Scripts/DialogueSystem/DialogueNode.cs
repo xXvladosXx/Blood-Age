@@ -27,8 +27,8 @@ namespace DialogueSystem
         public AIDialogueChanel GetOnExitAction => OnExitAction;
         public bool GetOneTimeVisit => _oneTimeVisited;
         public bool IsPlayerSpeaking() => _isPlayerSpeaking;
+        public bool HasCondition() => _condition != null;
 
-        public Condition GetCondition => _condition;
         private void OnValidate()
         {
             WasVisited = false;
@@ -41,7 +41,8 @@ namespace DialogueSystem
             
             return _condition.Check(predicateEvaluators);
         }
-        
+
+
 
 #if UNITY_EDITOR
         public void SetPosition(Vector2 newPosition)

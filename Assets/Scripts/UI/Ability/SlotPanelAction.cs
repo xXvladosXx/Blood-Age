@@ -35,7 +35,7 @@ namespace UI.Ability
             {
                 var slotHandler = _slots[_index];
                 slotHandler.OnAbilityClick += OpenItemChoose;
-                slotHandler.SetItem(ActionItems.FindNecessaryItemInData(inventorySlot.ItemData.Id) as ActiveSkill); 
+                slotHandler.SetItem(ActionItems.Database.GetItemByID(inventorySlot.ItemData.Id) as ActiveSkill); 
                 
                 SlotOnUI.Add(slotHandler, inventorySlot);
                 _index++;
@@ -53,7 +53,7 @@ namespace UI.Ability
             else
             {
                 SlotChoose.gameObject.SetActive(true);
-                SlotChoose.SetData(KnownItems, SlotOnUI[o], o);
+                SlotChoose.SetData(ActionItems,KnownItems, SlotOnUI[o], o);
             }
 
         }
@@ -62,20 +62,8 @@ namespace UI.Ability
         {
             foreach (var slot in SlotOnUI)
             {
-                if (slot.Value.ItemData.Id >= 0)
-                {
-                    slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite =
-                        ActionItems.FindNecessaryItemInData(slot.Value.ItemData.Id).UIDisplay;
-                    slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
-                    slot.Key.GetComponentInChildren<TextMeshProUGUI>().text =
-                        slot.Value.Amount == 1 || slot.Value.Amount == 0 ? string.Empty : slot.Value.Amount.ToString();
-                }
-                else
-                {
-                    slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
-                    slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
-                    slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
-                }
+                slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = slot.Value.ItemData.Id >= 0 
+                    ? ActionItems.Database.GetItemByID(slot.Value.ItemData.Id).UIDisplay : slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             }
         }
     }

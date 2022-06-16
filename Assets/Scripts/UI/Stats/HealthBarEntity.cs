@@ -16,7 +16,7 @@ namespace UI.Stats
         [SerializeField] private float _updateSpeedSeconds = 0.5f;
         [SerializeField] private TextMeshProUGUI _name;
 
-        public Health Health { get; set; }
+        private Health Health { get; set; }
 
         private void Awake()
         {
@@ -27,7 +27,8 @@ namespace UI.Stats
         public void ShowHealth(AliveEntity enemy)
         {
             Health = enemy.GetHealth;
-            _name.text = enemy.name;
+            _foreground.fillAmount = Health.GetCurrentHealth / Health.GetMaxHealth;
+            _name.text = enemy.SerializableClass.ToString();
             gameObject.SetActive(true);
             Health.OnHealthPctChanged += OnHealthPctChanged;
             Health.OnDie += HideHealth;
@@ -44,22 +45,8 @@ namespace UI.Stats
 
         private void OnHealthPctChanged(float pct)
         {
-            StartCoroutine(ChangeToPct(pct));
-        }
-
-        private IEnumerator ChangeToPct(float pct)
-        {
-            float preChangePct = _foreground.fillAmount;
-            float elapsed = 0f;
-
-            while (elapsed < _updateSpeedSeconds)
-            {
-                elapsed += Time.deltaTime;
-                _foreground.fillAmount = Mathf.Lerp(preChangePct, pct, elapsed / _updateSpeedSeconds);
-                yield return null;
-            }
-
             _foreground.fillAmount = pct;
         }
+
     }
 }

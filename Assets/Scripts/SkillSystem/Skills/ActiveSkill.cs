@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Entity;
 using InventorySystem.Items.Weapon;
 using RPGCharacterAnims;
@@ -10,6 +11,7 @@ using SkillSystem.MainComponents.Strategies;
 using SkillSystem.SkillInfo;
 using SkillSystem.SkillNodes;
 using StateMachine;
+using StateMachine.BaseStates;
 using StateMachine.PlayerStates;
 using StatsSystem;
 using UnityEngine;
@@ -28,13 +30,13 @@ namespace SkillSystem.Skills
         [SerializeField] private float _mana;
 
         private CharacteristicBonus[] _playerPassiveSkillBonus;
-        private int _continuousEffects = 0;
-        private int _currentEffects = 0;
-        private Dictionary<string, float> _data = new Dictionary<string, float>();
         private IStateSwitcher _state;
         protected SkillData _skillData;
         private Animator _animator;
         private AliveEntity _user;
+        
+        private readonly Dictionary<string, StringBuilder> _data = new Dictionary<string, StringBuilder>();
+        
         public float GetCooldown => _cooldown;
         public Weapon[] GetWeaponTypeSkill => _weaponType;
 
@@ -42,10 +44,11 @@ namespace SkillSystem.Skills
 
         private static readonly int Canceled = Animator.StringToHash("Canceled");
 
-        public Dictionary<string, float> GetData()
+        public Dictionary<string, StringBuilder> GetData()
         {
             _data.Clear();
-
+            StringBuilder stringBuilder = new StringBuilder();
+            
             if (_targeting is ICollectable collectable)
             {
                 collectable.AddData(_data);
@@ -58,30 +61,39 @@ namespace SkillSystem.Skills
                     icollectable.AddData(_data);
                 }
             }
-           
-            _data.Add("Mana", _mana);
-            _data.Add("Cooldown", _cooldown);
+
+            stringBuilder.Append(_cooldown);
+            _data.Add("Cooldown", stringBuilder);
+            
+            StringBuilder manaStringBuilder = new StringBuilder();
+            manaStringBuilder.Append("Mana: ").Append(_mana);
+            _data.Add("Mana", manaStringBuilder);
+            
+            StringBuilder requirementsStringBuilder = new StringBuilder();
+            requirementsStringBuilder.Append("Requirements: ").AppendLine();
+            foreach (var requiredSkill in Skills)
+            {
+                requirementsStringBuilder.Append("Skill: ").Append(requiredSkill.Data.Name);
+            }
+            requirementsStringBuilder.Append("Level: ").Append(RequiredLevel);
+            _data.Add("Requirements", requirementsStringBuilder);
+
             return _data;
         }
 
         public override void ApplySkill(AliveEntity user)
         {
             if (_targeting == null) return;
-
+            
+            
             _user = user;
-            if (!_user.GetMana.HasEnoughMana(_mana))
-            {
-                Cancel();
-                return;
-            }
             
             _state = _user.GetComponent<IStateSwitcher>();
             _animator = _user.GetComponent<Animator>();
             _animator.SetBool(Canceled, false);
-
-            _continuousEffects = 0;
-            _currentEffects = 0;
+           
             _skillData = new SkillData(_user);
+            
             _targeting.StartTargeting(_skillData, () => AcquireTarget(_skillData), Cancel);
         }
 
@@ -94,15 +106,17 @@ namespace SkillSystem.Skills
 
         private void ExecuteState()
         {
-            _state.SwitchState<IdlePlayerState>();
-
-            _currentEffects = 0;
+            _state?.SwitchState<IdleBaseState>();
         }
 
         private void AcquireTarget(SkillData skillData)
         {
-            if (skillData.IsCancelled) return;
-
+            if (!_user.GetMana.HasEnoughMana(_mana))
+            {
+                Cancel();
+                return;
+            }
+            
             foreach (var filtering in _filtering)
             {
                 skillData.Targets = filtering.StartFiltering(skillData.Targets, skillData.GetUser.Targets);
@@ -111,22 +125,12 @@ namespace SkillSystem.Skills
             foreach (var effectApplying in _effectApplying)
             {
                 effectApplying.Effect(skillData, Cancel, Finished);
-
-                if (effectApplying is ContinuousEffectApplying)
-                {
-                    _continuousEffects++;
-                }
             }
         }
 
         private void Finished()
         {
-            _currentEffects++;
             OnSkillCast?.Invoke(_skillData.GetUser);
-            if (_continuousEffects == _currentEffects)
-            {
-                
-            }
         }
     }
 }

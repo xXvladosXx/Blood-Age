@@ -24,7 +24,7 @@ namespace SkillSystem.Skills.PassiveAbilitySkill
 
             var switcher = skillData.Target.GetComponent<IStateSwitcher>();
             var state = switcher.SwitchState<StunBaseState>();
-            state?.StartState(_stunDuration);
+            //state?.StartState(_stunDuration);
         }
     }
 }

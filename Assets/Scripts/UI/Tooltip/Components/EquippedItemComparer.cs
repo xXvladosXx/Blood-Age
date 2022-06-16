@@ -18,7 +18,9 @@ namespace UI.Tooltip.Components
         {
             _stringBuilder = new StringBuilder();
             
-            _itemNameText.text = inventoryItem.name;
+            _itemNameText.text = inventoryItem.Data.Name;
+            _itemNameText.color = inventoryItem.Rarity.GetColor;
+
             _itemSlotText.text = inventoryItem.Category.ToString();
             _price.text = $"Price: {inventoryItem.Price.ToString()}" ;
             _stringBuilder.Length = 0;

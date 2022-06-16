@@ -28,29 +28,48 @@ namespace UI.Skill
             _background.sprite = activeSkill.GetSkillSprite;
             _foreground.sprite = activeSkill.GetSkillSprite;
             
-            if (_skillUpgradeData.SkillTree._knownSkillsList.Contains(_skill))
-            {
-                _upgrade.gameObject.SetActive(false);
-                _foreground.gameObject.SetActive(true);
-                _skillUpgradeData.SkillTree.UnlockSkill(_skill, _skillUpgradeData);
-                return;
-            }
-            
             _skillUpgradeData.SkillTree.OnSkillsChanged += SkillTreeOnOnSkillsChanged;
-            
-            var canAssign = _skillUpgradeData.SkillTree.CheckDependencies(_skill, _skillUpgradeData);
-            _upgrade.gameObject.SetActive(canAssign);
+            SkillTreeOnOnSkillsChanged();
         }
 
         private void SkillTreeOnOnSkillsChanged()
         {
-            var canAssign = _skillUpgradeData.SkillTree.CheckDependencies(_skill, _skillUpgradeData);
-            _upgrade.gameObject.SetActive(canAssign);
+            if(_skillUpgradeData == null) return;
+            
+            if (_skillUpgradeData.SkillTree.HasSkill(_skill))
+            {
+                _foreground.gameObject.SetActive(true);
+                _upgrade.gameObject.SetActive(false);
+                _background.gameObject.SetActive(false);
+                    
+                return;
+            }
+            
+            if (_skillUpgradeData.SkillTree.EnoughPoints())
+            {
+                if (!_skillUpgradeData.SkillTree.MeetsTheConditionsOfRequiredSkills(_skill) ||
+                    !_skillUpgradeData.SkillTree.CheckLevel(_skill, _skillUpgradeData))
+                {
+                    _upgrade.gameObject.SetActive(false);
+                    return;
+                }
+                
+                _foreground.gameObject.SetActive(true);
+                _upgrade.gameObject.SetActive(true);
+                _background.gameObject.SetActive(false);
+            }
+            else
+            {
+                _foreground.gameObject.SetActive(false);
+                _upgrade.gameObject.SetActive(false);
+                _background.gameObject.SetActive(true);
+            }
         }
 
         private void OnEnable()
         {
             _upgrade.onClick.AddListener(Unlock);
+            SkillTreeOnOnSkillsChanged();
         }
 
         private void OnDisable()
@@ -60,7 +79,6 @@ namespace UI.Skill
 
         private void Unlock()
         {
-            _skillUpgradeData.Points--;
             _upgrade.gameObject.SetActive(false);
             _foreground.gameObject.SetActive(true);
             _skillUpgradeData.SkillTree.UnlockSkill(_skill, _skillUpgradeData);

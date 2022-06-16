@@ -16,8 +16,7 @@ namespace UI.Inventory
     public abstract class UserInterface : Panel
     {
         [SerializeField] protected ItemContainer ItemContainer;
-        [SerializeField] protected bool ImageChanging = false;
-        [SerializeField] protected bool HaveAccessToChangeOthers = true;
+        [SerializeField] private bool _imageChanching = true;
         public ItemContainer GetItemContainer => ItemContainer;
 
         protected int Index = 0;
@@ -45,9 +44,8 @@ namespace UI.Inventory
 
         private void Update()
         {
-            if (ImageChanging)
+            if(_imageChanching)
                 UpdateSlots();
-            
         }
 
         protected abstract void CreateSlots();
@@ -73,7 +71,7 @@ namespace UI.Inventory
 
         protected void OnEnter(GameObject o)
         {
-            var item = ItemContainer.FindNecessaryItemInData(SlotOnUI[o].ItemData.Id);
+            var item = ItemContainer.Database.GetItemByID(SlotOnUI[o].ItemData.Id);
             
             ItemTooltipDistributor.Instance.ShowTooltip(item, this);
             SkillTooltip.Instance.ShowTooltip(item);
@@ -108,7 +106,7 @@ namespace UI.Inventory
             if (SlotOnUI[o].ItemData.Id >= 0)
             {
                 var img = mouseObj.AddComponent<Image>();
-                img.sprite = ItemContainer.FindNecessaryItemInData(SlotOnUI[o].ItemData.Id).UIDisplay;
+                img.sprite = ItemContainer.Database.GetItemByID(SlotOnUI[o].ItemData.Id).UIDisplay;
                 img.raycastTarget = false;
             }
 
@@ -130,11 +128,6 @@ namespace UI.Inventory
             Destroy(_mouseData.TempItemDrag);
             OnItemPlace?.Invoke();
 
-            if (!HaveAccessToChangeOthers && _mouseData.UI != this)
-            {
-                return;
-            }
-
             if (_mouseData.UI == null)
             {
                 SlotOnUI[o].RemoveItem();
@@ -145,7 +138,7 @@ namespace UI.Inventory
             {
                 var mouseHoverSlot = _mouseData.UI.SlotOnUI[_mouseData.TempItemHover];
 
-                ItemContainer.SwapItem(SlotOnUI[o], mouseHoverSlot);
+                ItemContainer.SwapItem(_mouseData.UI.ItemContainer ,SlotOnUI[o], mouseHoverSlot);
 
                 return;
             }
@@ -153,7 +146,7 @@ namespace UI.Inventory
             if (_mouseData.TempItemHover)
             {
                 var mouseHoverSlot = _mouseData.UI.SlotOnUI[_mouseData.TempItemHover];
-                ItemContainer.SwapItem(SlotOnUI[o], mouseHoverSlot);
+                ItemContainer.SwapItem(_mouseData.UI.ItemContainer, SlotOnUI[o], mouseHoverSlot);
             }
         }
 
@@ -176,7 +169,7 @@ namespace UI.Inventory
                 if (slot.Value.ItemData.Id >= 0)
                 {
                     slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite =
-                        ItemContainer.FindNecessaryItemInData(slot.Value.ItemData.Id).UIDisplay;
+                        ItemContainer.Database.GetItemByID(slot.Value.ItemData.Id).UIDisplay;
                     slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
                     slot.Key.GetComponentInChildren<TextMeshProUGUI>().text =
                         slot.Value.Amount == 1 || slot.Value.Amount == 0 ? string.Empty : slot.Value.Amount.ToString();

@@ -15,38 +15,30 @@ namespace UI.Dialogue
         [SerializeField] private TextMeshProUGUI _aiText;
         [SerializeField] private TextMeshProUGUI _conversantName;
         [SerializeField] private Button _nextButton;
+        [SerializeField] private Button _quit;
         [SerializeField] private Button _choiceButton;
         [SerializeField] private Transform _choiceRoot;
         [SerializeField] private GameObject _aiResponse;
-        [SerializeField] private Button _quitButton;
 
         private PlayerConversant _playerConversant;
 
         public override void Initialize(AliveEntity aliveEntity)
         {
             _playerConversant = aliveEntity.GetComponent<PlayerConversant>();
-            
-            _playerConversant.OnConversationUpdate += UpdateUI;
-            _playerConversant.OnLastNode += DisableDialoguePanel;
-            UpdateUI();
-        }
 
-        private void DisableDialoguePanel()
-        {
-            gameObject.SetActive(false);
+            _playerConversant.OnDialogueStart += () => ChangeUI(this);
+            _playerConversant.OnConversationUpdate += UpdateUI;
+            
+            UpdateUI();
         }
 
         private void OnEnable()
         {
-            ChangeUI(this);
-            
-            _quitButton.onClick.AddListener(() => _playerConversant.Quit());
             _nextButton.onClick.AddListener(() => _playerConversant.Next());
         }
-        
+
         private void UpdateUI()
         {
-            gameObject.SetActive(_playerConversant.IsActive());
             if (!_playerConversant.IsActive()) return;
 
             _conversantName.text = _playerConversant.GetCurrentConversantName();
@@ -66,6 +58,7 @@ namespace UI.Dialogue
 
                 _aiText.text = _playerConversant.GetText();
                 _nextButton.gameObject.SetActive(_playerConversant.HasNext());
+                _quit.gameObject.SetActive(!_playerConversant.HasNext());
             }
         }
 
@@ -86,13 +79,13 @@ namespace UI.Dialogue
 
         private void OnDisable()
         {
-            _playerConversant.TryGetComponent(out IStateSwitcher switcher);
-            if(switcher.GetCurrentState is DialoguePlayerState dialoguePlayerState)
-            {
-                 dialoguePlayerState.EndDialogue();
-            }
             _nextButton.onClick.RemoveAllListeners();
-            _quitButton.onClick.RemoveAllListeners();
+            _playerConversant.EndDialogue();
+        }
+
+        public void EndDialogue()
+        {
+            ChangeUI(this);
         }
     }
 }

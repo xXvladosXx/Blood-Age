@@ -13,6 +13,14 @@ namespace StatsSystem
         OrdinaryArcher,
         Guard,
         Ivan,
+        Goblin,
+        Bear,
+        Werewolf,
+        EnemyArcher,
+        Troll,
+        Orc,
+        Barbarian,
+        Dwarf,
         None
     }
 

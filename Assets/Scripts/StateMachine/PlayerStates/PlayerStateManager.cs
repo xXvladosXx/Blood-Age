@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Entity;
+using SaveSystem;
 using StateMachine.BaseStates;
 using UnityEngine;
 
@@ -13,13 +14,12 @@ namespace StateMachine.PlayerStates
         [SerializeField] private List<BaseState> _allStates;
 
         private BaseState _currentBaseState;
-        private AliveEntity _aliveEntity;
-        public static event Action<AliveEntity> OnPlayerSpawn = delegate{  };
-        public event Action<AliveEntity> OnPlayerDie;
+        private static PlayerEntity _aliveEntity;
+        public static PlayerEntity GetPlayer => _aliveEntity;
 
         private void Awake()
         {
-            _aliveEntity = GetComponent<AliveEntity>();
+            _aliveEntity = GetComponent<PlayerEntity>();
 
             _allStates = new List<BaseState>
             {
@@ -29,11 +29,11 @@ namespace StateMachine.PlayerStates
                 new DialoguePlayerState(),
                 new PickingPlayerState(),
                 new DeathPlayerState(),
-                new TeleportPlayerState()
+                new TeleportPlayerState(), 
+                new ShopPlayerState()
             };
 
             _currentBaseState = _allStates[0];
-            OnPlayerSpawn(_aliveEntity);
         }
 
         private void Start()
@@ -44,34 +44,36 @@ namespace StateMachine.PlayerStates
             }
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            print(_currentBaseState);
-
             _currentBaseState.RunState(_aliveEntity);
         }
 
-        public T SwitchState<T>(float time) where T : BaseState
+        public T SwitchState<T>() where T : BaseState
         {
             var state = _allStates.FirstOrDefault(s => s is T);
-            _currentBaseState = state;
-            
-            return (T)state;
+            if (state != null)
+            {
+                _currentBaseState.EndState(_aliveEntity);
+                _currentBaseState = state;
+                state.StartState(_aliveEntity);
+                return (T) state;
+            }
+
+            return null;
         }
 
         public bool CanSave()
         {
-            if (_aliveEntity.Targets.Count == 0)
-                return true;
-
-            if (_currentBaseState is DeathPlayerState)
+            if (_currentBaseState is DeathBaseState)
                 return false;
 
             if (_currentBaseState is TeleportPlayerState)
                 return false;
-
-            return false;
+            
+            return _aliveEntity.Targets.Count == 0;
         }
         public BaseState GetCurrentState => _currentBaseState;
+        
     }
 }

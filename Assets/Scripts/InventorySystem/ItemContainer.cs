@@ -13,8 +13,7 @@
         public Container Container;
         protected List<Func<ItemData, int, bool>> Filters = new List<Func<ItemData, int, bool>>();
 
-        public event Action<Item, Item> OnItemChange;
-        public event Action OnItemAdd;
+        public event Action OnInventoryChange;
 
         protected abstract void RegisterFilters();
 
@@ -27,9 +26,6 @@
 
         public bool AddItem(ItemData itemData, int amount)
         {
-            if (!HasEnough()) return false;
-            if (!Filters.Select(f => f(itemData, amount)).All(e => e)) return false;
-            
             var inventorySlot = FindSlotInInventory(itemData);
 
             if ((Database.Items[itemData.Id].Stackable && inventorySlot != null))
@@ -37,43 +33,39 @@
                 inventorySlot.AddAmount(amount);
                 return true;
             }
-            
+
+            if (!HasEnough()) return false;
+            if (!Filters.Select(f => f(itemData, amount)).All(e => e)) return false;
+
             SetSlot(itemData, amount);
-            OnItemAdd?.Invoke();
+            OnInventoryChange?.Invoke();
             return true;
         }
 
-        public Item FindNecessaryItemInData(int id)
+        public bool SwapItem(ItemContainer uiItemContainer, Slot draggedItem, Slot replacedItem)
         {
-            return Database.Items.FirstOrDefault(item => id == item.Data.Id);
-        }
-
-        public bool SwapItem(Slot draggedItem, Slot replacedItem)
-        {
-            if (!draggedItem.CanBeChanged && replacedItem.CanBeChanged)
-            {
-                if (replacedItem.CanBeReplaced(FindNecessaryItemInData(draggedItem.ItemData.Id)))
-                {
-                    replacedItem.UpdateSlot(draggedItem.ItemData, draggedItem.Amount);
-                    OnItemChange?.Invoke(FindNecessaryItemInData(draggedItem.ItemData.Id),FindNecessaryItemInData(replacedItem.ItemData.Id) );
-                }
-                
-                return false;
-            }
-            
-            if (!draggedItem.CanBeReplaced(FindNecessaryItemInData(replacedItem.ItemData.Id))) return false;
-            if(!replacedItem.CanBeReplaced(FindNecessaryItemInData(draggedItem.ItemData.Id))) return false;
+            if (!draggedItem.CanBeReplaced(Database.GetItemByID(replacedItem.ItemData.Id))) return false;
+            if (!replacedItem.CanBeReplaced(Database.GetItemByID(draggedItem.ItemData.Id))) return false;
 
             var temp = new Slot(replacedItem.ItemData, replacedItem.Amount);
-            if(!draggedItem.Discard)
-                replacedItem.UpdateSlot(draggedItem.ItemData, draggedItem.Amount);
-            
-            if(!replacedItem.Discard)
-                draggedItem.UpdateSlot(temp.ItemData, temp.Amount);
-                
-            OnItemChange?.Invoke(FindNecessaryItemInData(draggedItem.ItemData.Id),FindNecessaryItemInData(replacedItem.ItemData.Id) );
+            replacedItem.UpdateSlot(draggedItem.ItemData, draggedItem.Amount);
+
+            draggedItem.UpdateSlot(temp.ItemData, temp.Amount);
+
+            OnInventoryChange?.Invoke();
+            uiItemContainer.OnInventoryChange?.Invoke();
 
             return true;
+        }
+        
+        public void SwapDragged(ItemContainer uiItemContainer, Slot draggedItem, Slot replacedItem)
+        {
+            var temp = new Slot(replacedItem.ItemData, replacedItem.Amount);
+
+            draggedItem.UpdateSlot(temp.ItemData, temp.Amount);
+
+            OnInventoryChange?.Invoke();
+            uiItemContainer.OnInventoryChange?.Invoke();
         }
 
         public void ClearInventory()
@@ -104,22 +96,25 @@
                     if (inventorySlot.ItemData.Id == id)
                     {
                         inventorySlot.Amount -= amount;
-                        if(inventorySlot.Amount <= 0 && FindNecessaryItemInData(id).Stackable)
+                        if (inventorySlot.Amount <= 0 && Database.GetItemByID(id).Stackable)
                             inventorySlot.UpdateSlot(new ItemData(), 0);
-                        
+
                         break;
                     }
                 }
             }
+
+            OnInventoryChange?.Invoke();
         }
 
         public List<Slot> GetAllSlots()
         {
             return Container.InventorySlots.ToList();
         }
+
         public List<int> GetAllItems()
         {
-            List<int> items = new List<int>();
+            List<int> items = new List<int>(Container.InventorySlots.Length);
 
             foreach (var inventorySlot in Container.InventorySlots)
             {
@@ -133,9 +128,10 @@
         {
             List<Item> list = new List<Item>();
             foreach (Slot inventorySlot in Container.InventorySlots)
-            foreach (var item in Database.Items)
             {
-                if (inventorySlot.ItemData.Id == item.Data.Id) list.Add(item);
+                var item = Database.GetItemByID(inventorySlot.ItemData.Id);
+                if (item != null)
+                    list.Add(item);
             }
 
             return list;
@@ -145,36 +141,40 @@
         {
             foreach (var inventorySlot in Container.InventorySlots)
             {
-                if (inventorySlot.ItemData.Id > -1) continue;
+                if (inventorySlot.ItemData.Id > -1 ||
+                    !inventorySlot.CanBeReplaced(Database.GetItemByID(itemData.Id))) continue;
 
                 inventorySlot.UpdateSlot(itemData, amount);
-                
+
                 return inventorySlot;
             }
 
             return null;
         }
 
+        public Item GetItemOnIndexSlot(int index)
+        {
+            return Database.GetItemByID(Container.InventorySlots[index].ItemData.Id);
+        }
+
         public Slot FindSlotInInventory(ItemData itemData)
         {
             return Container.InventorySlots.FirstOrDefault(slot => slot.ItemData.Id == itemData.Id);
         }
+
         public bool HasItemInInventory(ItemData itemData)
         {
             return Container.InventorySlots.Any(inventorySlot => inventorySlot.ItemData.Id == itemData.Id);
         }
+
         private int HasEmptySlot
         {
             get { return Container.InventorySlots.Count(inventorySlot => inventorySlot.ItemData.Id <= -1); }
         }
-
-        public Slot GetSlotOfItem(Item item) => Container.InventorySlots
-            .FirstOrDefault(inventorySlot => inventorySlot.ItemData.Id == item.Data.Id);
-        
     }
 
     [Serializable]
-    public class Container 
+    public class Container
     {
         public Slot[] InventorySlots = new Slot[36];
     }
@@ -211,11 +211,6 @@
             Amount += value;
         }
 
-        public void RemoveAmount(int value)
-        {
-            
-        }
-        
         public bool CanBeReplaced(Item item)
         {
             if (ItemCategories.Length <= 0 || item == null || item.Data.Id < 0)
@@ -224,8 +219,10 @@
             }
 
             if (Discard)
+            {
                 return true;
-            
+            }
+
             var anyItem = ItemCategories.Any(t => (t & item.Category) == t);
 
             return anyItem;
@@ -239,18 +236,24 @@
     }
 
     [Flags]
-    public enum ItemCategory {
+    public enum ItemCategory
+    {
         Item = 1,
-        Armor = Item | 1<< 2,
+        Armor = Item | 1 << 2,
         Helmet = Item | 1 << 3,
         Chest = Item | 1 << 4,
         Pants = Item | 1 << 5,
         Consumable = Item | 1 << 6,
         Potion = Consumable | 1 << 7,
-        Skill = 1<<8,
+        Skill = 1 << 8,
         Weapon = Item | 1 << 9,
-        Bow = Weapon | 1<<10,
-        Sword = Weapon | 1<<11,
-        Stuff = Weapon | 1<<12,
+        Bow = Weapon | 1 << 10,
+        Sword = Weapon | 1 << 11,
+        Stuff = Weapon | 1 << 12,
+        Gloves = Item | 1 << 13,
+        Shoulders = Item | 1 << 14,
+        Boots = Item | 1 << 15,
+        Health = Potion | 1 << 16,
+        Mana = Potion | 1 << 17,
     }
 }

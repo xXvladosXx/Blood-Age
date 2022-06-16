@@ -10,12 +10,12 @@ namespace ShopSystem
         private ItemPicker _itemPicker;
         private ItemContainer _inventory;
         private int _gold;
-        
-        public event Action OnInventoryChange;
-        public event Action<InventoryItem> OnItemBuy;
+
+        public event Action<InventoryItem, int> OnItemBuy;
+        public event Action<Seller> OnInventoryShopOpen;
 
         public ItemContainer GetItemContainer => _inventory;
-        
+
         private void Awake()
         {
             _itemPicker = GetComponent<ItemPicker>();
@@ -27,42 +27,44 @@ namespace ShopSystem
             var gold = _inventory.FindSlotInInventory(new ItemData(15));
             if (gold == null)
                 return 0;
-            
+
             _gold = gold.Amount;
 
             return _gold;
         }
 
-        public bool BuyItem(InventoryItem inventoryItem, int amount = 1)
+        public bool CanBuyItem(InventoryItem inventoryItem, int priceModifier, int amount = 1)
         {
             if (!_inventory.AddItem(inventoryItem.Data, amount)) return false;
-            var gold = inventoryItem.Price * amount;
-            AddGold(gold, false);
-           
-            OnItemBuy?.Invoke(inventoryItem);
-            OnInventoryChange?.Invoke();
+            var startPrice = inventoryItem.Price * amount;
+            startPrice += (startPrice * priceModifier) / 100;
+            RemoveGold(startPrice);
+
+            OnItemBuy?.Invoke(inventoryItem, amount);
             return true;
         }
 
-        private void AddGold(int amount, bool add)
+        private void AddGold(int amount)
         {
-            if (add)
-            {
-                _inventory.AddItem(new ItemData(15), amount);
-            }
-            else
-            {
-                _inventory.RemoveItem(15, amount);
-            }
+            _inventory.AddItem(new ItemData(15), amount);
         }
 
-        public void ConfirmSelling(InventoryItem itemToPurchase, Seller seller, int amount)
+        private void RemoveGold(int amount)
         {
-            seller.SellItem(itemToPurchase, _inventory.GetSlotOfItem(itemToPurchase).Amount);
+            _inventory.RemoveItem(15, amount);
+        }
+
+        public void ConfirmPurchase(InventoryItem itemToPurchase, Seller seller, int amount)
+        {
+            seller.BuyItem(itemToPurchase, amount);
             var gold = itemToPurchase.Price * amount;
-            AddGold(gold, true);
+            AddGold(gold);
             _inventory.RemoveItem(itemToPurchase.Data.Id, itemToPurchase.Stackable ? amount : 0);
-            OnInventoryChange?.Invoke();
+        }
+
+        public void OpenInventory(Seller seller)
+        {
+            OnInventoryShopOpen?.Invoke(seller);
         }
     }
 }

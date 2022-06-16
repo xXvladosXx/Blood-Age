@@ -24,6 +24,8 @@ namespace QuestSystem.QuestObjectives
         {
             Amount = 0;
         }
+
+        
     }
     
 }

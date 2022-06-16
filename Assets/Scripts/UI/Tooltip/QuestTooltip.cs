@@ -1,5 +1,6 @@
 ﻿using QuestSystem;
 using TMPro;
+using UI.Quests;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ namespace UI.Tooltip
         [SerializeField] private TextMeshProUGUI _title;
         [SerializeField] private Transform _objectiveSpawner;
         [SerializeField] private Transform _rewardSpawner;
+        
         [SerializeField] private RewardDisplay _reward;
         
         [SerializeField] private GameObject _objective;
@@ -24,16 +26,14 @@ namespace UI.Tooltip
             HideTooltip();
         }
 
-        public void ShowTooltip(Transform questTransform, QuestStatus status)
+        public void ShowTooltip( QuestStatus status)
         {
-            Vector3[] corners = new Vector3[4];
-            questTransform.GetComponent<RectTransform>().GetWorldCorners(corners);
-            gameObject.transform.position = corners[0] + (corners[0] - questTransform.position + _offset);
+            _title.text = status.GetQuest.GetTitle;
 
             foreach (var objective in status.GetQuest.GetObjectives)
             {
                 var prefab = _objective;
-                if (status.IsObjectiveComplete(objective))
+                if (status.IsObjectiveCompleted(objective))
                 {
                     prefab = _objectiveCompleted;
                 }
@@ -47,7 +47,13 @@ namespace UI.Tooltip
                 var rewardPrefab = Instantiate(_reward, _rewardSpawner);
                 rewardPrefab.SetData(reward.Item, reward.Amount);
             }
-            
+
+            if (status.GetQuest.GetExperience > 0)
+            {
+                var experiencePrefab = Instantiate(_reward, _rewardSpawner);
+                experiencePrefab.SetData(status.GetQuest.GetExperience);
+            }
+
             gameObject.SetActive(true);   
         }
 

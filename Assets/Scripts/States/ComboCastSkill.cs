@@ -14,7 +14,6 @@ namespace States
     {
         [SerializeField] private float _startTime;
         [SerializeField] private float _endTime;
-        [SerializeField] private Key _key;
         [SerializeField] private SkillNode _requiredSkill;
 
         private IStateSwitcher _playerStateManager;
@@ -27,7 +26,7 @@ namespace States
         public override void OnEnter(AnimatorState characterStateAnimator, Animator animator,
             AnimatorStateInfo stateInfo)
         {
-            ComboKeySpawner.Instance.ResetKeyStart();
+            ComboKeySpawner.Instance.ResetChainKey();
             _playerStateManager = animator.GetComponent<IStateSwitcher>();
             _skillTree = animator.GetComponent<SkillTree>();
             _wasApplied = false;
@@ -35,37 +34,37 @@ namespace States
             if (_requiredSkill == null)
             {
                 _haveRequiredSkill = true;
-                _key = ComboKeySpawner.Instance.GetKeyFromNumber();
                 return;
             }
             _haveRequiredSkill = (_skillTree.GetKnownSkills.HasItemInInventory(_requiredSkill.Data));
-
-            if (_haveRequiredSkill)
-            {
-                _key = ComboKeySpawner.Instance.GetKeyFromNumber();
-            }
         }
 
         public override void UpdateAbility(AnimatorState characterStateAnimator, Animator animator,
             AnimatorStateInfo stateInfo)
         {
             if(!_haveRequiredSkill) return;
+            if (_wasApplied)
+            {
+                ComboKeySpawner.Instance.ResetChainKey();
+                return;
+            }
             
             _playerStateManager.SwitchState<CastPlayerState>();
-
-            if (Keyboard.current[_key].wasPressedThisFrame)
+            ComboKeySpawner.Instance.SetChainKey();
+            
+            if (Keyboard.current[Key.Space].wasPressedThisFrame)
             {
                 if (stateInfo.normalizedTime >= _startTime)
                 {
                     _wasApplied = true;
                     animator.SetBool(SkillContinueCombo, true);
-                    ComboKeySpawner.Instance.ResetKeyStart();
+                    ComboKeySpawner.Instance.ResetChainKey();
                 }
             }
 
             if (stateInfo.normalizedTime >= _endTime)
             {
-                ComboKeySpawner.Instance.ResetKeyStart();
+                ComboKeySpawner.Instance.ResetChainKey();
             }
         }
 
@@ -73,7 +72,7 @@ namespace States
             AnimatorStateInfo stateInfo)
         {
             animator.SetBool(SkillContinueCombo, false);
-            ComboKeySpawner.Instance.ResetKeyStart();
+            ComboKeySpawner.Instance.ResetChainKey();
             if(_wasApplied) return;
         }
     }

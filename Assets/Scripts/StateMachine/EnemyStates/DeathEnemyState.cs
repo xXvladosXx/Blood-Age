@@ -10,8 +10,16 @@ namespace StateMachine.EnemyStates
             
         }
 
-        public override void StartState(float time)
+        public override void StartState(AliveEntity aliveEntity)
         {
         }
+
+        public override void EndState(AliveEntity aliveEntity)
+        {
+            
+        }
+
+        public override bool CanBeChanged => false;
+
     }
 }
